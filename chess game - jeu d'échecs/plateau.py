@@ -1,5 +1,5 @@
 import turtle
-import pieces
+#import pieces
 
 #Création du "papier" et du "crayon"
 wn = turtle.Screen()
@@ -34,6 +34,10 @@ def echiquier(x,y,c,couleur,remplissage):
 
 
 remplissage = 1
+
+'''MODIFIER LES BOUCLES EN DESSOUS AVEC DES LISTE DE NOMBRES ET DE LETTRES
+OU Y = [1,2,3,4,5,6,7,8] ET X = [A,B,C,D,E,F,G,H]
+ET UTILISER EXEC POUR SAVOIR QUELLE CASE (X,Y) A QUELLE POSITION (x,y)'''
 for y in range(270,-361,-90):
     for x in range(-410,231,180):
         echiquier(x,y,90,"#5c3427",remplissage)
@@ -41,6 +45,7 @@ for y in range(270,-361,-90):
         echiquier(x,y,90,"#5c3427",1-remplissage)
     remplissage = 1-remplissage
 
+print(t.pos())
 wn.update()
 #Attend un clic pour fermer la fenêtre de dessin
 wn.mainloop()
