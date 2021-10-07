@@ -4,34 +4,43 @@ import numpy as np
 
 
 '''CONSTANTES'''
-WIDTH = 1.0 # plein écran
-HEIGHT = 1.0 # plein écran
 COTE_CASES = 90
+DARK_COLOR = '#5c3427'
+HEIGHT = 1.0 # taille de l'écran
+LIGHT_COLOR = 'beige'
+WIDTH = 1.0 # taille de l'écran
 X_DEPART = -410
 X_FIN = X_DEPART + 8 * COTE_CASES + 1
 Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES - 1
-LIGHT_COLOR = 'beige'
-DARK_COLOR = '#5c3427'
 
 
 #Création du "papier" et du "crayon"
 wn = turtle.Screen()
-wn.tracer(30)
+wn.tracer(100)
 
-t = turtle.Turtle()
+tortue = turtle.Turtle()
 
 #Taille, dimension et couleur pour le papier et le crayon
 wn.bgcolor("#27415c")
 wn.setup(width = WIDTH, height = HEIGHT)
 wn.title("Jeu d'échecs")
-t.pensize(2)
-t.shape("turtle")
-t.color("black")
+tortue.pensize(2)
+tortue.shape("turtle")
+tortue.color("black")
 
 
 #Création de l'échiquier
-def carree(x,y,c,couleur,remplissage):
+def carree(x, y, c, t, couleur, remplissage):
+    '''Dessine un carré.
+    Les arguments sont, dans l'ordre : 
+    x -> axe x
+    y -> axe y
+    c -> taille du côté
+    t -> tortue utilisée pour dessiner le carré
+    couleur -> couleur de remplissage si $remplissage = 0
+    remplissage -> sert à faire des alternances pour remplir les carrés (1/2, 1/3, ...)'''
+    
     t.color('black')
     t.penup()
     t.goto(x,y)
@@ -80,8 +89,8 @@ for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
     
     count -= 1   # indice de la liste $cases
     for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
-        carree(x, y, COTE_CASES, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
-        exec("pos_" + cases[count] + " = t.pos()")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
+        carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
+        exec("pos_" + cases[count] + " = tortue.pos()")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
         exec("num_" + cases[count] + " = count")   # crée la variable de nom $num_cases[count] ayant pour valeur le numéro de la case
         if count + 2 < 64:
             count += 2  # saute une case
@@ -89,15 +98,22 @@ for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
     
     count -= 7   # indice de la liste $cases
     for x in range(X_DEPART-90, X_FIN, COTE_CASES * 2):
-        carree(x, y, COTE_CASES, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
-        exec("pos_" + cases[count] + " = t.pos()")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
+        carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
+        exec("pos_" + cases[count] + " = tortue.pos()")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
         exec("num_" + cases[count] + " = count")   # crée la variable de nom $num_cases[count] ayant pour valeur le numéro de la case
         if count + 2 < 64:
             count += 2  # saute une case
 
     remplissage = 1 - remplissage
 
+print(locals())
 
+# P*TAIN LES CASES ONT PAS LES BONNES COORDONNEES CA CASSES LES C*UILLES
 
 wn.update()
 wn.mainloop()
+
+
+'''
+    Chercher comment faire et faire une class Plateau, faire un self.casesOccupees -> list() avec le numéro des cases
+'''
