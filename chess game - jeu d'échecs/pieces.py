@@ -14,10 +14,48 @@ S'il est Vrai les mouvement de la pièce peuvent se répéter :
     - 36 - 11 = 25
     - mais aussi en 25 - 11 = 14 et ainsi de suite et pour toutes les directions
 '''
+COTE_CASES = 90
 
 marquage = turtle.Turtle()
 marquage.pencolor('cyan')
 marquage.pensize(1)
+marquage.hideturtle()
+
+
+def carree(x, y, c, t, couleur, remplissage):
+    '''Dessine un carré.
+    Les arguments sont, dans l'ordre : 
+    x -> axe x
+    y -> axe y
+    c -> taille du côté
+    t -> tortue utilisée pour dessiner le carré
+    couleur -> couleur de remplissage si $remplissage = 0
+    remplissage -> sert à faire des alternances pour remplir les carrés (1/2, 1/3, ...)'''
+    
+    t.color('black')
+    t.penup()
+    t.goto(x,y)
+    t.pendown()
+    t.fillcolor('beige')
+    if remplissage == 0:
+        t.fillcolor(couleur)
+    t.begin_fill()
+    for _ in range(4):
+        t.forward(c)
+        t.left(90)
+    t.end_fill()
+    t.hideturtle()
+
+CASES = [
+    'a8','b8','c8','d8','e8','f8','g8','h8',
+    'a7','b7','c7','d7','e7','f7','g7','h7',
+    'a6','b6','c6','d6','e6','f6','g6','h6',
+    'a5','b5','c5','d5','e5','f5','g5','h5',
+    'a4','b4','c4','d4','e4','f4','g4','h4',
+    'a3','b3','c3','d3','e3','f3','g3','h3',
+    'a2','b2','c2','d2','e2','f2','g2','h2',
+    'a1','b1','c1','d1','e1','f1','g1','h1'
+]
 
 '''Définition'''
 pieces = ('cavalier','fou','pion','reine','roi','tour','vide')
@@ -41,9 +79,11 @@ class Piece:
             - Couleur
             - DéplacementPossibles
             - CaseActuelle
+            - Tortue
         Actions : 
             - MouvementPossibles()
             - MontrerDéplacementPossibles()
+            - MangerUnePiece()
             - DeplacerPiece()
     '''
     def __init__(self, couleur, deplacementPossibles, caseActuelle, tortue):
@@ -53,7 +93,7 @@ class Piece:
         self.tortue = tortue                                # turtle.Turtle Object -> la tortue qui à l'image du pion
 
 
-    def MouvementsPossibles(self,mouvements_possibles):
+    def MouvementsPossibles(self):
         '''Retourne le numéro de toutes les cases où la pièce peut se déplacer sous forme de liste.'''
         deplacements_possibles = []                                                     # initialisation de la liste des déplacements possibles
         depart = self.CaseActuelle                                                      # depart est la variable "point de départ" pour calculer les déplacements possibles
@@ -68,19 +108,23 @@ class Piece:
                     etape += self.deplacementsPossibles[i]                              # etape prend la valeur de la case qu'on vient d'ajouter pour calculer la case suivante
 
                 # pour la boucle while ajouter les conditions si la cases est occupée ou pas et si elle l'est, si c'est une pièce de notre camp donc non-mangeable ou si c'est une pièce du camp adverse et donc mangeable
-        return deplacements_possibles
+        self.deplacements_possibles = deplacements_possibles
     
-    def MontrerDeplacementsPossibles(self, deplacements_possibles):
+    def MontrerDeplacementsPossibles(self):
         '''Montre au joueur toutes les cases où sa pièce peut se déplacer après avoir effacer les cases déjà marquées (pour une autre pièces par exemple'''
         marquage.clear()
-        casesAMarquer = [locals()['pos_' + str(plateau.cases[i])] for i in deplacements_possibles] # liste contenant l'angle bas-gauche des cases à marquer
+        casesAMarquer = []
+        for i in self.deplacements_possibles:
+            exec("casesAMarquer.append(case_" + CASES[i] +".coordonnees)")
+            pass
         coordonneesAMarquer = []
         for cases in casesAMarquer:
-            case = (cases[0] + plateau.COTE_CASES * 0.45, cases[1] + plateau.COTE_CASES * 0.45)
+            case = (cases[0] + COTE_CASES * 0.45, cases[1] + COTE_CASES * 0.45)
             coordonneesAMarquer.append(case)
         for coord in coordonneesAMarquer:
-            plateau.carree(coord[0], coord[1], 10, marquage, 'cyan', 0)
-    
+            carree(coord[0], coord[1], 10, marquage, 'cyan', 0)
 
 
-        
+
+'''Code des pions : type_C_numéro   (C =Couleur) '''
+

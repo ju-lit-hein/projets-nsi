@@ -1,6 +1,5 @@
 import turtle
 import numpy as np
-#import pieces
 
 
 '''CONSTANTES'''
@@ -15,12 +14,12 @@ Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
 # c'est mieux de ne pas changer les constante
 
-
 #Création du "papier" et du "crayon"
 wn = turtle.Screen()
 wn.tracer(100)
 
 tortue = turtle.Turtle()
+tortue.hideturtle()
 
 #Taille, dimension et couleur pour le papier et le crayon
 wn.bgcolor("#27415c")
@@ -80,13 +79,20 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
             - Coordonnees ((-410.00,270.00))
             - Occupee (True ou False)
         Actions : 
-            - ...
+            - ChangerLeStatutDeLaCase
     '''
     def __init__(self, case, numero, coordonnees, occupee):
         self.case = case
         self.numero = numero
         self.coordonnees = coordonnees
         self.occupee = occupee
+
+    def ChangerLeStatutDeLaCase(self):
+        if self.occupee:
+            self.occupee = False
+        else:
+            self.occupee = True
+
 
 
 def faire_le_plateau():
@@ -99,7 +105,6 @@ def faire_le_plateau():
         for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
             exec("case_" + cases[count] + " = Plateau(cases[count], count, tortue.pos(), False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
-            exec("num_" + cases[count] + " = count")   # crée la variable de nom $num_cases[count] ayant pour valeur le numéro de la case
             if count + 2 < 64:
                 count += 2  # saute une case
             
@@ -108,16 +113,13 @@ def faire_le_plateau():
         for x in range(X_DEPART+90, X_FIN, COTE_CASES * 2):
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
             exec("case_" + cases[count] + " = Plateau(cases[count], count, tortue.pos(), False)")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
-            exec("num_" + cases[count] + " = count")   # crée la variable de nom $num_cases[count] ayant pour valeur le numéro de la case
             if count + 2 < 64:
                 count += 2  # saute une case
 
         remplissage = 1 - remplissage
     case_h1 = Plateau('h1', 63, (220.00, -360.00), False) # ca fait pas h1 donc voila
 
+    wn.update()
+    wn.mainloop()
 
-
-
-wn.update()
-wn.mainloop()
 

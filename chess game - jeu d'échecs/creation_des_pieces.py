@@ -1,27 +1,25 @@
-import plateau
 from os import path
 import turtle
+from plateau import wn
+
 
 currentDir = path.abspath(path.curdir) #get the python file location
 
-def creer_les_images_des_pieces():
-    '''ajoute les images des pièces'''
-    plateau.wn.addshape(currentDir + "\\pieces\\cavalier blanc.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\fou blanc.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\pion blanc.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\reine blanc.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\roi blanc.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\tour blanc.gif")
+'''ajoute les images des pièces'''
+wn.addshape(currentDir + "\\pieces\\cavalier blanc.gif")
+wn.addshape(currentDir + "\\pieces\\fou blanc.gif")
+wn.addshape(currentDir + "\\pieces\\pion blanc.gif")
+wn.addshape(currentDir + "\\pieces\\reine blanc.gif")
+wn.addshape(currentDir + "\\pieces\\roi blanc.gif")
+wn.addshape(currentDir + "\\pieces\\tour blanc.gif")
 
-    plateau.wn.addshape(currentDir + "\\pieces\\cavalier noir.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\fou noir.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\pion noir.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\reine noir.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\roi noir.gif")
-    plateau.wn.addshape(currentDir + "\\pieces\\tour noir.gif")
+wn.addshape(currentDir + "\\pieces\\cavalier noir.gif")
+wn.addshape(currentDir + "\\pieces\\fou noir.gif")
+wn.addshape(currentDir + "\\pieces\\pion noir.gif")
+wn.addshape(currentDir + "\\pieces\\reine noir.gif")
+wn.addshape(currentDir + "\\pieces\\roi noir.gif")
+wn.addshape(currentDir + "\\pieces\\tour noir.gif")
 
-def creer_les_tortues_des_pions():
-    pass
 
 pion_blanc_1 = turtle.Turtle(shape=currentDir + "\\pieces\\pion blanc.gif")
 pion_blanc_2 = turtle.Turtle(shape=currentDir + "\\pieces\\pion blanc.gif")
@@ -59,3 +57,6 @@ tour_noir_1 = turtle.Turtle(shape=currentDir + "\\pieces\\tour noir.gif")
 tour_noir_2 = turtle.Turtle(shape=currentDir + "\\pieces\\tour noir.gif")
 reine_noir = turtle.Turtle(shape=currentDir + "\\pieces\\reine noir.gif")
 roi_noir = turtle.Turtle(shape=currentDir + "\\pieces\\roi noir.gif")
+
+
+pion_blanc_1.goto((0,0))
