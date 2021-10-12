@@ -10,7 +10,7 @@ HEIGHT = 1.0 # taille de l'écran
 LIGHT_COLOR = 'beige'
 WIDTH = 1.0 # taille de l'écran
 X_DEPART = -410
-X_FIN = X_DEPART + 6 * COTE_CASES + 1  # je sais pas pourquoi 6 mais ca fait un plateau de longueur  x+2 donc 6 --> 8
+X_FIN = X_DEPART + 7 * COTE_CASES + 1  # je sais pas pourquoi 6 mais ca fait un plateau de longueur  x+2 donc 6 --> 8
 Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
 
@@ -83,6 +83,17 @@ cases = [
     'a2','b2','c2','d2','e2','f2','g2','h2',
     'a1','b1','c1','d1','e1','f1','g1','h1'
 ]
+
+
+class Plateau:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
+    def __init__(self, case, numero, coordonnees, occupee):
+        self.case = case
+        self.numero = numero
+        self.coordonnees = coordonnees
+        self.occupee = occupee
+
+
+
 count = 1
 for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
 
@@ -90,31 +101,38 @@ for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
     count -= 1   # indice de la liste $cases
     for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
         carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
-        exec("pos_" + cases[count] + " = tortue.pos()")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
+        exec("case_" + cases[count] + " = Plateau(cases[count], count, tortue.pos(), False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
         exec("num_" + cases[count] + " = count")   # crée la variable de nom $num_cases[count] ayant pour valeur le numéro de la case
         if count + 2 < 64:
             count += 2  # saute une case
         
     
     count -= 7   # indice de la liste $cases
-    for x in range(X_DEPART-90, X_FIN, COTE_CASES * 2):
+    for x in range(X_DEPART+90, X_FIN, COTE_CASES * 2):
         carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
-        exec("pos_" + cases[count] + " = tortue.pos()")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
+        exec("case_" + cases[count] + " = Plateau(cases[count], count, tortue.pos(), False)")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
         exec("num_" + cases[count] + " = count")   # crée la variable de nom $num_cases[count] ayant pour valeur le numéro de la case
         if count + 2 < 64:
             count += 2  # saute une case
 
     remplissage = 1 - remplissage
-pos_h1 = (220.00,-360.00) # ca fait pas h1 donc voila
-num_h1 = 63
+case_h1 = Plateau('h1', 63, (220.00, -360.00), False) # ca fait pas h1 donc voila
 
-print(locals())
 
+for case in cases:
+    exec("print(vars(case_" + case + "))")
 
 wn.update()
 wn.mainloop()
 
 
 '''
-    Chercher comment faire et faire une class Plateau, faire un self.casesOccupees -> list() avec le numéro des cases
+class Plateau:
+    Données : 
+        Case (a8)
+        Numéro (0)
+        Coordonnees ((-410.00,270.00))
+        Occupee (True ou False)
+    Actions : 
+        ...
 '''

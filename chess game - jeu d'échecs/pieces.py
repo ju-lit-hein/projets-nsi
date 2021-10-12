@@ -72,13 +72,14 @@ class Piece:
 
 
         
-
-# class Piece
-#     Données :
-#         Couleur
-#         DéplacementPossibles
-#         CaseActuelle
-#     Actions : 
-#         MouvementPossibles()
-#         MontrerDéplacementPossibles()
-#         Deplacer()
+'''
+class Piece
+    Données :
+        Couleur
+        DéplacementPossibles
+        CaseActuelle
+    Actions : 
+        MouvementPossibles()
+        MontrerDéplacementPossibles()
+        Deplacer()
+'''
