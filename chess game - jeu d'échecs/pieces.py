@@ -1,5 +1,6 @@
 import turtle
 import plateau
+import creation_des_pieces
 
 INFORMATIONS = 'le pavé en dessous'
 '''Pour obtenir :
@@ -34,11 +35,22 @@ mouvement_roi = (-11,-10,-9,-1,11,10,9,1,False)
 
 
 class Piece:
-    def __init__(self, couleur, deplacementPossibles, caseActuelle, skin):
+    '''
+    class Piece
+        Données :
+            - Couleur
+            - DéplacementPossibles
+            - CaseActuelle
+        Actions : 
+            - MouvementPossibles()
+            - MontrerDéplacementPossibles()
+            - DeplacerPiece()
+    '''
+    def __init__(self, couleur, deplacementPossibles, caseActuelle, tortue):
         self.couleur = couleur                              # str -> camp de la pièce
         self.deplacementsPossibles = deplacementPossibles   # tuple -> les déplacement possibles
         self.CaseActuelle = caseActuelle                    # int -> le numéro de la case
-        self.skin = skin
+        self.tortue = tortue                                # turtle.Turtle Object -> la tortue qui à l'image du pion
 
 
     def MouvementsPossibles(self,mouvements_possibles):
@@ -72,14 +84,3 @@ class Piece:
 
 
         
-'''
-class Piece
-    Données :
-        Couleur
-        DéplacementPossibles
-        CaseActuelle
-    Actions : 
-        MouvementPossibles()
-        MontrerDéplacementPossibles()
-        Deplacer()
-'''
