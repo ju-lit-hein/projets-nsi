@@ -71,7 +71,6 @@ class Piece:
     
 
 
-
         
 '''
 class Piece
