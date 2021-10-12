@@ -15,4 +15,4 @@ Notes sur le projet --> Le site n'est pas optimisé pour toutes les résolution 
 Voir le site --> <a href="https://ju-lit-hein.github.io/accueil.html" target="_blank">Cliquez ici!</a>  
   
   
-Mon linktr.ee --> <a href="https://liktr.ee/julithein">Cliquez ici!</a>
+linktr.ee de Julien --> <a href="https://liktr.ee/julithein">Cliquez ici!</a>
