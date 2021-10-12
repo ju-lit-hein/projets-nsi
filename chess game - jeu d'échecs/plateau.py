@@ -10,9 +10,10 @@ HEIGHT = 1.0 # taille de l'écran
 LIGHT_COLOR = 'beige'
 WIDTH = 1.0 # taille de l'écran
 X_DEPART = -410
-X_FIN = X_DEPART + 7 * COTE_CASES + 1  # je sais pas pourquoi 6 mais ca fait un plateau de longueur  x+2 donc 6 --> 8
+X_FIN = X_DEPART + 7 * COTE_CASES + 1 
 Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
+# C'est mieux de ne pas changer les constante
 
 
 #Création du "papier" et du "crayon"
