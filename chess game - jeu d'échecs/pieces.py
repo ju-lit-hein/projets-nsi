@@ -34,10 +34,11 @@ mouvement_roi = (-11,-10,-9,-1,11,10,9,1,False)
 
 
 class Piece:
-    def __init__(self, couleur, deplacementPossibles, caseActuelle):
+    def __init__(self, couleur, deplacementPossibles, caseActuelle, skin):
         self.couleur = couleur                              # str -> camp de la pièce
         self.deplacementsPossibles = deplacementPossibles   # tuple -> les déplacement possibles
         self.CaseActuelle = caseActuelle                    # int -> le numéro de la case
+        self.skin = skin
 
 
     def MouvementsPossibles(self,mouvements_possibles):
