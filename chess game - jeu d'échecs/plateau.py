@@ -10,9 +10,9 @@ HEIGHT = 1.0 # taille de l'écran
 LIGHT_COLOR = 'beige'
 WIDTH = 1.0 # taille de l'écran
 X_DEPART = -410
-X_FIN = X_DEPART + 8 * COTE_CASES + 1
+X_FIN = X_DEPART + 6 * COTE_CASES + 1  # je sais pas pourquoi 6 mais ca fait un plateau de longueur  x+2 donc 6 --> 8
 Y_DEPART = 270
-Y_FIN = Y_DEPART - 8 * COTE_CASES - 1
+Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
 
 
 #Création du "papier" et du "crayon"
@@ -83,7 +83,7 @@ cases = [
     'a2','b2','c2','d2','e2','f2','g2','h2',
     'a1','b1','c1','d1','e1','f1','g1','h1'
 ]
-count = -1
+count = 1
 for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
 
     
@@ -105,10 +105,11 @@ for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
             count += 2  # saute une case
 
     remplissage = 1 - remplissage
+pos_h1 = (220.00,-360.00) # ca fait pas h1 donc voila
+num_h1 = 63
 
 print(locals())
 
-# P*TAIN LES CASES ONT PAS LES BONNES COORDONNEES CA CASSES LES C*UILLES
 
 wn.update()
 wn.mainloop()

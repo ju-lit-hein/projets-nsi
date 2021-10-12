@@ -14,7 +14,9 @@ S'il est Vrai les mouvement de la pièce peuvent se répéter :
     - mais aussi en 25 - 11 = 14 et ainsi de suite et pour toutes les directions
 '''
 
-
+marquage = turtle.Turtle()
+marquage.pencolor('cyan')
+marquage.pensize(1)
 
 '''Définition'''
 pieces = ('cavalier','fou','pion','reine','roi','tour','vide')
@@ -56,13 +58,15 @@ class Piece:
         return deplacements_possibles
     
     def MontrerDeplacementsPossibles(self, deplacements_possibles):
-        '''Montre au joueur toutes les cases où sa pièce peut se déplacer'''
+        '''Montre au joueur toutes les cases où sa pièce peut se déplacer après avoir effacer les cases déjà marquées (pour une autre pièces par exemple'''
+        marquage.clear()
         casesAMarquer = [locals()['pos_' + str(plateau.cases[i])] for i in deplacements_possibles] # liste contenant l'angle bas-gauche des cases à marquer
         coordonneesAMarquer = []
         for cases in casesAMarquer:
-            
+            case = (cases[0] + plateau.COTE_CASES * 0.45, cases[1] + plateau.COTE_CASES * 0.45)
+            coordonneesAMarquer.append(case)
         for coord in coordonneesAMarquer:
-            plateau.carree()
+            plateau.carree(coord[0], coord[1], 10, marquage, 'cyan', 0)
     
 
 
@@ -78,11 +82,3 @@ class Piece:
 #         MouvementPossibles()
 #         MontrerDéplacementPossibles()
 #         Deplacer()
-
-
-cavalier = Piece()
-fou = Piece()
-pion = Piece()
-reine = Piece()
-roi = Piece()
-tour = Piece()
