@@ -58,12 +58,17 @@ CASES = [
     'a2','b2','c2','d2','e2','f2','g2','h2',
     'a1','b1','c1','d1','e1','f1','g1','h1']
 
-def deplacerUnePiece(piece, xy = 0):
+def deplacerUnePiece(piece, case):
     '''Deplace la pièce voulue vers une case ou vers ses coordonnes (même choses mais c'est utile d'avoir ces deux choix
-    piece -> tortue de la pièce
+    piece -> class nom de la pièce
     xy -> tuple coordonnees
     '''
-    piece.goto(xy)
+    caseActuelle = CASES[piece.caseActuelle]
+    exec("case_" + caseActuelle + ".occupee = False")
+    coordonnees = eval("case_" + case + ".cordonnees")
+    piece.goto(coordonnees)
+    exec("case_" + case + ".occupee = True")
+    exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
     
 
 

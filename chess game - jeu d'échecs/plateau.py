@@ -83,11 +83,12 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
         Actions : 
             - ChangerLeStatutDeLaCase()
     '''
-    def __init__(self, case, numero, coordonnees, occupee):
+    def __init__(self, case, numero, coordonnees, occupee, occupeeParQuelCamp):
         self.case = case
         self.numero = numero
         self.coordonnees = coordonnees
         self.occupee = occupee
+        self.occupeeParQuelCamp = occupeeParQuelCamp
 
     def ChangerLeStatutDeLaCase(self):
         if self.occupee:
@@ -133,10 +134,17 @@ def faire_le_plateau():
     wn.update()
 
     import creation_des_pieces
-    for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
+
+    for i in creation_des_pieces.pions_positions:
         j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()
-        i.goto(eval("case_" + j + ".coordonnees"))
+        j = eval("case_" + j + ".coordonnees")
+        deplacerUnePiece(i,j)
+
+    # for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
+    #     j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
+    #     i.penup()
+    #     i.goto(eval("case_" + j + ".coordonnees"))
 
     exec("creation_des_pieces.pion_blanc_8.goto(265.00, -225.00)")
     exec("creation_des_pieces.cavalier_blanc_1.goto(-275.00, -315.00)")
