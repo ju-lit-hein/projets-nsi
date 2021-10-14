@@ -1,6 +1,6 @@
 import turtle
 import plateau
-import creation_des_pieces
+#import creation_des_pieces
 
 INFORMATIONS = 'le pavé en dessous'
 '''Pour obtenir :

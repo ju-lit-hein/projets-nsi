@@ -104,7 +104,12 @@ def faire_le_plateau():
         count -= 1   # indice de la liste $cases
         for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
-            exec("case_" + cases[count] + " = Plateau(cases[count], count, tortue.pos(), False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            position = tortue.pos()
+            position = tuple(position)
+            position = (position[0] + 45, position[1] + 45)
+            position = turtle.Vec2D(position[0], position[1])
+            print(position, type(position))
+            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
             
@@ -112,14 +117,25 @@ def faire_le_plateau():
         count -= 7   # indice de la liste $cases
         for x in range(X_DEPART+90, X_FIN, COTE_CASES * 2):
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
-            exec("case_" + cases[count] + " = Plateau(cases[count], count, tortue.pos(), False)")   # crée la variable de nom $pos_cases[count] ayant pour valeur les coordonnées de l'angle bas gauche de la case
+            position = tortue.pos()
+            position = tuple(position)
+            position = (position[0] + 45, position[1] + 45)
+            #position = turtle.Vec2D(position[0], position[1])
+            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
 
         remplissage = 1 - remplissage
-    case_h1 = Plateau('h1', 63, (220.00, -360.00), False) # ca fait pas h1 donc voila
+    case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False) # ca fait pas h1 donc voila
 
     wn.update()
+    import creation_des_pieces
+    for i in creation_des_pieces.pions_positions:
+        j = creation_des_pieces.pions_positions[i]
+        i.penup()
+        #print(exec("case_" + j + ".coordonnees"))
+        #i.goto(exec("case_" + j + ".coordonnees"))
+        #print(j)
+    wn.update()
     wn.mainloop()
-
 
