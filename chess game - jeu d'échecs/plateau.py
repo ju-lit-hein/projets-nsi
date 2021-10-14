@@ -1,5 +1,6 @@
 import turtle
 import numpy as np
+from pieces import Pion, deplacerUnePiece
 
 
 '''CONSTANTES'''
@@ -76,10 +77,11 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
         Données : 
             - Case (a8)
             - Numéro (0)
-            - Coordonnees ((-410.00,270.00))
+            - Coordonnees ( (-365.00,315.00) -> centre de la case)
             - Occupee (True ou False)
+            - OccuppeParQuelCamp ('blanc' ou 'noir' 0 si vide)
         Actions : 
-            - ChangerLeStatutDeLaCase
+            - ChangerLeStatutDeLaCase()
     '''
     def __init__(self, case, numero, coordonnees, occupee):
         self.case = case
@@ -121,12 +123,12 @@ def faire_le_plateau():
             position = tuple(position)
             position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
-            print(cases[count], position)
             exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
 
         remplissage = 1 - remplissage
+
     case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False) # ca fait pas h1 donc voila
     wn.update()
 
@@ -134,11 +136,15 @@ def faire_le_plateau():
     for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
         j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()
-        print(j)
         i.goto(eval("case_" + j + ".coordonnees"))
 
-
-    
+    exec("creation_des_pieces.pion_blanc_8.goto(265.00, -225.00)")
+    exec("creation_des_pieces.cavalier_blanc_1.goto(-275.00, -315.00)")
+    exec("creation_des_pieces.cavalier_blanc_2.goto(195.00, -315.00)")
+    exec("creation_des_pieces.reine_blanc.goto(-95.00, -315.00)")
+    exec("creation_des_pieces.fou_blanc_2.goto(85.00, -315.00)")
+    exec("creation_des_pieces.cavalier_blanc_2.goto(case_g1.coordonnees)")   
+    # Les 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
     wn.update()
     wn.mainloop()
 

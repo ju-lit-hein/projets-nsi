@@ -1,4 +1,6 @@
 import turtle
+
+from numpy import e
 import plateau
 #import creation_des_pieces
 
@@ -6,7 +8,7 @@ INFORMATIONS = 'le pavé en dessous'
 '''Pour obtenir :
 - lettre et numéro d'une case (par exemple a1) : cases[caseActuelle]
 - numéro de la case actuelle (par exemple 21) : Piece.caseActuelle
-- coordonées Turtle d'une case (par exemple (-200, 50) ) : locals(){'pos_' + str(cases[self.caseActuelle])} 
+- coordonées Turtle d'une case par exemple (265.00, -135.00) : pour la case 'h3' -> case_h3.coordonnees 
 
 Pour chaque pièces, (on va prendre pour exemple le fou) mouvement_fou[-1] est un booléens.
 S'il est Vrai les mouvement de la pièce peuvent se répéter :
@@ -54,25 +56,31 @@ CASES = [
     'a4','b4','c4','d4','e4','f4','g4','h4',
     'a3','b3','c3','d3','e3','f3','g3','h3',
     'a2','b2','c2','d2','e2','f2','g2','h2',
-    'a1','b1','c1','d1','e1','f1','g1','h1'
-]
+    'a1','b1','c1','d1','e1','f1','g1','h1']
+
+def deplacerUnePiece(piece, xy = 0):
+    '''Deplace la pièce voulue vers une case ou vers ses coordonnes (même choses mais c'est utile d'avoir ces deux choix
+    piece -> tortue de la pièce
+    xy -> tuple coordonnees
+    '''
+    piece.goto(xy)
+    
+
+
 
 '''Définition'''
 pieces = ('cavalier','fou','pion','reine','roi','tour','vide')
 valeur_pieces = (3,3,1,9,0,5,0)
-mouvement_cavalier = (-12,-21,-19,-8,12,21,19,8,False)
-mouvement_fou = (-11,-9,11,9,True)
-mouvement_pion = (-16,-8,-9,-7,False)
-mouvement_tour = (-10,10,-1,1,True)
-mouvement_reine = (-11,-10,-9,-1,11,10,9,1,True)
-mouvement_roi = (-11,-10,-9,-1,11,10,9,1,False)
+mouvement_cavalier = (-12,-21,-19,-8,12,21,19,8)
+mouvement_fou = (-11,-9,11,9)
+mouvement_pion = (-16,-8,-9,-7)
+mouvement_tour = (-10,10,-1,1)
+mouvement_reine = (-11,-10,-9,-1,11,10,9,1)
+mouvement_roi = (-11,-10,-9,-1,11,10,9,1)
 
 
 
-
-
-
-class Piece:
+class Pion:
     '''
     class Piece
         Données :
@@ -84,8 +92,31 @@ class Piece:
             - MouvementPossibles()
             - MontrerDéplacementPossibles()
             - MangerUnePiece()
-            - DeplacerPiece()
     '''
+    def __init__(self, couleur, deplacementsPossibles, caseActuelle, tortue, dejaBouge = False):
+        self.couleur = couleur                              # str -> camp de la pièce
+        self.deplacementsPossibles = deplacementsPossibles  # tuple -> déplacements possibles de la pièce
+        self.caseActuelle = caseActuelle                    # int -> numéro de la case sur laquelle le pion est
+        self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
+        self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
+
+    def MouvementsPossibles(self):
+        '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de tuple'''
+        liste_deplacements_possibles = []
+        point_de_depart = self.caseActuelle
+        if len(self.deplacementsPossibles) == 4:
+            case_tout_droit = (self.deplacementsPossibles[0], self.deplacementsPossibles[1])
+        else:
+            case_tout_droit = self.deplacementsPossibles[0]
+        self.deplacementsPossibles = list(self.deplacementsPossibles)
+        self.deplacementsPossibles.remove(-16)
+        self.deplacementsPossibles = tuple(self.deplacementsPossibles)
+
+        cases_diagonales = 1
+
+
+
+class Piece:
     def __init__(self, couleur, deplacementPossibles, caseActuelle, tortue):
         self.couleur = couleur                              # str -> camp de la pièce
         self.deplacementsPossibles = deplacementPossibles   # tuple -> les déplacement possibles

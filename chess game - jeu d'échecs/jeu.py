@@ -1,6 +1,6 @@
 import turtle
-import pieces
 import plateau
+import pieces
 
 
 plateau.faire_le_plateau()
