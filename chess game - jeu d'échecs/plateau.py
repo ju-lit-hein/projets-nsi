@@ -4,7 +4,7 @@ from pieces import Pion, deplacerUnePiece
 
 
 '''CONSTANTES'''
-COTE_CASES = 90
+COTE_CASES = 85
 DARK_COLOR = '#5c3427'
 HEIGHT = 1.0 # taille de l'écran
 LIGHT_COLOR = 'beige'
@@ -79,15 +79,17 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
             - Numéro (0)
             - Coordonnees ( (-365.00,315.00) -> centre de la case)
             - Occupee (True ou False)
+            - OccupeeParQuellePiece (class -> nom de la pièce 0 si vide)
             - OccuppeParQuelCamp ('blanc' ou 'noir' 0 si vide)
         Actions : 
             - ChangerLeStatutDeLaCase()
     '''
-    def __init__(self, case, numero, coordonnees, occupee, occupeeParQuelCamp):
+    def __init__(self, case, numero, coordonnees, occupee, occupeeParQuellePiece, occupeeParQuelCamp):
         self.case = case
         self.numero = numero
         self.coordonnees = coordonnees
         self.occupee = occupee
+        self.occupeeparQuellePiece = occupeeParQuellePiece
         self.occupeeParQuelCamp = occupeeParQuelCamp
 
     def ChangerLeStatutDeLaCase(self):
@@ -112,7 +114,7 @@ def faire_le_plateau():
             position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
             #print(cases[count], position)
-            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
             
@@ -124,17 +126,17 @@ def faire_le_plateau():
             position = tuple(position)
             position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
-            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
 
         remplissage = 1 - remplissage
 
-    case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False) # ca fait pas h1 donc voila
+    case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0) # ca fait pas h1 donc voila
     wn.update()
 
     import creation_des_pieces
-
+    
     for i in creation_des_pieces.pions_positions:
         j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()

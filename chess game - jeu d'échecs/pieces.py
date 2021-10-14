@@ -1,7 +1,7 @@
 import turtle
 
 from numpy import e
-import plateau
+#import plateau
 #import creation_des_pieces
 
 INFORMATIONS = 'le pavé en dessous'
@@ -58,10 +58,21 @@ CASES = [
     'a2','b2','c2','d2','e2','f2','g2','h2',
     'a1','b1','c1','d1','e1','f1','g1','h1']
 
+def MontrerDeplacementsPossibles(self, DDP):
+    '''DDP -> dico {nom de la case à marquer : True -> Piece à manger ; False -> deplacement simple'''
+    for i in DDP:
+        coordonnees = eval("case_" + i + ".coordonnees")
+        if DDP[i]:
+            carree(coordonnees[0] - 45, coordonnees[1] -45 , 90, marquage, '#b32727', 0)
+        else:
+            carree(coordonnees[0] - 45, coordonnees[1] - 45, 10, marquage, '#2f43ba', 0)
+        
+
+
 def deplacerUnePiece(piece, case):
-    '''Deplace la pièce voulue vers une case ou vers ses coordonnes (même choses mais c'est utile d'avoir ces deux choix
-    piece -> class nom de la pièce
-    xy -> tuple coordonnees
+    '''Deplace la pièce voulue vers une case
+    piece -> class nom de la pièce qui est déplacée
+    case -> str nom de la case (a5)
     '''
     caseActuelle = CASES[piece.caseActuelle]
     exec("case_" + caseActuelle + ".occupee = False")
@@ -71,10 +82,21 @@ def deplacerUnePiece(piece, case):
     exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
     
 
-
+def mangerUnePiece(piece, case, piece_mangee):
+    '''Deplace la pièce voulue vers une case et mange la pièce sur la case
+    piece -> class nom de la pièce qui est déplacée
+    case -> str nom de la case (f4)
+    piece_mangee -> class nom de la piece mangee
+    '''
+    caseActuelle = CASES[piece.caseActuelle]
+    exec("case_" + caseActuelle + ".occupee = False")
+    coordonnees = eval("case_" + case + ".cordonnees")
+    piece.goto(coordonnees)
+    exec("case_" + case + ".occupee = True")
+    exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
 
 '''Définition'''
-pieces = ('cavalier','fou','pion','reine','roi','tour','vide')
+pieces = ('cavalier','fou','pion','reine','roi','tour')
 valeur_pieces = (3,3,1,9,0,5,0)
 mouvement_cavalier = (-12,-21,-19,-8,12,21,19,8)
 mouvement_fou = (-11,-9,11,9)
@@ -94,32 +116,43 @@ class Pion:
             - CaseActuelle
             - Tortue
         Actions : 
-            - MouvementPossibles()
-            - MontrerDéplacementPossibles()
-            - MangerUnePiece()
+            - MouvementsPossibles()
     '''
     def __init__(self, couleur, deplacementsPossibles, caseActuelle, tortue, dejaBouge = False):
         self.couleur = couleur                              # str -> camp de la pièce
-        self.deplacementsPossibles = deplacementsPossibles  # tuple -> déplacements possibles de la pièce
+        self.deplacementsPossibles = (-16,-8,-9,-7)         # tuple -> déplacements possibles de la pièce
         self.caseActuelle = caseActuelle                    # int -> numéro de la case sur laquelle le pion est
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
 
-    def MouvementsPossibles(self):
+
+    def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de tuple'''
-        liste_deplacements_possibles = []
+        dico_deplacements_possibles = {}
         point_de_depart = self.caseActuelle
-        if len(self.deplacementsPossibles) == 4:
-            case_tout_droit = (self.deplacementsPossibles[0], self.deplacementsPossibles[1])
+        
+        if self.dejaBouge == False:                                             # si le pion n'a pas encore bougé et peut donc avancer de deux cases d'un coup
+            case_0 = CASES[self.caseActuelle + self.deplacementsPossibles[0]]   # case où le pion à le droit d'aller
+            case_1 = CASES[self.caseActuelle + self.deplacementsPossibles[1]]   # case où le pion à le droit d'aller
+
+            if not(eval("case_" + case_0 + ".occupee")):                        # si la case est libre
+                dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
+
+            if not(eval("case_" + case_1 + ".occupee")):                        # si la case est libre
+                dico_deplacements_possibles[case_1] = False                     # case où le pion peut aller
+
         else:
-            case_tout_droit = self.deplacementsPossibles[0]
-        self.deplacementsPossibles = list(self.deplacementsPossibles)
-        self.deplacementsPossibles.remove(-16)
-        self.deplacementsPossibles = tuple(self.deplacementsPossibles)
+            case_0 = CASES[self.caseActuelle + self.deplacementsPossibles[1]]   # case où le pion à le droit d'aller
+            if not(eval("case_" + case_0 + ".occupee")):                        # si la case est libre
+                dico_deplacements_possibles[case_0]                             # case où le pion peut aller
+            
+        for i in self.deplacementsPossibles[2:]:
+            case = CASES[self.caseActuelle + i]
+            if eval("case_" + case + ".occupee"):
+                dico_deplacements_possibles[case]
+        return dico_deplacements_possibles
 
-        cases_diagonales = 1
-
-
+    
 
 class Piece:
     def __init__(self, couleur, deplacementPossibles, caseActuelle, tortue):
@@ -146,19 +179,6 @@ class Piece:
                 # pour la boucle while ajouter les conditions si la cases est occupée ou pas et si elle l'est, si c'est une pièce de notre camp donc non-mangeable ou si c'est une pièce du camp adverse et donc mangeable
         self.deplacements_possibles = deplacements_possibles
     
-    def MontrerDeplacementsPossibles(self):
-        '''Montre au joueur toutes les cases où sa pièce peut se déplacer après avoir effacer les cases déjà marquées (pour une autre pièces par exemple'''
-        marquage.clear()
-        casesAMarquer = []
-        for i in self.deplacements_possibles:
-            exec("casesAMarquer.append(case_" + CASES[i] +".coordonnees)")
-            pass
-        coordonneesAMarquer = []
-        for cases in casesAMarquer:
-            case = (cases[0] + COTE_CASES * 0.45, cases[1] + COTE_CASES * 0.45)
-            coordonneesAMarquer.append(case)
-        for coord in coordonneesAMarquer:
-            carree(coord[0], coord[1], 10, marquage, 'cyan', 0)
 
 
 
