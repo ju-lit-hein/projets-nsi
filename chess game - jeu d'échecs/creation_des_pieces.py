@@ -77,8 +77,8 @@ roi_noir = turtle.Turtle(shape=chemin_roi_noir)
 
 
 # pions et leur position de départ
-pions_positions = {pion_blanc_1:'a2', pion_blanc_2:'b2', pion_blanc_3:'c2', pion_blanc_4:'d2', pion_blanc_5:'e2', pion_blanc_6:'f2', pion_blanc_7:'g2', pion_blanc_8:'h2', fou_blanc_1:'c1', fou_blanc_2:'f1', cavalier_blanc_1:'b1', cavalier_blanc_2:'g1', tour_blanc_1:'a1', tour_blanc_2:'h1', reine_blanc:'d1', roi_blanc:'e1', pion_noir_1:'g8', pion_noir_2:'g7', pion_noir_3:'g6', pion_noir_4:'g5', pion_noir_5:'g4', pion_noir_6:'g3', pion_noir_7:'g2', pion_noir_8:'g1', fou_noir_1:'f8', fou_noir_2:'c8', cavalier_noir_1:'g8', cavalier_noir_2:'b8', tour_noir_1:'h8', tour_noir_2:'a8', reine_noir:'d8', roi_noir:'e8'}
-
-pion_blanc_1.penup()
-pion_blanc_1.showturtle()
-pion_blanc_1.goto((0,0))
+pions_positions = {pion_blanc_1:'a2', pion_blanc_2:'b2', pion_blanc_3:'c2', pion_blanc_4:'d2', pion_blanc_5:'e2', pion_blanc_6:'f2', pion_blanc_7:'g2', 
+                    pion_blanc_8:'h2', fou_blanc_1:'c1', fou_blanc_2:'f1', cavalier_blanc_1:'b1', cavalier_blanc_2:'g1', tour_blanc_1:'a1', 
+                    tour_blanc_2:'h1', reine_blanc:'d1', roi_blanc:'e1', pion_noir_1:'h7', pion_noir_2:'g7', pion_noir_3:'f7', pion_noir_4:'e7', 
+                    pion_noir_5:'d7', pion_noir_6:'c7', pion_noir_7:'b7', pion_noir_8:'a7', fou_noir_1:'f8', fou_noir_2:'c8', cavalier_noir_1:'g8', 
+                    cavalier_noir_2:'b8', tour_noir_1:'h8', tour_noir_2:'a8', reine_noir:'d8', roi_noir:'e8'}

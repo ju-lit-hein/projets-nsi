@@ -12,7 +12,7 @@ X_DEPART = -410
 X_FIN = X_DEPART + 7 * COTE_CASES + 1 
 Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
-# c'est mieux de ne pas changer les constante
+# c'est mieux de ne pas changer les constante (bah en fait ca marche pas si on change)
 
 #Création du "papier" et du "crayon"
 wn = turtle.Screen()
@@ -106,9 +106,9 @@ def faire_le_plateau():
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
             position = tortue.pos()
             position = tuple(position)
-            position = (position[0] + 45, position[1] + 45)
+            position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
-            print(position, type(position))
+            #print(cases[count], position)
             exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
@@ -119,23 +119,26 @@ def faire_le_plateau():
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
             position = tortue.pos()
             position = tuple(position)
-            position = (position[0] + 45, position[1] + 45)
-            #position = turtle.Vec2D(position[0], position[1])
+            position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
+            position = turtle.Vec2D(position[0], position[1])
+            print(cases[count], position)
             exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
 
         remplissage = 1 - remplissage
     case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False) # ca fait pas h1 donc voila
-
     wn.update()
+
     import creation_des_pieces
-    for i in creation_des_pieces.pions_positions:
-        j = creation_des_pieces.pions_positions[i]
+    for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
+        j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()
-        #print(exec("case_" + j + ".coordonnees"))
-        #i.goto(exec("case_" + j + ".coordonnees"))
-        #print(j)
+        print(j)
+        i.goto(eval("case_" + j + ".coordonnees"))
+
+
+    
     wn.update()
     wn.mainloop()
 

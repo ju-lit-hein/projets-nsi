@@ -128,3 +128,8 @@ class Piece:
 
 '''Code des pions : type_C_numéro   (C =Couleur) '''
 
+'''faire une class par type
+Class cavalier:
+Class reine
+...
+'''
