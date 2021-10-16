@@ -122,12 +122,12 @@ class Pion:
         Actions : 
             - MouvementsPossibles()
     '''
-    def __init__(self, couleur, deplacementsPossibles, caseActuelle, tortue, dejaBouge = False):
-        self.couleur = couleur                              # str -> camp de la pièce
-        self.deplacementsPossibles = (-16,-8,-9,-7)         # tuple -> déplacements possibles de la pièce
+    def __init__(self, couleur, caseActuelle, tortue, dejaBouge = False):
         self.caseActuelle = caseActuelle                    # int -> numéro de la case sur laquelle le pion est
-        self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
+        self.couleur = couleur                              # str -> camp de la pièce
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
+        self.deplacementsPossibles = (-16,-8,-9,-7)         # tuple -> déplacements possibles de la pièce
+        self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
 
 
     def MouvementsPossibles(self) -> dict:
