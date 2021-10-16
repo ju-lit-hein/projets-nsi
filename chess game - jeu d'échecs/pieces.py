@@ -68,20 +68,6 @@ def MontrerDeplacementsPossibles(self, DDP):
             carree(coordonnees[0] - 45, coordonnees[1] - 45, 10, marquage, '#2f43ba', 0)
         
 
-
-def deplacerUnePiece(piece, case):
-    '''Deplace la pièce voulue vers une case
-    piece -> class nom de la pièce qui est déplacée
-    case -> str nom de la case (a5)
-    '''
-    caseActuelle = CASES[piece.caseActuelle]
-    exec("case_" + caseActuelle + ".occupee = False")
-    coordonnees = eval("case_" + case + ".cordonnees")
-    piece.goto(coordonnees)
-    exec("case_" + case + ".occupee = True")
-    exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
-    
-
 def mangerUnePiece(piece, case, piece_mangee):
     '''Deplace la pièce voulue vers une case et mange la pièce sur la case
     piece -> class nom de la pièce qui est déplacée
@@ -94,6 +80,24 @@ def mangerUnePiece(piece, case, piece_mangee):
     piece.goto(coordonnees)
     exec("case_" + case + ".occupee = True")
     exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
+
+def deplacerUnePiece(case_depart, case_arrivee):
+    '''Deplace la pièce voulue vers une case
+    case_depart -> str case de départ de la pièce qui va être déplacée (b4)
+    case_arrivee -> str nom de la case d'arrivée de la pièce qui va être déplacée(a5)
+    '''
+    piece = eval("case_" + case_depart + ".OccupeeParQuellePiece")                                          # class -> piece qui va être déplacée
+    if eval("case_" + case_arrivee + ".occupee"):                                                           # si la case d'arrivée est ocuppée
+        mangerUnePiece()
+
+    coordonnees = eval("case_" + case_arrivee + ".cordonnees")
+    piece.goto(coordonnees)
+    exec("case_" + case_depart + ".occupee = False")
+    exec("case_" + case_arrivee + ".occupee = True")
+    exec("case_" + case_arrivee + ".occupeeParQuellePiece = " )
+    exec("case_" + case_arrivee + ".occupeeParQuelCamp = " + piece + ".couleur")
+    
+
 
 '''Définition'''
 pieces = ('cavalier','fou','pion','reine','roi','tour')

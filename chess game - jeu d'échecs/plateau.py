@@ -89,7 +89,7 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
         self.numero = numero
         self.coordonnees = coordonnees
         self.occupee = occupee
-        self.occupeeparQuellePiece = occupeeParQuellePiece
+        self.occupeeParQuellePiece = occupeeParQuellePiece
         self.occupeeParQuelCamp = occupeeParQuelCamp
 
     def ChangerLeStatutDeLaCase(self):
