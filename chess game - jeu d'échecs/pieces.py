@@ -60,13 +60,14 @@ CASES = [
 
 def MontrerDeplacementsPossibles(self, DDP):
     '''DDP -> dico {nom de la case à marquer : True -> Piece à manger ; False -> deplacement simple'''
-    for i in DDP:
-        coordonnees = eval("case_" + i + ".coordonnees")
-        if DDP[i]:
-            carree(coordonnees[0] - 45, coordonnees[1] -45 , 90, marquage, '#b32727', 0)
-        else:
-            carree(coordonnees[0] - 45, coordonnees[1] - 45, 10, marquage, '#2f43ba', 0)
-        
+    if len(DDP) < 0:
+        for i in DDP:
+            coordonnees = eval("case_" + i + ".coordonnees")
+            if DDP[i]:
+                carree(coordonnees[0] - 45, coordonnees[1] -45 , 90, marquage, '#b32727', 0)
+            else:
+                carree(coordonnees[0] - 45, coordonnees[1] - 45, 10, marquage, '#2f43ba', 0)        
+
 
 def mangerUnePiece(piece, case, piece_mangee):
     '''Deplace la pièce voulue vers une case et mange la pièce sur la case
@@ -80,15 +81,18 @@ def mangerUnePiece(piece, case, piece_mangee):
     piece.goto(coordonnees)
     exec("case_" + case + ".occupee = True")
     exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
+    piece_mangee.hideturtle()
+    piece_mangee.goto(-750,0)
+
 
 def deplacerUnePiece(case_depart, case_arrivee):
     '''Deplace la pièce voulue vers une case
-    case_depart -> str case de départ de la pièce qui va être déplacée (b4)
-    case_arrivee -> str nom de la case d'arrivée de la pièce qui va être déplacée(a5)
+    case_depart -> str case de départ de la pièce qui va être déplacée ("b4")
+    case_arrivee -> str nom de la case d'arrivée de la pièce qui va être déplacée("a5")
     '''
     piece = eval("case_" + case_depart + ".OccupeeParQuellePiece")                                          # class -> piece qui va être déplacée
     if eval("case_" + case_arrivee + ".occupee"):                                                           # si la case d'arrivée est ocuppée
-        mangerUnePiece()
+        mangerUnePiece(piece, case_arrivee, eval("case_" + case_arrivee + ".occupeeParQuellePiece"))
 
     coordonnees = eval("case_" + case_arrivee + ".cordonnees")
     piece.goto(coordonnees)
@@ -104,7 +108,6 @@ pieces = ('cavalier','fou','pion','reine','roi','tour')
 valeur_pieces = (3,3,1,9,0,5,0)
 mouvement_cavalier = (-12,-21,-19,-8,12,21,19,8)
 mouvement_fou = (-11,-9,11,9)
-mouvement_pion = (-16,-8,-9,-7)
 mouvement_tour = (-10,10,-1,1)
 mouvement_reine = (-11,-10,-9,-1,11,10,9,1)
 mouvement_roi = (-11,-10,-9,-1,11,10,9,1)
@@ -115,10 +118,11 @@ class Pion:
     '''
     class Piece
         Données :
-            - Couleur
-            - DéplacementPossibles
-            - CaseActuelle
-            - Tortue
+            - CaseActuelle -> int numéro de la case sur laquelle est le pion
+            - Couleur -> str 'noir' ou 'blanc'
+            - dejaBouge -> bool si le pion a déjà bougé (True) ou pas (False)
+            - DéplacementPossibles -> tuple contenant des int
+            - Tortue -> turtle.Turtle Object -> tortue qui représente le pion
         Actions : 
             - MouvementsPossibles()
     '''
@@ -131,7 +135,7 @@ class Pion:
 
 
     def MouvementsPossibles(self) -> dict:
-        '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de tuple'''
+        '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de dictionnaire'''
         dico_deplacements_possibles = {}
         point_de_depart = self.caseActuelle
         
@@ -148,20 +152,21 @@ class Pion:
         else:
             case_0 = CASES[self.caseActuelle + self.deplacementsPossibles[1]]   # case où le pion à le droit d'aller
             if not(eval("case_" + case_0 + ".occupee")):                        # si la case est libre
-                dico_deplacements_possibles[case_0]                             # case où le pion peut aller
+                dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
             
         for i in self.deplacementsPossibles[2:]:
-            case = CASES[self.caseActuelle + i]
-            if eval("case_" + case + ".occupee"):
-                dico_deplacements_possibles[case]
+            case = CASES[self.caseActuelle + i]                                 # cases où le pion à le droit d'aller pour manger une autre pièce
+            if eval("case_" + case + ".occupee"):                               # si il y a une pièce a manger
+                if eval("case_" + case + ".occupeeParQuelCamp") != self.couleur:
+                    dico_deplacements_possibles[case] = True
         return dico_deplacements_possibles
 
     
 
 class Piece:
-    def __init__(self, couleur, deplacementPossibles, caseActuelle, tortue):
+    def __init__(self, couleur, caseActuelle, tortue):
         self.couleur = couleur                              # str -> camp de la pièce
-        self.deplacementsPossibles = deplacementPossibles   # tuple -> les déplacement possibles
+        self.deplacementsPossibles = ()   # tuple -> les déplacement possibles
         self.CaseActuelle = caseActuelle                    # int -> le numéro de la case
         self.tortue = tortue                                # turtle.Turtle Object -> la tortue qui à l'image du pion
 
@@ -184,12 +189,3 @@ class Piece:
         self.deplacements_possibles = deplacements_possibles
     
 
-
-
-'''Code des pions : type_C_numéro   (C =Couleur) '''
-
-'''faire une class par type
-Class cavalier:
-Class reine
-...
-'''
