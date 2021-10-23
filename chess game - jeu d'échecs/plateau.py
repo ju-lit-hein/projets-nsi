@@ -126,7 +126,7 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
         else:
             self.occupee = True
 
-
+ 
 
 def faire_le_plateau():
     remplissage = 1
