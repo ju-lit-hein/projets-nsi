@@ -4,7 +4,7 @@ from pieces import Pion, deplacerUnePiece
 
 
 '''CONSTANTES'''
-COTE_CASES = 85
+COTE_CASES = 90
 DARK_COLOR = '#5c3427'
 HEIGHT = 1.0 # taille de l'écran
 LIGHT_COLOR = 'beige'
@@ -70,7 +70,7 @@ cases = [
     'a1','b1','c1','d1','e1','f1','g1','h1'
 ]
 
-plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques =  (
+plateau_120 =  (
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, 0, 1, 2, 3, 4, 5, 6, 7, -1,
@@ -84,9 +84,8 @@ plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques =  (
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
  )
- # oui le nom de cette variable est très grand
 
-plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques_bis = (
+plateau_64 = (
         21, 22, 23, 24, 25, 26, 27, 28,
         31, 32, 33, 34, 35, 36, 37, 38,
         41, 42, 43, 44, 45, 46, 47, 48,
@@ -95,8 +94,7 @@ plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques_bis = (
         71, 72, 73, 74, 75, 76, 77, 78,
         81, 82, 83, 84, 85, 86, 87, 88,
         91, 92, 93, 94, 95, 96, 97, 98
- )
- # oui le nom de cette variable est encore plus grand
+)
 
 
 class Plateau:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
@@ -164,24 +162,25 @@ def faire_le_plateau():
     wn.update()
 
     import creation_des_pieces
-    
-    for i in creation_des_pieces.pions_positions:
-        j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
-        i.penup()
-        j = eval("case_" + j + ".coordonnees")
-        deplacerUnePiece(i,j)
-
-    # for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
+    # for i in creation_des_pieces.pions_positions:
     #     j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
     #     i.penup()
-    #     i.goto(eval("case_" + j + ".coordonnees"))
+    #     j = eval("case_" + j + ".coordonnees")
+    #     deplacerUnePiece(i,j)
 
-    exec("creation_des_pieces.pion_blanc_8.goto(265.00, -225.00)")
-    exec("creation_des_pieces.cavalier_blanc_1.goto(-275.00, -315.00)")
-    exec("creation_des_pieces.cavalier_blanc_2.goto(195.00, -315.00)")
-    exec("creation_des_pieces.reine_blanc.goto(-95.00, -315.00)")
-    exec("creation_des_pieces.fou_blanc_2.goto(85.00, -315.00)")
-    exec("creation_des_pieces.cavalier_blanc_2.goto(case_g1.coordonnees)")   
+    for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
+        j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
+        i.penup()
+        i.goto(eval("case_" + j + ".coordonnees"))
+        exec("case_j.Occupee = True")
+
+    exec("creation_des_pieces.pion_blanc_8_tortue.goto(265.00, -225.00)")
+    exec("creation_des_pieces.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
+    exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(195.00, -315.00)")
+    exec("creation_des_pieces.reine_blanc_tortue.goto(-95.00, -315.00)")
+    exec("creation_des_pieces.fou_blanc_2_tortue.goto(85.00, -315.00)")
+    exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(case_g1.coordonnees)")  
+    
     # Les 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
     wn.update()
     wn.mainloop()

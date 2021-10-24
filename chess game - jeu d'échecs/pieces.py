@@ -1,5 +1,4 @@
 import turtle
-from plateau import plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques, plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques_bis
 #import creation_des_pieces
 
 INFORMATIONS = 'le pavé en dessous'
@@ -15,8 +14,30 @@ S'il est Vrai les mouvement de la pièce peuvent se répéter :
     - mais aussi en 25 - 11 = 14 et ainsi de suite et pour toutes les directions
 '''
 COTE_CASES = 90
-PL_120 = plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques
-PL_64 = plateau_pour_pas_faire_de_sortie_de_plateau_ou_de_mouvements_illogiques_bis
+PL_120 = (
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, 0, 1, 2, 3, 4, 5, 6, 7, -1,
+        -1, 8, 9, 10, 11, 12, 13, 14, 15, -1,
+        -1, 16, 17, 18, 19, 20, 21, 22, 23, -1,
+        -1, 24, 25, 26, 27, 28, 29, 30, 31, -1,
+        -1, 32, 33, 34, 35, 36, 37, 38, 39, -1,
+        -1, 40, 41, 42, 43, 44, 45, 46, 47, -1,
+        -1, 48, 49, 50, 51, 52, 53, 54, 55, -1,
+        -1, 56, 57, 58, 59, 60, 61, 62, 63, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+)
+PL_64 = (
+        21, 22, 23, 24, 25, 26, 27, 28,
+        31, 32, 33, 34, 35, 36, 37, 38,
+        41, 42, 43, 44, 45, 46, 47, 48,
+        51, 52, 53, 54, 55, 56, 57, 58,
+        61, 62, 63, 64, 65, 66, 67, 68,
+        71, 72, 73, 74, 75, 76, 77, 78,
+        81, 82, 83, 84, 85, 86, 87, 88,
+        91, 92, 93, 94, 95, 96, 97, 98
+)
 
 marquage = turtle.Turtle()
 marquage.pencolor('cyan')
@@ -128,7 +149,7 @@ class Pion:
         Actions : 
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, couleur, caseActuelle, sens, tortue, dejaBouge = False):
+    def __init__(self, couleur, caseActuelle, sens, tortue, dejaBouge = False) -> None:
         self.caseActuelle = caseActuelle                    # int -> numéro de la case sur laquelle le pion est
         self.couleur = couleur                              # str -> camp de la pièce
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
@@ -180,7 +201,7 @@ class Cavalier:
         Actions :            
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, caseActuelle, couleur, tortue):
+    def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
         self.deplacementsPossibles = (-12, -21, -19, -8, 12, 21, 19, 8)
@@ -208,7 +229,7 @@ class Fou:
         Actions :    
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, caseActuelle, couleur, tortue):
+    def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
         self.deplacementsPossibles = (-9,-7, 7, 9)
@@ -236,7 +257,7 @@ class Tour:
         Actions :    
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, caseActuelle, couleur, tortue):
+    def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
         self.deplacementsPossibles = (-8, -1, 1, 8)
@@ -263,7 +284,7 @@ class Reine:
         Actions :    
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, caseActuelle, couleur, tortue):
+    def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
         self.deplacementsPossibles = (-9, -8, -7, -1, 1, 7, 8, 9)
@@ -277,8 +298,31 @@ class Reine:
                     dico_deplacements_possibles[CASES[self.caseActuelle + i]] = eval("case_" + CASES[self.caseActuelle] + ".occupee")   # la case est ajoutée au $dico_deplacements_possibles avec pour valeur si la case est occupée ou non (si la case est libre -> rien à manger -> False | si la case est occupée c'est forcément une pièce du camp adverse -> il faut manger la pièce -> True)
         return dico_deplacements_possibles
 
+class Roi:
+    '''class Roi     
 
+        Données :     
+            - CaseActuelle -> int numéro de la case sur laquelle est le pion
+            - Couleur -> str 'noir' ou 'blanc'
+            - DéplacementPossibles -> tuple contenant des int
+            - Tortue -> turtle.Turtle Object -> tortue qui représente le pion    
 
+        Actions :    
+            - MouvementsPossibles() -> dict
+    '''
+    def __init__(self, caseActuelle, couleur, tortue, dejaBouge, dejaEchec) -> None:
+        self.caseActuelle = caseActuelle
+        self.couleur = couleur
+        self.dejaBouge = dejaBouge
+        self.dejaEchec = dejaEchec
+        self.deplacementspossibles = (-9, -8, -7, -1, 1, 7, 8, 9)
+        self.tortue = tortue
+    
+    def MouvementsPossibles(self) -> dict:
+        for i in self.deplacementspossibles:
+            if eval("case_" + CASES[self.caseActuelle] + ".occupeeParQuelCamp") != self.couleur:
+                
+        
 
 class Piece:
     def __init__(self, couleur, caseActuelle, tortue):

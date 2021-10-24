@@ -1,6 +1,7 @@
 from os import path
 import turtle
 from plateau import wn
+from pieces import Pion, Tour, Fou, Reine, Cavalier
 
 
 currentDir = path.abspath(path.curdir) #get the python file location
