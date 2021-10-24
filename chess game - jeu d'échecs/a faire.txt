@@ -1,6 +1,5 @@
-prendre les noms des tortue de chaque pion pour leur nom de classe et donner un autre nom (pas formcément logique) pour les tortue
-
 faire une fonction déplacerUnePiece() générale et l'importer dans plateau pour déplacer les pièces sur les bonnes cases au début de la partie et définir la case en occupee et par quel camp
+
 faire une fonction mangerUnePiece() en copiant la fonction deplacerUnePiece() mais en enlevant la pièce mangée
 
 faire une fonction dans plateau.py -> etatPlateau() qui retourne tous les self de chaque case

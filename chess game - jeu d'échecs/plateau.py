@@ -94,7 +94,7 @@ plateau_64 = (
         91, 92, 93, 94, 95, 96, 97, 98
 )
 
-
+        
 class Plateau:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
     '''class Plateau:   
 
@@ -124,6 +124,11 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
             self.occupee = True
 
  
+def etat_partie() -> dict:
+        etat_de_la_partie = {}
+        for i in cases:
+            etat_de_la_partie["case " + i] = [eval("case_" + i + ".occupee"), eval("case_" + i + ".occupeeParQuellePiece"), eval("case_" + i + ".occupeeParQuelCamp")]
+        return etat_de_la_partie
 
 def faire_le_plateau():
     remplissage = 1
@@ -182,6 +187,7 @@ def faire_le_plateau():
         exec("creation_des_pieces.reine_noir_tortue.goto(-5.00, -315.00)")
         exec("creation_des_pieces.roi_noir_tortue.goto(-95.00, -315.00)")
         exec("creation_des_pieces.fou_noir_2_tortue.goto(85.00, -315.00)")
+    # Les 5 et 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
 
     for i in creation_des_pieces.pions_positions_str:
         piece = i[:-7]
@@ -189,11 +195,8 @@ def faire_le_plateau():
         exec("case_" + case + ".ChangerLeStatutDeLaCase()")
         exec("case_" + case + ".occupeeParQuelCamp = creation_des_pieces." + piece + ".couleur")
         exec("case_" + case + ".occupeeParQuellePiece = creation_des_pieces." + piece)
-        print("case_" + case)
-        print(eval("case_" + case + ".occupee"))
-        print(eval("case_" + case + ".occupeeParQuelCamp"))
-        print(eval("case_" + case + ".occupeeParQuellePiece"))
-    # Les 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
+    etat = etat_partie()
+    print(etat)
     wn.update()
     wn.mainloop()
 
