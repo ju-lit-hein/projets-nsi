@@ -143,17 +143,17 @@ class Pion:
             - Couleur -> str 'noir' ou 'blanc'
             - dejaBouge -> bool si le pion a déjà bougé (True) ou pas (False)
             - DéplacementPossibles -> tuple contenant des int
-            - Sens -> int 1 si le pion avance vers la haut du plateau et 0 si il avance vers le bas
+            - Sens -> bool True si le pion avance vers la haut du plateau et False si il avance vers le bas
             - Tortue -> turtle.Turtle Object -> tortue qui représente le pion   
 
         Actions : 
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, couleur, caseActuelle, sens, tortue, dejaBouge = False) -> None:
+    def __init__(self, caseActuelle, couleur, sens, tortue, dejaBouge = False) -> None:
         self.caseActuelle = caseActuelle                    # int -> numéro de la case sur laquelle le pion est
         self.couleur = couleur                              # str -> camp de la pièce
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
-        self.sens = sens
+        self.sens = sens                                    # bool -> voir définition de a class
         if self.sens == 1:                                  # si le pion est orinté vers le haut
             self.deplacementsPossibles = (-16,-8,-9,-7)     # tuple -> déplacements possibles de la pièce
         else:                                               # si le pion est orienté vers le bas
@@ -294,7 +294,7 @@ class Reine:
         dico_deplacements_possibles = {}
         for i in self.deplacementsPossibles:
             while PL_120[PL_64[self.caseActuelle + i]] != -1:                                                                           # tant que la pièce reste dans le plateau
-                if eval("case_" + CASES[self.caseActuelle] + ".occupeeParQuelCamp") != self.couleur:                                    # si la case, n'est pas occupée par un pièce du même camp
+                if eval("case_" + CASES[self.caseActuelle + i] + ".occupeeParQuelCamp") != self.couleur:                                    # si la case, n'est pas occupée par un pièce du même camp
                     dico_deplacements_possibles[CASES[self.caseActuelle + i]] = eval("case_" + CASES[self.caseActuelle] + ".occupee")   # la case est ajoutée au $dico_deplacements_possibles avec pour valeur si la case est occupée ou non (si la case est libre -> rien à manger -> False | si la case est occupée c'est forcément une pièce du camp adverse -> il faut manger la pièce -> True)
         return dico_deplacements_possibles
 
@@ -310,7 +310,7 @@ class Roi:
         Actions :    
             - MouvementsPossibles() -> dict
     '''
-    def __init__(self, caseActuelle, couleur, tortue, dejaBouge, dejaEchec) -> None:
+    def __init__(self, caseActuelle, couleur, tortue, dejaBouge = False, dejaEchec = False) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
         self.dejaBouge = dejaBouge
@@ -319,34 +319,8 @@ class Roi:
         self.tortue = tortue
     
     def MouvementsPossibles(self) -> dict:
+        dico_deplacements_possibles = {}
         for i in self.deplacementspossibles:
-            if eval("case_" + CASES[self.caseActuelle] + ".occupeeParQuelCamp") != self.couleur:
-                
-        
-
-class Piece:
-    def __init__(self, couleur, caseActuelle, tortue):
-        self.couleur = couleur                              # str -> camp de la pièce
-        self.deplacementsPossibles = ()                     # tuple -> les déplacement possibles
-        self.CaseActuelle = caseActuelle                    # int -> le numéro de la case
-        self.tortue = tortue                                # turtle.Turtle Object -> la tortue qui à l'image du pion
-
-
-    def MouvementsPossibles(self):
-        '''Retourne le numéro de toutes les cases où la pièce peut se déplacer sous forme de liste.'''
-        deplacements_possibles = []                                                     # initialisation de la liste des déplacements possibles
-        depart = self.CaseActuelle                                                      # depart est la variable "point de départ" pour calculer les déplacements possibles
-        if self.deplacementsPossibles[-1] == False:                                     # si la pièce ne peut se déplcer que d'une case à la fois
-            for i in range(len(self.deplacementsPossibles) - 1):                        # pour tout les mouvements dans le tuple self.dP, sauf le dernier qui est un booléen
-                deplacements_possibles.append(depart + self.deplacementsPossibles[i])   # ajoute à la liste des déplacements possibles le numéro des cases où la pièce peut aller
-        else:                                                                           # si la pièce peut se déplacer de plusieurs cases à la fois
-            for i in range(len(self.deplacementsPossibles) - 1):                        # pout tout les mouvements dans le tuple self.dP, sauf le dernier qui est un booléen
-                etape = depart                                                          # initialisation de la variable etape qui prend la valeur de $depart pour pouvoir être modifiée sans perdre la valeur $depart
-                while 0 <= etape + self.deplacementsPossibles[i] <= 63:                 # tant que etape + le mouvement en cours de calcul est positif et inférieur à 64
-                    deplacements_possibles.append(etape + self.deplacementsPossibles[i])# ajouter à la liste des déplacements possibles le numéro des cases où la pièce peut aller
-                    etape += self.deplacementsPossibles[i]                              # etape prend la valeur de la case qu'on vient d'ajouter pour calculer la case suivante
-
-                # pour la boucle while ajouter les conditions si la cases est occupée ou pas et si elle l'est, si c'est une pièce de notre camp donc non-mangeable ou si c'est une pièce du camp adverse et donc mangeable
-        self.deplacements_possibles = deplacements_possibles
-    
-
+            if eval("case_" + CASES[self.caseActuelle + i] + ".occupeeParQuelCamp") != self.couleur:                                    # si la case, n'est pas occupée par un pièce du même camp
+                dico_deplacements_possibles[CASES[self.caseActuelle + i]] = eval("case_" + CASES[self.caseActuelle] + ".occupee")   # la case est ajoutée au $dico_deplacements_possibles avec pour valeur si la case est occupée ou non (si la case est libre -> rien à manger -> False | si la case est occupée c'est forcément une pièce du camp adverse -> il faut manger la pièce -> True)
+        return dico_deplacements_possibles

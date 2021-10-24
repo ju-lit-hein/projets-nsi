@@ -1,6 +1,4 @@
 import turtle
-import numpy as np
-from pieces import Pion, deplacerUnePiece
 
 
 '''CONSTANTES'''
@@ -162,25 +160,21 @@ def faire_le_plateau():
     wn.update()
 
     import creation_des_pieces
-    # for i in creation_des_pieces.pions_positions:
-    #     j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
-    #     i.penup()
-    #     j = eval("case_" + j + ".coordonnees")
-    #     deplacerUnePiece(i,j)
 
     for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
         j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()
         i.goto(eval("case_" + j + ".coordonnees"))
-        exec("case_j.Occupee = True")
-
+        exec("case_" + j + ".ChangerLeStatutDeLaCase()")
     exec("creation_des_pieces.pion_blanc_8_tortue.goto(265.00, -225.00)")
     exec("creation_des_pieces.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
-    exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(195.00, -315.00)")
+    exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
     exec("creation_des_pieces.reine_blanc_tortue.goto(-95.00, -315.00)")
     exec("creation_des_pieces.fou_blanc_2_tortue.goto(85.00, -315.00)")
-    exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(case_g1.coordonnees)")  
     
+    for i in creation_des_pieces.pions_positions_str:
+        piece = i[:-7]
+        
     # Les 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
     wn.update()
     wn.mainloop()
