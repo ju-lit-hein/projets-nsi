@@ -85,9 +85,9 @@ def MontrerDeplacementsPossibles(self, DDP):
         for i in DDP:
             coordonnees = eval("case_" + i + ".coordonnees")
             if DDP[i]:                                                                              # si la clé (la case) a pour valeur True
-                carree(coordonnees[0] - 45, coordonnees[1] -45 , 90, marquage, '#b32727', 0)
+                carree(coordonnees[0] - 5, coordonnees[1] - 5 , 10, marquage, '#b32727', 0)
             else:
-                carree(coordonnees[0] - 45, coordonnees[1] - 45, 10, marquage, '#2f43ba', 0)        
+                carree(coordonnees[0] - 5, coordonnees[1] - 5, 10, marquage, '#2f43ba', 0)        
 
 
 def mangerUnePiece(piece, case, piece_mangee) -> None:

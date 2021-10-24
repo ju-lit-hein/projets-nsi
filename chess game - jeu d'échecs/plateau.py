@@ -96,15 +96,16 @@ plateau_64 = (
 
 
 class Plateau:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
-    '''
-    class Plateau:
+    '''class Plateau:   
+
         Données : 
             - Case (a8)
             - Numéro (0)
             - Coordonnees ( (-365.00,315.00) -> centre de la case)
             - Occupee (True ou False)
             - OccupeeParQuellePiece (class -> nom de la pièce 0 si vide)
-            - OccuppeParQuelCamp ('blanc' ou 'noir' 0 si vide)
+            - OccuppeParQuelCamp ('blanc' ou 'noir' 0 si vide)   
+
         Actions : 
             - ChangerLeStatutDeLaCase()
     '''
@@ -160,21 +161,38 @@ def faire_le_plateau():
     wn.update()
 
     import creation_des_pieces
-
+    
     for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
         j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()
         i.goto(eval("case_" + j + ".coordonnees"))
-        exec("case_" + j + ".ChangerLeStatutDeLaCase()")
-    exec("creation_des_pieces.pion_blanc_8_tortue.goto(265.00, -225.00)")
-    exec("creation_des_pieces.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
-    exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
-    exec("creation_des_pieces.reine_blanc_tortue.goto(-95.00, -315.00)")
-    exec("creation_des_pieces.fou_blanc_2_tortue.goto(85.00, -315.00)")
-    
+        ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
+        carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
+        ##############################################################################################################
+    if creation_des_pieces.sens:
+        exec("creation_des_pieces.pion_blanc_8_tortue.goto(265.00, -225.00)")
+        exec("creation_des_pieces.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
+        exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
+        exec("creation_des_pieces.reine_blanc_tortue.goto(-95.00, -315.00)")
+        exec("creation_des_pieces.fou_blanc_2_tortue.goto(85.00, -315.00)")
+    else:
+        exec("creation_des_pieces.pion_noir_8_tortue.goto(265.00, -225.00)")
+        exec("creation_des_pieces.cavalier_noir_1_tortue.goto(-275.00, -315.00)")
+        exec("creation_des_pieces.cavalier_noir_2_tortue.goto(175.00, -315.00)")
+        exec("creation_des_pieces.reine_noir_tortue.goto(-5.00, -315.00)")
+        exec("creation_des_pieces.roi_noir_tortue.goto(-95.00, -315.00)")
+        exec("creation_des_pieces.fou_noir_2_tortue.goto(85.00, -315.00)")
+
     for i in creation_des_pieces.pions_positions_str:
         piece = i[:-7]
-        
+        case = creation_des_pieces.pions_positions_str[i]
+        exec("case_" + case + ".ChangerLeStatutDeLaCase()")
+        exec("case_" + case + ".occupeeParQuelCamp = creation_des_pieces." + piece + ".couleur")
+        exec("case_" + case + ".occupeeParQuellePiece = creation_des_pieces." + piece)
+        print("case_" + case)
+        print(eval("case_" + case + ".occupee"))
+        print(eval("case_" + case + ".occupeeParQuelCamp"))
+        print(eval("case_" + case + ".occupeeParQuellePiece"))
     # Les 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
     wn.update()
     wn.mainloop()
