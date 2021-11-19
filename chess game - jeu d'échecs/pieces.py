@@ -27,7 +27,7 @@ PL_120 = (
         -1, 56, 57, 58, 59, 60, 61, 62, 63, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
-)
+) # = plateau_120
 PL_64 = (
         21, 22, 23, 24, 25, 26, 27, 28,
         31, 32, 33, 34, 35, 36, 37, 38,
@@ -37,7 +37,7 @@ PL_64 = (
         71, 72, 73, 74, 75, 76, 77, 78,
         81, 82, 83, 84, 85, 86, 87, 88,
         91, 92, 93, 94, 95, 96, 97, 98
-)
+) # = plateau_64
 
 marquage = turtle.Turtle()
 marquage.pencolor('cyan')
@@ -154,12 +154,14 @@ class Pion:
         self.couleur = couleur                              # str -> camp de la pièce
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
         self.sens = sens                                    # bool -> voir définition de a class
-        if self.sens == 1:                                  # si le pion est orinté vers le haut
+        if self.sens:                                  # si le pion est orinté vers le haut
             self.deplacementsPossibles = (-16,-8,-9,-7)     # tuple -> déplacements possibles de la pièce
         else:                                               # si le pion est orienté vers le bas
             self.deplacementsPossibles = (16,8,9,7)         # tuple -> déplacements possibles de la pièce
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
 
+    def __str__(self):
+        return f"Ce pion est {self.couleur}"
 
     def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de dictionnaire'''
@@ -207,6 +209,9 @@ class Cavalier:
         self.deplacementsPossibles = (-12, -21, -19, -8, 12, 21, 19, 8)
         self.tortue = tortue
 
+    def __str__(self):
+        return f"Ce cavalier est {self.couleur}"
+        
     def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le cavalier peut se déplacer sous forme de dictionnaire'''
         dico_deplacements_possibles = {}
@@ -235,7 +240,9 @@ class Fou:
         self.deplacementsPossibles = (-9,-7, 7, 9)
         self.tortue = tortue
     
-
+    def __str__(self):
+        return f"Ce fou est {self.couleur}"
+        
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
         for i in self.deplacementsPossibles:
@@ -263,6 +270,9 @@ class Tour:
         self.deplacementsPossibles = (-8, -1, 1, 8)
         self.tortue = tortue
 
+    def __str__(self):
+        return f"Cette tour est {self.couleur}"
+        
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
         for i in self.deplacementsPossibles:
@@ -290,6 +300,9 @@ class Reine:
         self.deplacementsPossibles = (-9, -8, -7, -1, 1, 7, 8, 9)
         self.tortue = tortue
 
+    def __str__(self):
+        return f"Cette reine est {self.couleur}"
+        
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
         for i in self.deplacementsPossibles:
@@ -318,6 +331,9 @@ class Roi:
         self.deplacementspossibles = (-9, -8, -7, -1, 1, 7, 8, 9)
         self.tortue = tortue
     
+    def __str__(self):
+        return f"Ce roi est {self.couleur}"
+        
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
         for i in self.deplacementspossibles:

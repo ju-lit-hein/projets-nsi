@@ -1,4 +1,6 @@
 import turtle
+from time import sleep
+from pieces import deplacerUnePiece
 
 
 '''CONSTANTES'''
@@ -11,10 +13,11 @@ X_DEPART = -410
 X_FIN = X_DEPART + 7 * COTE_CASES + 1 
 Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
-# c'est mieux de ne pas changer les constante (bah en fait ca marche pas si on change)
+# c'est mieux de ne pas changer les constantes de dimensions (bah en fait ca marche pas si on change)
 
 #Création du "papier" et du "crayon"
 wn = turtle.Screen()
+
 wn.tracer(100)
 
 tortue = turtle.Turtle()
@@ -124,11 +127,11 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
             self.occupee = True
 
  
-def etat_partie() -> dict:
-        etat_de_la_partie = {}
-        for i in cases:
-            etat_de_la_partie["case " + i] = [eval("case_" + i + ".occupee"), eval("case_" + i + ".occupeeParQuellePiece"), eval("case_" + i + ".occupeeParQuelCamp")]
-        return etat_de_la_partie
+# def etat_partie() -> dict:
+#         etat_de_la_partie = {}
+#         for i in cases:
+#             etat_de_la_partie["case " + i] = [eval("case_" + i + ".occupee"), eval("case_" + i + ".occupeeParQuellePiece"), eval("case_" + i + ".occupeeParQuelCamp")]
+#         return etat_de_la_partie
 
 def faire_le_plateau():
     remplissage = 1
@@ -172,7 +175,7 @@ def faire_le_plateau():
         i.penup()
         i.goto(eval("case_" + j + ".coordonnees"))
         ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
-        carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
+        # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
         ##############################################################################################################
     if creation_des_pieces.sens:
         exec("creation_des_pieces.pion_blanc_8_tortue.goto(265.00, -225.00)")
@@ -195,8 +198,10 @@ def faire_le_plateau():
         exec("case_" + case + ".ChangerLeStatutDeLaCase()")
         exec("case_" + case + ".occupeeParQuelCamp = creation_des_pieces." + piece + ".couleur")
         exec("case_" + case + ".occupeeParQuellePiece = creation_des_pieces." + piece)
-    etat = etat_partie()
-    print(etat)
+    # etat = etat_partie()
+    # print(etat)
+    sleep(1)
+    deplacerUnePiece("a2", "a3")
     wn.update()
     wn.mainloop()
 
