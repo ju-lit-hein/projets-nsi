@@ -1,7 +1,10 @@
 /*GENERAL*/
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* overflow: hidden; */
+    user-select: none;
+}
+body {
+    overflow-x: hidden;
 }
 /*FIN GENERAL*/
 /* MENU */
