@@ -37,7 +37,7 @@ body {
 
 button {
     position: absolute;
-    margin: 25vh 45vw;
+    margin: 0vh 44vw;
     display: flex;
     padding: 20px 50px;
     font-size: 1.5rem;
@@ -49,6 +49,7 @@ button {
     color: #fff;
     border-radius: 30px;
     box-shadow: 0px -0px 0px 0px #8f40f880, 0px 0px 0px 0px #27c8ff80;
+    transform: translateY(-20vh);
 }
 
 button::after {
@@ -61,28 +62,71 @@ button::after {
     background-image: linear-gradient(225deg, #27d86c 0%, #26caf8 50%, #c625d0 100%);
     z-index: -1;
     transition: all .5s;
+    transform: translateY(-20vh);
+
 }
 
 button:hover::after {
     transform: rotate(150deg);
+
 }
   
 button:hover {
     transform: translate(0,-6px);
     box-shadow: 10px -10px 25px 0px #8f40f840, -10px 10px 25px 0px #27c8ff40;
+    transform: translateY(-20vh);
+
 }
 
 .a-button {
-    color: #8f40f8;
+    color: #ffa5d8;
     text-decoration: none;
     display: block;
 }
 
 
 
+/*TITRE*/
 
-
-
+.titre {
+    color: #94deeb;
+    display: flex;
+    transform: translate(30vw, 30vh);
+}
+ .patterns {
+   height: 80vh;
+ }
+ 
+ 
+ 
+ svg text {
+   font-family: Lora;
+   letter-spacing: 10px;
+   stroke: #ffa5d8;
+   font-size: 150px;
+   font-weight: 700;
+   stroke-width: 3;
+  
+   animation: textAnimate 5s infinite alternate;
+   
+ }
+ 
+ @keyframes textAnimate {
+   0% {
+     stroke-dasharray: 0 50%;
+     stroke-dashoffset:  20%;
+     fill:#94deeb
+ 
+   }
+   
+   100% {
+     stroke-dasharray: 50% 0;
+     stroke-dashoffstet: -20%;
+     fill: #94deeb00
+   }
+   
+ }
+/*FIN TITRE*/
 
 /* BACKGROUND */
 @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
