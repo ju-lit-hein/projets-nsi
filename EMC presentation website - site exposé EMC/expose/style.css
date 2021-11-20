@@ -80,3 +80,104 @@ button:hover {
     display: block;
 }
 
+
+/* Parties de l'exposé */
+.wrapper {
+    height: 10vh;
+    /*This part is important for centering*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.typing-demo-13 {
+    color: #f0da12;
+    width: 13ch;
+    animation: typing 2s steps(13) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+.typing-demo-18 {
+    color: #f0da12;
+    width: 18ch;
+    animation: typing 3s steps(18) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+.typing-demo-20 {
+    color: #f0da12;
+    width: 20ch;
+    animation: typing 3.5s steps(20) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+.typing-demo-22 {
+    color: #f0da12;
+    width: 22ch;
+    animation: typing 3.8s steps(22) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+.typing-demo-24 {
+    color: #f0da12;
+    width: 24ch;
+    animation: typing 4s steps(24) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+.typing-demo-26 {
+    color: #f0da12;
+    width: 26ch;
+    animation: typing 4.3s steps(26) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+} 
+.typing-demo-37 {
+    color: #f0da12;
+    width: 37ch;
+    animation: typing 6s steps(37) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+.typing-demo-38 {
+    color: #f0da12;
+    width: 38ch;
+    animation: typing 6.2s steps(38) infinite, blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+    font-size: 2em;
+}
+@keyframes typing {
+    from {
+    width: 0
+    }
+}
+     
+@keyframes blink {
+    50% {
+    border-color: transparent
+    }
+}
+/* FIN Parties de l'exposé */
