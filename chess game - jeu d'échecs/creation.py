@@ -77,9 +77,9 @@ reine_noir_tortue = turtle.Turtle(shape=chemin_reine_noir)
 roi_noir_tortue = turtle.Turtle(shape=chemin_roi_noir)
 
 
-sens = False
+jouer_blanc = True
 # pions et leur position de départ
-if sens:
+if jouer_blanc:
     pions_positions = {pion_blanc_1_tortue:'a2', pion_blanc_2_tortue:'b2', pion_blanc_3_tortue:'c2', pion_blanc_4_tortue:'d2', pion_blanc_5_tortue:'e2', pion_blanc_6_tortue:'f2', pion_blanc_7_tortue:'g2', pion_blanc_8_tortue:'h2', fou_blanc_1_tortue:'c1', fou_blanc_2_tortue:'f1', cavalier_blanc_1_tortue:'b1', cavalier_blanc_2_tortue:'g1', tour_blanc_1_tortue:'a1', tour_blanc_2_tortue:'h1', reine_blanc_tortue:'d1', roi_blanc_tortue:'e1', pion_noir_1_tortue:'h7', pion_noir_2_tortue:'g7', pion_noir_3_tortue:'f7', pion_noir_4_tortue:'e7', pion_noir_5_tortue:'d7', pion_noir_6_tortue:'c7', pion_noir_7_tortue:'b7', pion_noir_8_tortue:'a7', fou_noir_1_tortue:'f8', fou_noir_2_tortue:'c8', cavalier_noir_1_tortue:'g8', cavalier_noir_2_tortue:'b8', tour_noir_1_tortue:'h8', tour_noir_2_tortue:'a8', reine_noir_tortue:'d8', roi_noir_tortue:'e8'}
 
     pions_positions_str = {'pion_blanc_1_tortue':'a2', 'pion_blanc_2_tortue':'b2', 'pion_blanc_3_tortue':'c2', 'pion_blanc_4_tortue':'d2', 'pion_blanc_5_tortue':'e2', 'pion_blanc_6_tortue':'f2', 'pion_blanc_7_tortue':'g2', 'pion_blanc_8_tortue':'h2', 'fou_blanc_1_tortue':'c1', 'fou_blanc_2_tortue':'f1', 'cavalier_blanc_1_tortue':'b1', 'cavalier_blanc_2_tortue':'g1', 'tour_blanc_1_tortue':'a1', 'tour_blanc_2_tortue':'h1', 'reine_blanc_tortue':'d1', 'roi_blanc_tortue':'e1', 'pion_noir_1_tortue':'h7', 'pion_noir_2_tortue':'g7', 'pion_noir_3_tortue':'f7', 'pion_noir_4_tortue':'e7', 'pion_noir_5_tortue':'d7', 'pion_noir_6_tortue':'c7', 'pion_noir_7_tortue':'b7', 'pion_noir_8_tortue':'a7', 'fou_noir_1_tortue':'f8', 'fou_noir_2_tortue':'c8', 'cavalier_noir_1_tortue':'g8', 'cavalier_noir_2_tortue':'b8', 'tour_noir_1_tortue':'h8', 'tour_noir_2_tortue':'a8', 'reine_noir_tortue':'d8', 'roi_noir_tortue':'e8'}
@@ -89,16 +89,18 @@ else:
     pions_positions_str = {'pion_blanc_1_tortue':'h7', 'pion_blanc_2_tortue':'g7', 'pion_blanc_3_tortue':'f7', 'pion_blanc_4_tortue':'e7', 'pion_blanc_5_tortue':'d7', 'pion_blanc_6_tortue':'c7', 'pion_blanc_7_tortue':'b7', 'pion_blanc_8_tortue':'a7', 'fou_blanc_1_tortue':'f8', 'fou_blanc_2_tortue':'c8', 'cavalier_blanc_1_tortue':'g8', 'cavalier_blanc_2_tortue':'b8', 'tour_blanc_1_tortue':'h8', 'tour_blanc_2_tortue':'a8', 'reine_blanc_tortue':'e8', 'roi_blanc_tortue':'d8', 'pion_noir_1_tortue':'a2', 'pion_noir_2_tortue':'b2', 'pion_noir_3_tortue':'c2', 'pion_noir_4_tortue':'d2', 'pion_noir_5_tortue':'e2', 'pion_noir_6_tortue':'f2', 'pion_noir_7_tortue':'g2', 'pion_noir_8_tortue':'h2', 'fou_noir_1_tortue':'c1', 'fou_noir_2_tortue':'f1', 'cavalier_noir_1_tortue':'b1', 'cavalier_noir_2_tortue':'g1', 'tour_noir_1_tortue':'a1', 'tour_noir_2_tortue':'h1', 'reine_noir_tortue':'e1', 'roi_noir_tortue':'d1'}
 
 
+### Pieces
 
 
-pion_blanc_1 = Pion(CASES.index(pions_positions[pion_blanc_1_tortue]), 'blanc', sens, pion_blanc_1_tortue)
-pion_blanc_2 = Pion(CASES.index(pions_positions[pion_blanc_2_tortue]), 'blanc', sens, pion_blanc_2_tortue)
-pion_blanc_3 = Pion(CASES.index(pions_positions[pion_blanc_3_tortue]), 'blanc', sens, pion_blanc_3_tortue)
-pion_blanc_4 = Pion(CASES.index(pions_positions[pion_blanc_4_tortue]), 'blanc', sens, pion_blanc_4_tortue)
-pion_blanc_5 = Pion(CASES.index(pions_positions[pion_blanc_5_tortue]), 'blanc', sens, pion_blanc_5_tortue)
-pion_blanc_6 = Pion(CASES.index(pions_positions[pion_blanc_6_tortue]), 'blanc', sens, pion_blanc_6_tortue)
-pion_blanc_7 = Pion(CASES.index(pions_positions[pion_blanc_7_tortue]), 'blanc', sens, pion_blanc_7_tortue)
-pion_blanc_8 = Pion(CASES.index(pions_positions[pion_blanc_8_tortue]), 'blanc', sens, pion_blanc_8_tortue)
+### regarder comment fonctionne le '.index(...)' pq sah j'ai oublié
+pion_blanc_1 = Pion(CASES.index(pions_positions[pion_blanc_1_tortue]), 'blanc', jouer_blanc, pion_blanc_1_tortue)
+pion_blanc_2 = Pion(CASES.index(pions_positions[pion_blanc_2_tortue]), 'blanc', jouer_blanc, pion_blanc_2_tortue)
+pion_blanc_3 = Pion(CASES.index(pions_positions[pion_blanc_3_tortue]), 'blanc', jouer_blanc, pion_blanc_3_tortue)
+pion_blanc_4 = Pion(CASES.index(pions_positions[pion_blanc_4_tortue]), 'blanc', jouer_blanc, pion_blanc_4_tortue)
+pion_blanc_5 = Pion(CASES.index(pions_positions[pion_blanc_5_tortue]), 'blanc', jouer_blanc, pion_blanc_5_tortue)
+pion_blanc_6 = Pion(CASES.index(pions_positions[pion_blanc_6_tortue]), 'blanc', jouer_blanc, pion_blanc_6_tortue)
+pion_blanc_7 = Pion(CASES.index(pions_positions[pion_blanc_7_tortue]), 'blanc', jouer_blanc, pion_blanc_7_tortue)
+pion_blanc_8 = Pion(CASES.index(pions_positions[pion_blanc_8_tortue]), 'blanc', jouer_blanc, pion_blanc_8_tortue)
 
 fou_blanc_1 = Fou(CASES.index(pions_positions[fou_blanc_1_tortue]), 'blanc', fou_blanc_1_tortue)
 fou_blanc_2 = Fou(CASES.index(pions_positions[fou_blanc_2_tortue]), 'blanc', fou_blanc_2_tortue)
@@ -110,14 +112,14 @@ reine_blanc = Reine(CASES.index(pions_positions[reine_blanc_tortue]), 'blanc', r
 roi_blanc = Roi(CASES.index(pions_positions[roi_blanc_tortue]), 'blanc', roi_blanc_tortue)
 
 
-pion_noir_1 = Pion(CASES.index(pions_positions[pion_noir_1_tortue]), 'noir', not(sens), pion_noir_1_tortue)
-pion_noir_2 = Pion(CASES.index(pions_positions[pion_noir_2_tortue]), 'noir', not(sens), pion_noir_2_tortue)
-pion_noir_3 = Pion(CASES.index(pions_positions[pion_noir_3_tortue]), 'noir', not(sens), pion_noir_3_tortue)
-pion_noir_4 = Pion(CASES.index(pions_positions[pion_noir_4_tortue]), 'noir', not(sens), pion_noir_4_tortue)
-pion_noir_5 = Pion(CASES.index(pions_positions[pion_noir_5_tortue]), 'noir', not(sens), pion_noir_5_tortue)
-pion_noir_6 = Pion(CASES.index(pions_positions[pion_noir_6_tortue]), 'noir', not(sens), pion_noir_6_tortue)
-pion_noir_7 = Pion(CASES.index(pions_positions[pion_noir_7_tortue]), 'noir', not(sens), pion_noir_7_tortue)
-pion_noir_8 = Pion(CASES.index(pions_positions[pion_noir_8_tortue]), 'noir', not(sens), pion_noir_8_tortue)
+pion_noir_1 = Pion(CASES.index(pions_positions[pion_noir_1_tortue]), 'noir', not(jouer_blanc), pion_noir_1_tortue)
+pion_noir_2 = Pion(CASES.index(pions_positions[pion_noir_2_tortue]), 'noir', not(jouer_blanc), pion_noir_2_tortue)
+pion_noir_3 = Pion(CASES.index(pions_positions[pion_noir_3_tortue]), 'noir', not(jouer_blanc), pion_noir_3_tortue)
+pion_noir_4 = Pion(CASES.index(pions_positions[pion_noir_4_tortue]), 'noir', not(jouer_blanc), pion_noir_4_tortue)
+pion_noir_5 = Pion(CASES.index(pions_positions[pion_noir_5_tortue]), 'noir', not(jouer_blanc), pion_noir_5_tortue)
+pion_noir_6 = Pion(CASES.index(pions_positions[pion_noir_6_tortue]), 'noir', not(jouer_blanc), pion_noir_6_tortue)
+pion_noir_7 = Pion(CASES.index(pions_positions[pion_noir_7_tortue]), 'noir', not(jouer_blanc), pion_noir_7_tortue)
+pion_noir_8 = Pion(CASES.index(pions_positions[pion_noir_8_tortue]), 'noir', not(jouer_blanc), pion_noir_8_tortue)
 
 fou_noir_1 = Fou(CASES.index(pions_positions[fou_noir_1_tortue]), 'noir', fou_noir_1_tortue)
 fou_noir_2 = Fou(CASES.index(pions_positions[fou_noir_2_tortue]), 'noir', fou_noir_2_tortue)
@@ -127,3 +129,10 @@ tour_noir_1 = Tour(CASES.index(pions_positions[tour_noir_1_tortue]), 'noir', tou
 tour_noir_2 = Tour(CASES.index(pions_positions[tour_noir_2_tortue]), 'noir', tour_noir_2_tortue)
 reine_noir = Reine(CASES.index(pions_positions[reine_noir_tortue]), 'noir', reine_noir_tortue)
 roi_noir = Roi(CASES.index(pions_positions[roi_noir_tortue]), 'noir', roi_noir_tortue)
+
+# tout = [pion_blanc_1, pion_blanc_2, pion_blanc_3, pion_blanc_4, pion_blanc_5, pion_blanc_6, pion_blanc_7, pion_blanc_8, fou_blanc_1, fou_blanc_2, cavalier_blanc_1, cavalier_blanc_2, tour_blanc_1, tour_blanc_2, reine_blanc, roi_blanc, pion_noir_1, pion_noir_2, pion_noir_3, pion_noir_4, pion_noir_5, pion_noir_6, pion_noir_7, pion_noir_8, fou_noir_1, fou_noir_2, cavalier_noir_1, cavalier_noir_2, tour_noir_1, tour_noir_2, reine_noir, roi_noir]
+
+### Cases du plateau
+
+for i in CASES:
+    print(f'case_{i}')

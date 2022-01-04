@@ -7,3 +7,20 @@ faire une fonction dans plateau.py -> etatPlateau() qui retourne tous les self d
 adapter TOUS les déplacement a la liste plateau_120 et créer les vérifications de cases
 
 finir la class Pion et faire les autres class
+
+
+
+
+
+
+faire pour chaque classe de pion :
+    méthode :
+        get_case()
+        aller_a(x,y)
+        cacher()
+        get_camp()
+        ChangeLaCase(case)
+
+pour la classe Plateau:
+    méthode : 
+        

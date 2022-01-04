@@ -1,4 +1,5 @@
 import turtle
+
 #import creation_des_pieces
 
 INFORMATIONS = 'le pavé en dessous'
@@ -69,58 +70,60 @@ def carree(x, y, c, t, couleur, remplissage):
     t.end_fill()
     t.hideturtle()
 
-CASES = [
-    'a8','b8','c8','d8','e8','f8','g8','h8',
-    'a7','b7','c7','d7','e7','f7','g7','h7',
-    'a6','b6','c6','d6','e6','f6','g6','h6',
-    'a5','b5','c5','d5','e5','f5','g5','h5',
-    'a4','b4','c4','d4','e4','f4','g4','h4',
-    'a3','b3','c3','d3','e3','f3','g3','h3',
-    'a2','b2','c2','d2','e2','f2','g2','h2',
-    'a1','b1','c1','d1','e1','f1','g1','h1']
+CASES = ['a8','b8','c8','d8','e8','f8','g8','h8', 'a7','b7','c7','d7','e7','f7','g7','h7', 'a6','b6','c6','d6','e6','f6','g6','h6', 'a5','b5','c5','d5','e5','f5','g5','h5', 'a4','b4','c4','d4','e4','f4','g4','h4', 'a3','b3','c3','d3','e3','f3','g3','h3', 'a2','b2','c2','d2','e2','f2','g2','h2', 'a1','b1','c1','d1','e1','f1','g1','h1']
 
-def MontrerDeplacementsPossibles(self, DDP):
-    '''DDP -> dico {nom de la case à marquer : True -> Piece à manger ; False -> deplacement simple'''
+def MontrerDeplacementsPossibles(DDP):
+    '''DDP -> dictionnaire {objet de la case à marquer : True -> Piece à manger ; False -> deplacement simple'''
     if len(DDP) < 0:
         for i in DDP:
-            coordonnees = eval("case_" + i + ".coordonnees")
+            coordonnees = i.get_coordonnees()
             if DDP[i]:                                                                              # si la clé (la case) a pour valeur True
                 carree(coordonnees[0] - 5, coordonnees[1] - 5 , 10, marquage, '#b32727', 0)
             else:
                 carree(coordonnees[0] - 5, coordonnees[1] - 5, 10, marquage, '#2f43ba', 0)        
 
 
-def mangerUnePiece(piece, case, piece_mangee) -> None:
+def mangerUnePiece(piece, case, piece_mangee):
     '''Deplace la pièce voulue vers une case et mange la pièce sur la case :    
     - piece -> class nom de la pièce qui est déplacée
-    - case -> str nom de la case (f4)
+    - case -> objet case_XX de la classe Plateau
     - piece_mangee -> class nom de la piece mangee
     '''
-    caseActuelle = CASES[piece.caseActuelle]
-    exec("case_" + caseActuelle + ".occupee = False")
-    coordonnees = eval("case_" + case + ".cordonnees")
-    piece.goto(coordonnees)
-    exec("case_" + case + ".occupee = True")
-    exec("case_" + case + ".occupeeParQuelCamp = " + piece + ".couleur")
-    piece_mangee.hideturtle()
-    piece_mangee.goto(-750,0)
+    assert type(case) == object, f"La fonction mangerUnePiece() a recu comme argument : {type(case)} au lieu d'un objet de la classe Plateau."
+
+    # on rend libre la case actuelle de la piece qui mange
+    caseActuelle = piece.get_case_actuelle()
+    caseActuelle.ChangerLeStatutDeLaCase()
+
+    # on deplace la piece qui mange vers sa nouvelle case
+    coordonnees = case.get_coordonnees()
+    piece.aller_a(coordonnees)
+    piece.ChangerLaCase(case)
+    case.ChangerLestatutDeLaCase()
+    case.ChangerLeCamp()
+
+    # on sort la piece mangee du plateau
+    piece_mangee.aller_a(-750,0)
+    piece_mangee.cacher()
 
 
-def deplacerUnePiece(case_depart, case_arrivee) -> None:
+def deplacerUnePiece(piece, case):
     '''Deplace la pièce voulue vers une case :  
-    - case_depart -> str case de départ de la pièce qui va être déplacée ("b4")
-    - case_arrivee -> str nom de la case d'arrivée de la pièce qui va être déplacée("a5")
+    - piece -> objet de la piece a deplacer
+    - case -> objet dela case d'arrivee
     '''
-    piece = eval("case_" + case_depart + ".OccupeeParQuellePiece")                                          # class -> piece qui va être déplacée
-    if eval("case_" + case_arrivee + ".occupee"):                                                           # si la case d'arrivée est ocuppée
-        mangerUnePiece(piece, case_arrivee, eval("case_" + case_arrivee + ".occupeeParQuellePiece"))
+    if case.est_occupee:                                                                                    # si la case d'arrivée est ocuppée
+        piece_a_manger = case.get_piece()                                                                   
+        mangerUnePiece(piece, case, piece_a_manger)
         return 0
-    coordonnees = eval("case_" + case_arrivee + ".cordonnees")                                              # récupère les coordoonées de la case d'arrivée
-    piece.goto(coordonnees)
-    exec("case_" + case_depart + ".occupee = False")                                                        # rend la case de départ inoccupée
-    exec("case_" + case_arrivee + ".occupee = True")                                                        # rend la case d'arrivée occupée
-    exec("case_" + case_arrivee + ".occupeeParQuellePiece = piece")
-    exec("case_" + case_arrivee + ".occupeeParQuelCamp = " + piece + ".couleur")
+    coordonnees = case.get_coordonnees()                                                                    # récupère les coordoonées de la case d'arrivée
+    piece.aller_a(coordonnees)
+    piece.ChangerLaCase(case)
+    caseActuelle = piece.get_case()
+    caseActuelle.ChangerLeStatutDeLaCase()                                                                  # rend la case de départ inoccupée
+    case.ChangerLeStatutDeLaCase()                                                                          # rend la case d'arrivée occupée
+    case.ChangerLaPiece(piece)                                                                              # change la piece qui occuppe la case
+    case.ChangerLeCamp(piece.get)                                                                           # change la camp qui occuppe la case
     
 
 
@@ -150,7 +153,7 @@ class Pion:
             - MouvementsPossibles() -> dict
     '''
     def __init__(self, caseActuelle, couleur, sens, tortue, dejaBouge = False) -> None:
-        self.caseActuelle = caseActuelle                    # int -> numéro de la case sur laquelle le pion est
+        self.caseActuelle = caseActuelle                    # Plateau -> objet case        #########
         self.couleur = couleur                              # str -> camp de la pièce
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
         self.sens = sens                                    # bool -> voir définition de a class
@@ -161,7 +164,22 @@ class Pion:
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
 
     def __str__(self):
-        return f"Ce pion est {self.couleur}"
+        return f"Ce pion {self.couleur} est sur la case {self.caseActuelle}. Déja bougé = {self.dejaBouge}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
+
+    def aller_a(self, x, y):
+        self.tortue.goto(x, y)
+    
+    def cacher(self):
+        self.tortue.hideturtle()
+    
+    def ChangerLaCase(self, case):
+        self.caseActuelle = case
+
+    def get_camp(self) -> str:
+        return self.couleur
+    
+    def get_case(self) -> object: # -> Plateau
+        return self.caseActuelle
 
     def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de dictionnaire'''
@@ -206,11 +224,26 @@ class Cavalier:
     def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
-        self.deplacementsPossibles = (-12, -21, -19, -8, 12, 21, 19, 8)
+        self.deplacementsPossibles = (-12,-21,-19,-8,12,21,19,8)
         self.tortue = tortue
 
     def __str__(self):
-        return f"Ce cavalier est {self.couleur}"
+        return f"Ce cavalier {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
+
+    def aller_a(self, x, y):
+        self.tortue.goto(x, y)
+    
+    def cacher(self):
+        self.tortue.hideturtle()
+    
+    def ChangerLaCase(self, case):
+        self.caseActuelle = case
+
+    def get_camp(self) -> str:
+        return self.couleur
+    
+    def get_case(self) -> object: # -> Plateau
+        return self.caseActuelle
         
     def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le cavalier peut se déplacer sous forme de dictionnaire'''
@@ -237,11 +270,26 @@ class Fou:
     def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
-        self.deplacementsPossibles = (-9,-7, 7, 9)
+        self.deplacementsPossibles = (-11,-9,11,9)
         self.tortue = tortue
     
     def __str__(self):
-        return f"Ce fou est {self.couleur}"
+        return f"Ce fou {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
+
+    def aller_a(self, x, y):
+        self.tortue.goto(x, y)
+    
+    def cacher(self):
+        self.tortue.hideturtle()
+    
+    def ChangerLaCase(self, case):
+        self.caseActuelle = case
+
+    def get_camp(self) -> str:
+        return self.couleur
+    
+    def get_case(self) -> object: # -> Plateau
+        return self.caseActuelle
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
@@ -267,11 +315,26 @@ class Tour:
     def __init__(self, caseActuelle, couleur, tortue) -> None:
         self.caseActuelle = caseActuelle
         self.couleur = couleur
-        self.deplacementsPossibles = (-8, -1, 1, 8)
+        self.deplacementsPossibles = (-10,10,-1,1)
         self.tortue = tortue
 
     def __str__(self):
-        return f"Cette tour est {self.couleur}"
+        return f"Cette tour {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
+    
+    def aller_a(self, x, y):
+        self.tortue.goto(x, y)
+    
+    def cacher(self):
+        self.tortue.hideturtle()
+    
+    def ChangerLaCase(self, case):
+        self.caseActuelle = case
+
+    def get_camp(self) -> str:
+        return self.couleur
+    
+    def get_case(self) -> object: # -> Plateau
+        return self.caseActuelle
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
@@ -301,7 +364,22 @@ class Reine:
         self.tortue = tortue
 
     def __str__(self):
-        return f"Cette reine est {self.couleur}"
+        return f"Cette reine {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
+
+    def aller_a(self, x, y):
+        self.tortue.goto(x, y)
+    
+    def cacher(self):
+        self.tortue.hideturtle()
+    
+    def ChangerLaCase(self, case):
+        self.caseActuelle = case
+
+    def get_camp(self) -> str:
+        return self.couleur
+    
+    def get_case(self) -> object: # -> Plateau
+        return self.caseActuelle
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
@@ -332,7 +410,22 @@ class Roi:
         self.tortue = tortue
     
     def __str__(self):
-        return f"Ce roi est {self.couleur}"
+        return f"Ce roi {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}. Déja bouge = {self.dejaBouge} et deja echec = {self.dejaEchec}"
+
+    def aller_a(self, x, y):
+        self.tortue.goto(x, y)
+    
+    def cacher(self):
+        self.tortue.hideturtle()
+    
+    def ChangerLaCase(self, case):
+        self.caseActuelle = case
+
+    def get_camp(self) -> str:
+        return self.couleur
+    
+    def get_case(self) -> object: # -> Plateau
+        return self.caseActuelle
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}

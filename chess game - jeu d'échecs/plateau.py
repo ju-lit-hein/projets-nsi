@@ -120,11 +120,37 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
         self.occupeeParQuellePiece = occupeeParQuellePiece
         self.occupeeParQuelCamp = occupeeParQuelCamp
 
+    def __str__(self) -> str:
+        return f'La case {self.case} | numéro {self.numero} a pour coordonnees {self.coordonnees} | Occupee : {self.occupee} | Piece : {self.occupeeParQuellePiece} | Camp : {self.occupeeParQuelCamp}'
+
     def ChangerLeStatutDeLaCase(self):
         if self.occupee:
             self.occupee = False
         else:
             self.occupee = True
+    
+    def ChangerLaPiece(self, piece):    
+        self.occupeeParQuellePiece == piece
+    
+    def ChangerLeCamp(self, couleur=0):
+        if couleur == 0:
+            if self.occupeeParQuelCamp == 'blanc':
+                self.occupeeParQuelCamp == 'noir'
+            else:
+                self.occupeeParQuelCamp == 'blanc'
+        else:
+            self.occupeeParQuelCamp == couleur
+
+    def est_occupee(self) -> bool:
+        return self.occupee
+
+    def get_coordonnees(self) -> tuple:
+        return self.coordonnees
+
+    def get_piece(self) -> object: # -> Piece
+        return self.occupeeParQuellePiece
+
+
 
  
 # def etat_partie() -> dict:
@@ -148,6 +174,7 @@ def faire_le_plateau():
             position = turtle.Vec2D(position[0], position[1])
             #print(cases[count], position)
             exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec(f'print(case_{cases[count]})')
             if count + 2 < 64:
                 count += 2  # saute une case
             
@@ -160,6 +187,7 @@ def faire_le_plateau():
             position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
             exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec(f'print(case_{cases[count]})')
             if count + 2 < 64:
                 count += 2  # saute une case
 
@@ -168,40 +196,38 @@ def faire_le_plateau():
     case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0) # ca fait pas h1 donc voila
     wn.update()
 
-    import creation_des_pieces
+    import creation
     
-    for i in creation_des_pieces.pions_positions:  # i est la tortue de chaque pièce
-        j = creation_des_pieces.pions_positions[i] # case où doivent aller les pièces au début de la partie
+    for i in creation.pions_positions:  # i est la tortue de chaque pièce
+        j = creation.pions_positions[i] # case où doivent aller les pièces au début de la partie
         i.penup()
         i.goto(eval("case_" + j + ".coordonnees"))
         ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
         # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
         ##############################################################################################################
-    if creation_des_pieces.sens:
-        exec("creation_des_pieces.pion_blanc_8_tortue.goto(265.00, -225.00)")
-        exec("creation_des_pieces.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
-        exec("creation_des_pieces.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
-        exec("creation_des_pieces.reine_blanc_tortue.goto(-95.00, -315.00)")
-        exec("creation_des_pieces.fou_blanc_2_tortue.goto(85.00, -315.00)")
+    if creation.sens:
+        exec("creation.pion_blanc_8_tortue.goto(265.00, -225.00)")
+        exec("creation.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
+        exec("creation.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
+        exec("creation.reine_blanc_tortue.goto(-95.00, -315.00)")
+        exec("creation.fou_blanc_2_tortue.goto(85.00, -315.00)")
     else:
-        exec("creation_des_pieces.pion_noir_8_tortue.goto(265.00, -225.00)")
-        exec("creation_des_pieces.cavalier_noir_1_tortue.goto(-275.00, -315.00)")
-        exec("creation_des_pieces.cavalier_noir_2_tortue.goto(175.00, -315.00)")
-        exec("creation_des_pieces.reine_noir_tortue.goto(-5.00, -315.00)")
-        exec("creation_des_pieces.roi_noir_tortue.goto(-95.00, -315.00)")
-        exec("creation_des_pieces.fou_noir_2_tortue.goto(85.00, -315.00)")
+        exec("creation.pion_noir_8_tortue.goto(265.00, -225.00)")
+        exec("creation.cavalier_noir_1_tortue.goto(-275.00, -315.00)")
+        exec("creation.cavalier_noir_2_tortue.goto(175.00, -315.00)")
+        exec("creation.reine_noir_tortue.goto(-5.00, -315.00)")
+        exec("creation.roi_noir_tortue.goto(-95.00, -315.00)")
+        exec("creation.fou_noir_2_tortue.goto(85.00, -315.00)")
     # Les 5 et 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
 
-    for i in creation_des_pieces.pions_positions_str:
+    for i in creation.pions_positions_str:
         piece = i[:-7]
-        case = creation_des_pieces.pions_positions_str[i]
+        case = creation.pions_positions_str[i]
         exec("case_" + case + ".ChangerLeStatutDeLaCase()")
-        exec("case_" + case + ".occupeeParQuelCamp = creation_des_pieces." + piece + ".couleur")
-        exec("case_" + case + ".occupeeParQuellePiece = creation_des_pieces." + piece)
+        exec("case_" + case + ".occupeeParQuelCamp = creation." + piece + ".couleur")
+        exec("case_" + case + ".occupeeParQuellePiece = creation." + piece)
     # etat = etat_partie()
     # print(etat)
-    sleep(1)
-    deplacerUnePiece("a2", "a3")
     wn.update()
     wn.mainloop()
 
