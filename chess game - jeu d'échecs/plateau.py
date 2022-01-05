@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import turtle
 from time import sleep
 from pieces import deplacerUnePiece
@@ -144,6 +145,9 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
     def est_occupee(self) -> bool:
         return self.occupee
 
+    def get_camp(self) -> int or str:
+        return self.occupeeParQuelCamp
+
     def get_coordonnees(self) -> tuple:
         return self.coordonnees
 
@@ -205,7 +209,7 @@ def faire_le_plateau():
         ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
         # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
         ##############################################################################################################
-    if creation.sens:
+    if creation.jouer_blanc:
         exec("creation.pion_blanc_8_tortue.goto(265.00, -225.00)")
         exec("creation.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
         exec("creation.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
@@ -228,6 +232,11 @@ def faire_le_plateau():
         exec("case_" + case + ".occupeeParQuellePiece = creation." + piece)
     # etat = etat_partie()
     # print(etat)
+
+    ################################
+    from collections import OrderedDict
+    cases_plateau = {}
+    
     wn.update()
     wn.mainloop()
 
