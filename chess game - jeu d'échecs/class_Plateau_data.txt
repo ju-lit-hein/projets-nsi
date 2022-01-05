@@ -63,8 +63,12 @@
 (62, [<plateau.Plateau object at 0x00000262E556E100>, 62, (175.00,-315.00), True, <pieces.Cavalier object at 0x00000262E7199700>, 'blanc']), 
 (63, [<plateau.Plateau object at 0x00000262E556E8B0>, 63, (265.00,-315.00), True, <pieces.Tour object at 0x00000262E71997C0>, 'blanc'])
 
-### Obtenu avec les lignes suivantes :
+### Obtenu avec les lignes suivantes : 
 
+>>>from collections import OrderedDict
+>>>cases_plateau = {}
 >>>for i in range(64):
 ...    exec(f'cases_plateau[i] = [case_{cases[i]}, {i}, case_{cases[i]}.get_coordonnees(), case_{cases[i]}.est_occupee(), case_{cases[i]}.get_piece(), case_{cases[i]}.get_camp()]')
 >>>print(OrderedDict(sorted(cases_plateau.items(), key=lambda t: t[0])))
+
+###
