@@ -8,19 +8,9 @@ adapter TOUS les déplacement a la liste plateau_120 et créer les vérification
 
 finir la class Pion et faire les autres class
 
+faire une page tkinter avec
+    toutes les saves de parties, scroll s'il y en a trop pour l'écran
+    chaque save sera représenté par un rectangle et aura comme texte (pour se repérer) la date de la sauvegarde
 
-
-
-
-
-faire pour chaque classe de pion :
-    méthode :
-        get_case()
-        aller_a(x,y)
-        cacher()
-        get_camp()
-        ChangeLaCase(case)
-
-pour la classe Plateau:
-    méthode : 
-        
+faire la fonction qui save la partie en cours  
+    le nom de la save sera la date et l'heure de la save

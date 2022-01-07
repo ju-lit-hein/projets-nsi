@@ -72,3 +72,5 @@
 >>>print(OrderedDict(sorted(cases_plateau.items(), key=lambda t: t[0])))
 
 ###
+
+Les lignes sont triées par numéro de case, ici en index 1

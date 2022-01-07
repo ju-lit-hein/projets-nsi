@@ -1,4 +1,3 @@
-from collections import OrderedDict
 import turtle
 from time import sleep
 from pieces import deplacerUnePiece
@@ -14,9 +13,9 @@ X_DEPART = -410
 X_FIN = X_DEPART + 7 * COTE_CASES + 1 
 Y_DEPART = 270
 Y_FIN = Y_DEPART - 8 * COTE_CASES + 1
-# c'est mieux de ne pas changer les constantes de dimensions (bah en fait ca marche pas si on change)
+# c'est mieux de ne pas changer les constantes de dimensions (bah en fait ca marche plus très bien si on change celles conçernant les dimensions)
 
-#Création du "papier" et du "crayon"
+# Création du "papier" et du "crayon"
 wn = turtle.Screen()
 
 wn.tracer(100)
@@ -164,6 +163,7 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
 #         return etat_de_la_partie
 
 def faire_le_plateau():
+    cases_buggees = [55, 57, 59, 61, 63]
     remplissage = 1
     count = 1
     for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
@@ -172,13 +172,13 @@ def faire_le_plateau():
         count -= 1   # indice de la liste $cases
         for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
-            position = tortue.pos()
-            position = tuple(position)
-            position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
-            position = turtle.Vec2D(position[0], position[1])
-            #print(cases[count], position)
-            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
-            exec(f'print(case_{cases[count]})')
+            if count not in cases_buggees:
+                position = tortue.pos()
+                position = tuple(position)
+                position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
+                position = turtle.Vec2D(position[0], position[1])
+                #print(cases[count], position)
+                exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
             
@@ -186,18 +186,24 @@ def faire_le_plateau():
         count -= 7   # indice de la liste $cases
         for x in range(X_DEPART+90, X_FIN, COTE_CASES * 2):
             carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
-            position = tortue.pos()
-            position = tuple(position)
-            position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
-            position = turtle.Vec2D(position[0], position[1])
-            exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
-            exec(f'print(case_{cases[count]})')
+            if count not in cases_buggees:
+                position = tortue.pos()
+                position = tuple(position)
+                position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
+                position = turtle.Vec2D(position[0], position[1])
+                exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
             if count + 2 < 64:
                 count += 2  # saute une case
 
         remplissage = 1 - remplissage
 
-    case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0) # ca fait pas h1 donc voila
+    # Création des cases bugées
+    
+    case_h2 = Plateau('h2', 55, turtle.Vec2D(265.00, -225.00), False, 0, 0)
+    case_b1 = Plateau('b1', 57, turtle.Vec2D(-275.00, -315.00), False, 0, 0)
+    case_d1 = Plateau('d1', 59, turtle.Vec2D(-95.00, -315.00), False, 0, 0)
+    case_f1 = Plateau('f1', 61, turtle.Vec2D(85.00, -315.00), False, 0, 0)
+    case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0)
     wn.update()
 
     import creation
@@ -209,7 +215,7 @@ def faire_le_plateau():
         ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
         # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
         ##############################################################################################################
-    if creation.jouer_blanc:
+    if creation.jouer_blanc: # remet en place le pièces buggées
         exec("creation.pion_blanc_8_tortue.goto(265.00, -225.00)")
         exec("creation.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
         exec("creation.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
@@ -232,10 +238,6 @@ def faire_le_plateau():
         exec("case_" + case + ".occupeeParQuellePiece = creation." + piece)
     # etat = etat_partie()
     # print(etat)
-
-    ################################
-    from collections import OrderedDict
-    cases_plateau = {}
     
     wn.update()
     wn.mainloop()
