@@ -45,6 +45,7 @@ marquage.pencolor('cyan')
 marquage.pensize(1)
 marquage.hideturtle()
 
+### Fonctions pour toutes les pièces
 
 def carree(x, y, c, t, couleur, remplissage):
     '''Dessine un carré.
@@ -137,6 +138,7 @@ mouvement_reine = (-11,-10,-9,-1,11,10,9,1)
 mouvement_roi = (-11,-10,-9,-1,11,10,9,1)
 
 
+### Class de chaque pièce
 
 class Pion:
     '''class Pion   
