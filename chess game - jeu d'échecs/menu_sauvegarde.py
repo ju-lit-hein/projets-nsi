@@ -37,7 +37,7 @@ frame_bis.grid(row=0, column=0, sticky=W)
 #Creation de l'image
 width = 200
 height = 200
-img = PhotoImage(file='chessgame_menu/backup-copy.png').zoom(35).subsample(32)
+img = PhotoImage(file='images/backup-copy.png').zoom(35).subsample(32)
 can = Canvas(frame, width=width, height=height, bg='#2CDF85', bd=0, highlightthickness=0)
 can.create_image(width/2, height/2, image=img)
 can.grid(row=0, column=10, sticky=W)
