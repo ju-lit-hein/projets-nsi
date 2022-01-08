@@ -1,5 +1,7 @@
 import turtle
 
+from plateau import Plateau
+
 #import creation_des_pieces
 
 INFORMATIONS = 'le pavé en dessous'
@@ -90,7 +92,7 @@ def mangerUnePiece(piece, case, piece_mangee):
     - case -> objet case_XX de la classe Plateau
     - piece_mangee -> class nom de la piece mangee
     '''
-    assert type(case) == object, f"La fonction mangerUnePiece() a recu comme argument : {type(case)} au lieu d'un objet de la classe Plateau."
+    assert type(case) == Plateau, f"La fonction mangerUnePiece() a recu comme argument : {type(case)} au lieu d'un objet de la classe Plateau."
 
     # on rend libre la case actuelle de la piece qui mange
     caseActuelle = piece.get_case_actuelle()
