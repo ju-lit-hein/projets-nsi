@@ -24,7 +24,8 @@ title.pack()
 subtitle.pack()
 
 # Fonction qui va sur la fenêtre des sauvegardes
-### j'ai trop le seum
+### j'ai trop le seum je voulais faire :(
+### pour les boutons ajoute activebackground pour la couleur quand on clique dessus
 
 #Ajout des boutons pour lancer les parties
 JvJ = Button(frame, text='J v J', font=('montserrat', 20), bg='#36B23D', fg='black')

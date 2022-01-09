@@ -69,5 +69,5 @@ frame.pack(expand=YES)
 
 
 #Affichage de la fenêtre
-wn.update()
+#wn.update()
 wn.mainloop()
