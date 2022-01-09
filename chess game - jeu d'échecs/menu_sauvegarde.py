@@ -8,6 +8,12 @@ for i in range(len(files)):
     files[i] = files[i][:-4]
     files[i] = f'{files[i][:13]}:{files[i][14:]}'
 
+# Lancement de la sauvegarde
+
+def load_game(fichier):
+    file = open(f'saves/{fichier}.txt', 'r')
+    test = Label(wn, text=)
+
 
 #Création de la fenêtre
 wn = Tk()
@@ -36,9 +42,9 @@ title.pack(fill=X)
 
 #Bouton pour lancer la sauvegarde
 for i in range(len(files)):
-    bc_button = Button(bg='#0CF781', fg='black', activebackground='#2CDF85')
-    sauvegarde = Button(bc_button, text=f'@{files[i][17:]}', font=('montserrat', 20), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85')
-    date_time = Button(bc_button, text=f'{files[i][:16]}', font=('montserrat', 20), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85')
+    bc_button = Button(bg='#0CF781', fg='black', activebackground='#2CDF85', command=load_game(f'{files[i]}.txt'))
+    sauvegarde = Button(bc_button, text=f'@{files[i][17:]}', font=('montserrat', 20), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85', command=load_game(f'{files[i]}.txt'))
+    date_time = Button(bc_button, text=f'{files[i][:16]}', font=('montserrat', 20), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85', command=load_game(f'{files[i]}.txt'))
     bc_button.pack(fill=X, padx=100, pady=10)
     sauvegarde.pack(fill=X)
     date_time.pack(fill=X)
