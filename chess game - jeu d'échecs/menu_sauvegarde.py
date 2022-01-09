@@ -9,7 +9,6 @@ for i in range(len(files)):
     files[i] = f'{files[i][:13]}:{files[i][14:]}'
 
 # Lancement de la sauvegarde
-
 def load_game(fichier):
     file = open(f'{currentDir}\\saves\\{fichier[:13]}-{fichier[14:]}.txt', 'r')
     test = Label(wn, text=file.readlines(), font=('montserrat', 35, 'bold', 'italic'), bg='#2CDF85', fg='black')
@@ -42,12 +41,12 @@ title.pack(fill=X)
 
 
 #Bouton pour lancer la sauvegarde
-### , command=load_game(f'{files[i]}.txt')
+### , command=load_game(f'{files[i]}')
 for i in range(len(files)):
     exec(f'save_{i} = files[i]')
-    bc_button = Button(bg='#0CF781', fg='black', activebackground='#2CDF85', command=lambda: load_game(eval(f'save_{i}')))
-    sauvegarde = Button(bc_button, text=f'@{files[i][17:]}', font=('montserrat', 20), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85', command=lambda: load_game(eval(f'save_{i}')))
-    date_time = Button(bc_button, text=f'{files[i][:16]}', font=('montserrat', 10), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85', command=lambda: load_game(eval(f'save_{i}')))
+    bc_button = Button(bg='#0CF781', fg='black', activebackground='#2CDF85', command=, command=partial(load_game, f'{files[i]}'))
+    sauvegarde = Button(bc_button, text=f'@{files[i][17:]}', font=('montserrat', 20), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85', command=, command=partial(load_game, f'{files[i]}'))
+    date_time = Button(bc_button, text=f'{files[i][:16]}', font=('montserrat', 10), bg='#0CF781', fg='black', anchor='w', borderwidth=0, activebackground='#2CDF85', command=, command=partial(load_game, f'{files[i]}'))
     bc_button.pack(fill=X, padx=100, pady=10)
     sauvegarde.pack(fill=X)
     date_time.pack(fill=X)
