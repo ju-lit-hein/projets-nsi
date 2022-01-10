@@ -1,6 +1,5 @@
 import turtle
 from time import sleep
-from pieces import deplacerUnePiece
 
 
 '''CONSTANTES'''
