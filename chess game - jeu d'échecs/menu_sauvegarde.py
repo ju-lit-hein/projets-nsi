@@ -21,7 +21,7 @@ wn = Tk()
 
 
 #Personnalisation de la fenêtre
-wn.title('Backups')
+wn.title('Saved Games')
 wn.geometry('1080x720')
 wn.minsize(470, 360)
     #Ajout d'un logo:   wn.iconbitmap('')
@@ -37,7 +37,7 @@ frame_bis = Frame(frame, bg='#2CDF85')
 
 
 #Titre
-title = Label(wn, text='Charger une partie', font=('montserrat', 35, 'bold', 'italic'), bg='#2CDF85', fg='black')
+title = Label(wn, text='Load a game', font=('montserrat', 35, 'bold', 'italic'), bg='#2CDF85', fg='black')
 title.pack(fill=X)
 
 
