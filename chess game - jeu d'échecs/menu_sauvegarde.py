@@ -40,6 +40,11 @@ frame_bis = Frame(frame, bg='#2CDF85')
 title = Label(wn, text='Load a game', font=('montserrat', 35, 'bold', 'italic'), bg='#2CDF85', fg='black')
 title.pack(fill=X)
 
+# Fonction pour retourner à l'accueil
+
+def go_home_menu():
+    wn.destroy()
+    import main_menu
 
 #Bouton pour lancer la sauvegarde
 for i in range(len(files)):
@@ -50,6 +55,10 @@ for i in range(len(files)):
     bc_button.pack(fill=X, padx=100, pady=10)
     sauvegarde.pack(fill=X)
     date_time.pack(fill=X)
+
+# Bouton pour retourner à la fenêtre d'accueil
+home = Button(wn,  text='Back', font=('montserrat', 20), bg='#0CF781', fg='black', borderwidth=0, activebackground='#2CDF85', command=go_home_menu)
+home.pack()
 
 #Placement de la frame secondaire à gauche
 frame_bis.grid(row=0, column=0, sticky=W)
