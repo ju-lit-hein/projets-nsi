@@ -24,14 +24,16 @@ title.pack()
 subtitle.pack()
 
 # Fonction qui va sur la fenêtre des sauvegardes
-### j'ai trop le seum je voulais faire :(
-### pour les boutons ajoute activebackground pour la couleur quand on clique dessus
+
+def go_save_menu():
+    wn.destroy()
+    import menu_sauvegarde
 
 #Ajout des boutons pour lancer les parties
 JvJ = Button(frame, text='J v J', font=('montserrat', 20), bg='#36B23D', fg='black')
 JvIA = Button(frame, text='J v IA', font=('montserrat', 20), bg='#36B23D', fg='black')
 IAvIA = Button(frame, text='IA v IA', font=('montserrat', 20), bg='#36B23D', fg='black')
-load_game = Button(frame, text='Load a game', font=('montserrat', 20), bg='#36B23D', fg='black')
+load_game = Button(frame, text='Load a game', font=('montserrat', 20), bg='#36B23D', fg='black', command=go_save_menu)
 Quit_button = Button(frame, text='Quit', font=('montserrat', 20), bg='#36B23D', fg='black', command = quit)
 JvJ.pack(pady=12.5, fill=X)
 JvIA.pack(pady=12.5, fill=X)
