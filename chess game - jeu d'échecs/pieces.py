@@ -183,6 +183,7 @@ class Pion:
     def get_case(self) -> object: # -> Plateau
         return self.caseActuelle
 
+
     def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le pion peut se déplacer sous forme de dictionnaire'''
         dico_deplacements_possibles = {}
