@@ -1,9 +1,6 @@
 import turtle
 
-
-#import creation_des_pieces
-
-INFORMATIONS = 'le pavé en dessous'
+INFORMATIONS = 'le pavé en dessous' ### A corriger
 '''Pour obtenir :
 - lettre et numéro d'une case (par exemple a1) : cases[caseActuelle]
 - numéro de la case actuelle (par exemple 21) : Piece.caseActuelle
@@ -16,6 +13,7 @@ S'il est Vrai les mouvement de la pièce peuvent se répéter :
     - mais aussi en 25 - 11 = 14 et ainsi de suite et pour toutes les directions
 '''
 COTE_CASES = 90
+
 PL_120 = (
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -79,9 +77,9 @@ def MontrerDeplacementsPossibles(DDP):
     if len(DDP) < 0:
         for i in DDP:
             coordonnees = i.get_coordonnees()
-            if DDP[i]:                                                                              # si la clé (la case) a pour valeur True
+            if DDP[i]: # si la clé (la case) a pour valeur True, c'est une piece  manger donc la case sera en rouge
                 carree(coordonnees[0] - 5, coordonnees[1] - 5 , 10, marquage, '#b32727', 0)
-            else:
+            else: # sinon, la case sera en bleu car ce sera un simple déplacement.
                 carree(coordonnees[0] - 5, coordonnees[1] - 5, 10, marquage, '#2f43ba', 0)        
 
 
@@ -130,15 +128,13 @@ def deplacerUnePiece(piece, case):
 
 '''Définition'''
 pieces = ('cavalier','fou','pion','reine','roi','tour')
-valeur_pieces = (3,3,1,9,0,5,0)
+valeur_pieces = (3,3,1,9,0,5)
 mouvement_cavalier = (-12,-21,-19,-8,12,21,19,8)
 mouvement_fou = (-11,-9,11,9)
 mouvement_tour = (-10,10,-1,1)
-mouvement_reine = (-11,-10,-9,-1,11,10,9,1)
-mouvement_roi = (-11,-10,-9,-1,11,10,9,1)
 
 
-### Class de chaque pièce
+### Classe de chaque pièce
 
 class Pion:
     '''class Pion   
