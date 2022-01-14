@@ -12,7 +12,6 @@ S'il est Vrai les mouvement de la pièce peuvent se répéter :
     - 36 - 11 = 25
     - mais aussi en 25 - 11 = 14 et ainsi de suite et pour toutes les directions
 '''
-COTE_CASES = 90
 
 PL_120 = (
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
