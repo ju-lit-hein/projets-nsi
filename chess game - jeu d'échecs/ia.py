@@ -1,4 +1,4 @@
-from pieces import Cavalier, Fou, Pion, Reine, Roi, Tour
+from pieces import *
 ### Fonctions d'évaluation de plusieurs même pièces
 
 def eval_piece(*args) -> list:
@@ -12,3 +12,10 @@ def eval_piece(*args) -> list:
     coups_possibles = {}
     for piece in args:
         coups_possibles[piece] = piece.mouvementPossibles()
+
+
+class IA():
+    def __init__(self) -> None:
+        pass
+
+    ### faire un algo minmax() qui prend en argument la liste retournée par eval_piece()

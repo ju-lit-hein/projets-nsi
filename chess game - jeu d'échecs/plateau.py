@@ -96,8 +96,88 @@ plateau_64 = (
         91, 92, 93, 94, 95, 96, 97, 98
 )
 
+def faire_le_plateau():
+    cases_buggees = [55, 57, 59, 61, 63]
+    '''Les cases buggées ci-dessus sont buggees du fait de la façon dont est réaliser le plateau et de la façon dont les cases sont représentées numériquement.'''
+    remplissage = 1
+    count = 1
+    for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
+
         
-class Plateau:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
+        count -= 1   # indice de la liste $cases
+        for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
+            carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
+            if count not in cases_buggees:
+                position = tortue.pos()
+                position = tuple(position)
+                position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
+                position = turtle.Vec2D(position[0], position[1])
+                #print(cases[count], position)
+                exec("case_" + cases[count] + " = Case(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            if count + 2 < 64:
+                count += 2  # saute une case
+            
+        
+        count -= 7   # indice de la liste $cases
+        for x in range(X_DEPART+90, X_FIN, COTE_CASES * 2):
+            carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
+            if count not in cases_buggees:
+                position = tortue.pos()
+                position = tuple(position)
+                position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
+                position = turtle.Vec2D(position[0], position[1])
+                exec("case_" + cases[count] + " = Case(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            if count + 2 < 64:
+                count += 2  # saute une case
+
+        remplissage = 1 - remplissage
+
+    # Création des cases bugées
+    
+    case_h2 = Case('h2', 55, turtle.Vec2D(265.00, -225.00), False, 0, 0)
+    case_b1 = Case('b1', 57, turtle.Vec2D(-275.00, -315.00), False, 0, 0)
+    case_d1 = Case('d1', 59, turtle.Vec2D(-95.00, -315.00), False, 0, 0)
+    case_f1 = Case('f1', 61, turtle.Vec2D(85.00, -315.00), False, 0, 0)
+    case_h1 = Case('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0)
+    wn.update()
+
+    import creation
+    
+    for i in creation.pions_positions:  # i est la tortue de chaque pièce
+        j = creation.pions_positions[i] # case où doivent aller les pièces au début de la partie
+        i.penup()
+        i.goto(eval("case_" + j + ".coordonnees"))
+        ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
+        # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
+        ##############################################################################################################
+    if creation.jouer_blanc: # remet en place le pièces buggées
+        exec("creation.pion_blanc_8_tortue.goto(265.00, -225.00)")
+        exec("creation.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
+        exec("creation.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
+        exec("creation.reine_blanc_tortue.goto(-95.00, -315.00)")
+        exec("creation.fou_blanc_2_tortue.goto(85.00, -315.00)")
+    else:
+        exec("creation.pion_noir_8_tortue.goto(265.00, -225.00)")
+        exec("creation.cavalier_noir_1_tortue.goto(-275.00, -315.00)")
+        exec("creation.cavalier_noir_2_tortue.goto(175.00, -315.00)")
+        exec("creation.reine_noir_tortue.goto(-5.00, -315.00)")
+        exec("creation.roi_noir_tortue.goto(-95.00, -315.00)")
+        exec("creation.fou_noir_2_tortue.goto(85.00, -315.00)")
+    # Les 5 et 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
+
+    for i in creation.pions_positions_str:
+        piece = i[:-7]
+        case = creation.pions_positions_str[i]
+        exec("case_" + case + ".ChangerLeStatutDeLaCase()")
+        exec("case_" + case + ".occupeeParQuelCamp = creation." + piece + ".couleur")
+        exec("case_" + case + ".occupeeParQuellePiece = creation." + piece)
+    # etat = etat_partie()
+    # print(etat)
+    
+    wn.update()
+    wn.mainloop()
+        
+class Case:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
     '''class Plateau:   
 
         Données : 
@@ -161,83 +241,10 @@ class Plateau:      # Nom de class Plateau qui contient plein de petites cases (
 #             etat_de_la_partie["case " + i] = [eval("case_" + i + ".occupee"), eval("case_" + i + ".occupeeParQuellePiece"), eval("case_" + i + ".occupeeParQuelCamp")]
 #         return etat_de_la_partie
 
-def faire_le_plateau():
-    cases_buggees = [55, 57, 59, 61, 63]
-    remplissage = 1
-    count = 1
-    for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
+class Plateau():
 
-        
-        count -= 1   # indice de la liste $cases
-        for x in range(X_DEPART, X_FIN, COTE_CASES * 2):
-            carree(x, y, COTE_CASES, tortue, DARK_COLOR, remplissage)   # fait un carree de l'échiquier
-            if count not in cases_buggees:
-                position = tortue.pos()
-                position = tuple(position)
-                position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
-                position = turtle.Vec2D(position[0], position[1])
-                #print(cases[count], position)
-                exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
-            if count + 2 < 64:
-                count += 2  # saute une case
-            
-        
-        count -= 7   # indice de la liste $cases
-        for x in range(X_DEPART+90, X_FIN, COTE_CASES * 2):
-            carree(x, y, COTE_CASES, tortue, DARK_COLOR, 1 - remplissage)   # fait un carree de l'échiquier
-            if count not in cases_buggees:
-                position = tortue.pos()
-                position = tuple(position)
-                position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
-                position = turtle.Vec2D(position[0], position[1])
-                exec("case_" + cases[count] + " = Plateau(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
-            if count + 2 < 64:
-                count += 2  # saute une case
-
-        remplissage = 1 - remplissage
-
-    # Création des cases bugées
+    def __init__(self) -> None:
+        self.plt = faire_le_plateau()
     
-    case_h2 = Plateau('h2', 55, turtle.Vec2D(265.00, -225.00), False, 0, 0)
-    case_b1 = Plateau('b1', 57, turtle.Vec2D(-275.00, -315.00), False, 0, 0)
-    case_d1 = Plateau('d1', 59, turtle.Vec2D(-95.00, -315.00), False, 0, 0)
-    case_f1 = Plateau('f1', 61, turtle.Vec2D(85.00, -315.00), False, 0, 0)
-    case_h1 = Plateau('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0)
-    wn.update()
-
-    import creation
-    
-    for i in creation.pions_positions:  # i est la tortue de chaque pièce
-        j = creation.pions_positions[i] # case où doivent aller les pièces au début de la partie
-        i.penup()
-        i.goto(eval("case_" + j + ".coordonnees"))
-        ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
-        # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
-        ##############################################################################################################
-    if creation.jouer_blanc: # remet en place le pièces buggées
-        exec("creation.pion_blanc_8_tortue.goto(265.00, -225.00)")
-        exec("creation.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
-        exec("creation.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
-        exec("creation.reine_blanc_tortue.goto(-95.00, -315.00)")
-        exec("creation.fou_blanc_2_tortue.goto(85.00, -315.00)")
-    else:
-        exec("creation.pion_noir_8_tortue.goto(265.00, -225.00)")
-        exec("creation.cavalier_noir_1_tortue.goto(-275.00, -315.00)")
-        exec("creation.cavalier_noir_2_tortue.goto(175.00, -315.00)")
-        exec("creation.reine_noir_tortue.goto(-5.00, -315.00)")
-        exec("creation.roi_noir_tortue.goto(-95.00, -315.00)")
-        exec("creation.fou_noir_2_tortue.goto(85.00, -315.00)")
-    # Les 5 et 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
-
-    for i in creation.pions_positions_str:
-        piece = i[:-7]
-        case = creation.pions_positions_str[i]
-        exec("case_" + case + ".ChangerLeStatutDeLaCase()")
-        exec("case_" + case + ".occupeeParQuelCamp = creation." + piece + ".couleur")
-        exec("case_" + case + ".occupeeParQuellePiece = creation." + piece)
-    # etat = etat_partie()
-    # print(etat)
-    
-    wn.update()
-    wn.mainloop()
-
+    def UpdatePlateau():
+        wn.update()

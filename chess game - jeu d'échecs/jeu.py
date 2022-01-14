@@ -4,4 +4,4 @@ import pieces
 import time
 
 
-plateau.faire_le_plateau()
+plt = plateau.Plateau()
