@@ -177,7 +177,7 @@ def faire_le_plateau():
     wn.update()
     wn.mainloop()
         
-class Case:      # Nom de class Plateau qui contient plein de petites cases (je trouve ca plus joli que class Case)
+class Case:
     '''class Plateau:   
 
         Données : 
@@ -240,11 +240,3 @@ class Case:      # Nom de class Plateau qui contient plein de petites cases (je 
 #         for i in cases:
 #             etat_de_la_partie["case " + i] = [eval("case_" + i + ".occupee"), eval("case_" + i + ".occupeeParQuellePiece"), eval("case_" + i + ".occupeeParQuelCamp")]
 #         return etat_de_la_partie
-
-class Plateau():
-
-    def __init__(self) -> None:
-        self.plt = faire_le_plateau()
-    
-    def UpdatePlateau():
-        wn.update()
