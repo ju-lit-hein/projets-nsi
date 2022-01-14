@@ -1,6 +1,6 @@
 from os import path
 import turtle
-from plateau import Plateau, wn
+from plateau import wn
 from pieces import CASES, Pion, Tour, Fou, Reine, Cavalier, Roi
 
 
