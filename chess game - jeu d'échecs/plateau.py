@@ -151,6 +151,8 @@ class Case:
     def get_piece(self) -> object: # -> Piece
         return self.occupeeParQuellePiece
 
+    def get_numero(self) -> int:
+        return self.numero
 
 #def faire_le_plateau():
 cases_buggees = [55, 57, 59, 61, 63]
