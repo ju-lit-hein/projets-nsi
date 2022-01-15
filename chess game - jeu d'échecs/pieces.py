@@ -159,6 +159,7 @@ class Pion:
         else:                                               # si le pion est orienté vers le bas
             self.deplacementsPossibles = (16,8,9,7)         # tuple -> déplacements possibles de la pièce
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
+        self.alive = True
 
     def __str__(self):
         return f"Ce pion {self.couleur} est sur la case {self.caseActuelle}. Déja bougé = {self.dejaBouge}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
@@ -177,6 +178,9 @@ class Pion:
     
     def get_case(self) -> object: # -> Plateau
         return self.caseActuelle
+
+    def set_dead(self):
+        self.alive = False
 
 
     def MouvementsPossibles(self) -> dict:
@@ -224,6 +228,7 @@ class Cavalier:
         self.couleur = couleur
         self.deplacementsPossibles = (-12,-21,-19,-8,12,21,19,8)
         self.tortue = tortue
+        self.alive = True
 
     def __str__(self):
         return f"Ce cavalier {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
@@ -242,6 +247,9 @@ class Cavalier:
     
     def get_case(self) -> object: # -> Plateau
         return self.caseActuelle
+
+    def set_dead(self):
+        self.alive = False
         
     def MouvementsPossibles(self) -> dict:
         '''Retourne le numéro de toutes les cases où le cavalier peut se déplacer sous forme de dictionnaire'''
@@ -270,7 +278,8 @@ class Fou:
         self.couleur = couleur
         self.deplacementsPossibles = (-11,-9,11,9)
         self.tortue = tortue
-    
+        self.alive = True
+
     def __str__(self):
         return f"Ce fou {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
 
@@ -288,6 +297,9 @@ class Fou:
     
     def get_case(self) -> object: # -> Plateau
         return self.caseActuelle
+
+    def set_dead(self):
+        self.alive = False
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
@@ -315,6 +327,7 @@ class Tour:
         self.couleur = couleur
         self.deplacementsPossibles = (-10,10,-1,1)
         self.tortue = tortue
+        self.alive = True
 
     def __str__(self):
         return f"Cette tour {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
@@ -333,6 +346,9 @@ class Tour:
     
     def get_case(self) -> object: # -> Plateau
         return self.caseActuelle
+
+    def set_dead(self):
+        self.alive = False
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
@@ -360,6 +376,7 @@ class Reine:
         self.couleur = couleur
         self.deplacementsPossibles = (-9, -8, -7, -1, 1, 7, 8, 9)
         self.tortue = tortue
+        self.alive = True
 
     def __str__(self):
         return f"Cette reine {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
@@ -378,6 +395,9 @@ class Reine:
     
     def get_case(self) -> object: # -> Plateau
         return self.caseActuelle
+
+    def set_dead(self):
+        self.alive = False
         
     def MouvementsPossibles(self) -> dict:
         dico_deplacements_possibles = {}
