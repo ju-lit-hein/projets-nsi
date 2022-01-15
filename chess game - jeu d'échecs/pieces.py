@@ -1,4 +1,5 @@
 import turtle
+from functools import partial
 
 INFORMATIONS = 'le pavé en dessous' ### A corriger
 '''Pour obtenir :
@@ -160,6 +161,7 @@ class Pion:
             self.deplacementsPossibles = (16,8,9,7)         # tuple -> déplacements possibles de la pièce
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
         self.alive = True
+        self.tortue.onclick(partial(MontrerDeplacementsPossibles(self.MouvementsPossibles())))
 
     def __str__(self):
         return f"Ce pion {self.couleur} est sur la case {self.caseActuelle}. Déja bougé = {self.dejaBouge}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
@@ -451,36 +453,3 @@ class Roi:
             if eval("case_" + CASES[self.caseActuelle + i] + ".occupeeParQuelCamp") != self.couleur:                                    # si la case, n'est pas occupée par un pièce du même camp
                 dico_deplacements_possibles[CASES[self.caseActuelle + i]] = eval("case_" + CASES[self.caseActuelle] + ".occupee")   # la case est ajoutée au $dico_deplacements_possibles avec pour valeur si la case est occupée ou non (si la case est libre -> rien à manger -> False | si la case est occupée c'est forcément une pièce du camp adverse -> il faut manger la pièce -> True)
         return dico_deplacements_possibles
-def placement_piece():
-    import creation
-        
-    for i in creation.pions_positions:  # i est la tortue de chaque pièce
-        j = creation.pions_positions[i] # case où doivent aller les pièces au début de la partie
-        i.penup()
-        i.goto(eval("case_" + j + ".coordonnees"))
-        ########################## Pour tester le cases prises en compte par la boucle -> la case h2 n'est pas prise en compte et une case sur deux bug après
-        # carree(eval("case_" + j + ".coordonnees[0]"), eval("case_" + j + ".coordonnees[1]"), 45, tortue, '#ff0000', 0)
-        ##############################################################################################################
-    if creation.jouer_blanc: # remet en place le pièces buggées
-        exec("creation.pion_blanc_8_tortue.goto(265.00, -225.00)")
-        exec("creation.cavalier_blanc_1_tortue.goto(-275.00, -315.00)")
-        exec("creation.cavalier_blanc_2_tortue.goto(175.00, -315.00)")
-        exec("creation.reine_blanc_tortue.goto(-95.00, -315.00)")
-        exec("creation.fou_blanc_2_tortue.goto(85.00, -315.00)")
-    else:
-        exec("creation.pion_noir_8_tortue.goto(265.00, -225.00)")
-        exec("creation.cavalier_noir_1_tortue.goto(-275.00, -315.00)")
-        exec("creation.cavalier_noir_2_tortue.goto(175.00, -315.00)")
-        exec("creation.reine_noir_tortue.goto(-5.00, -315.00)")
-        exec("creation.roi_noir_tortue.goto(-95.00, -315.00)")
-        exec("creation.fou_noir_2_tortue.goto(85.00, -315.00)")
-    # Les 5 et 6 lignes au-dessus sont présentes car le code bug et après des heures (littéralement des heures) on n'a trouver aucune solution car tout est correct 
-
-    for i in creation.pions_positions_str:
-        piece = i[:-7]
-        case = creation.pions_positions_str[i]
-        exec("case_" + case + ".ChangerLeStatutDeLaCase()")
-        exec("case_" + case + ".occupeeParQuelCamp = creation." + piece + ".couleur")
-        exec("case_" + case + ".occupeeParQuellePiece = creation." + piece)
-    # etat = etat_partie()
-    # print(etat)
