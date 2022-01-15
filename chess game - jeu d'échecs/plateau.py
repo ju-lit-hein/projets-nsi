@@ -199,7 +199,7 @@ wn.update()
 
 
 wn.update()
-wn.exitonclick()
+wn.mainloop()
         
 
 
