@@ -20,8 +20,10 @@ frame = Frame(wn, bg='#2CDF85')
 #Création du titre et du sous-titre
 title = Label(frame, text='Chess Game', font=('montserrat', 35, 'bold'), bg='#2CDF85', fg='black')
 subtitle = Label(frame, text='Created by Julien and Lukas', font=('montserrat', 10, 'bold', 'italic'), bg='#2CDF85', fg='black')
+thanks = Label(frame, text='A thank you to Sayfa', font=('montserrat', 10, 'bold', 'italic'), bg='#2CDF85', fg='black')
 title.pack()
 subtitle.pack()
+thanks.pack()
 
 # Fonction qui va sur la fenêtre des sauvegardes
 

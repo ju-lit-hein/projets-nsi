@@ -1,7 +1,9 @@
-import turtle
-import plateau
 import pieces
-import time
+import creation
 
+class Jeu:
+    def __init__(self) -> None:
+        self.tour = creation.jouer_blanc
 
-plateau.faire_le_plateau()
+    def changeTour(self):
+        self.tour = bool(self.tour * False)
