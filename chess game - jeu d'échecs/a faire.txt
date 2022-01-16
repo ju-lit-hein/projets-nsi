@@ -7,3 +7,10 @@ faire la fonction qui save la partie en cours
     le nom de la save sera la date et l'heure de la save
 
 modifier ligne 194 & 195 pieces.py pour que case_0 et case_1 soient égales aux objet de la case <Case object at 0x0000001CAB541D5>
+
+**notes**
+idée de refaire le plateau et le placement des pions à chaque fois (ce qui permettrait d'utiliser wn.exitonclick() et donc de n eplus blocker la suite du code
+avec faire_le_plateau('tcfrkfct/pppppppp/8/8/8/8/PPPPPPPP/TCFRKFCT')
+
+chercher comment rendre un dessin turtle cliquable
+
