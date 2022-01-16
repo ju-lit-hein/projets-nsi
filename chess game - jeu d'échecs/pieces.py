@@ -191,19 +191,21 @@ class Pion:
         point_de_depart = self.caseActuelle
         
         if self.dejaBouge == False:                                             # si le pion n'a pas encore bougé et peut donc avancer de deux cases d'un coup
-            case_0 = CASES[self.caseActuelle + self.deplacementsPossibles[0]]   # case où le pion à le droit d'aller
-            case_1 = CASES[self.caseActuelle + self.deplacementsPossibles[1]]   # case où le pion à le droit d'aller
+            case_0 = point_de_depart + 20                                       # case où le pion à le droit d'aller
+            case_1 = point_de_depart + 10                                       # case où le pion à le droit d'aller
 
-            if not(eval("case_" + case_0 + ".occupee")):                        # si la case est libre
+            if not case_0.est_occupee():                                        # si la case est libre
                 dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
 
-            if not(eval("case_" + case_1 + ".occupee")):                        # si la case est libre
+            if not case_1.est_occupee():                                        # si la case est libre
                 dico_deplacements_possibles[case_1] = False                     # case où le pion peut aller
 
         else:
-            case_0 = CASES[self.caseActuelle + self.deplacementsPossibles[1]]   # case où le pion à le droit d'aller
-            if not(eval("case_" + case_0 + ".occupee")) and self.caseActuelle + self.deplacementsPossibles[1] <= 0:                        # si la case est libre
+            case_0 = point_de_depart + 10                                       # case où le pion à le droit d'aller
+
+            if not case_0.est_occupee() and :                        # si la case est libre
                 dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
+
         if self.caseActuelle + self.deplacementsPossibles[2] <= 0 or self.caseActuelle + self.deplacementsPossibles[3] <= 0:
             for i in self.deplacementsPossibles[2:]:
                 case = CASES[self.caseActuelle + i]                                 # cases où le pion à le droit d'aller pour manger une autre pièce

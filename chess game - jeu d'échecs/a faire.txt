@@ -14,3 +14,6 @@ avec faire_le_plateau('tcfrkfct/pppppppp/8/8/8/8/PPPPPPPP/TCFRKFCT')
 
 chercher comment rendre un dessin turtle cliquable
 
+utile pour les lignes 194 & 195
+faire en sorte que objet Case + int = self.numero + int
+    self.numero + int = other

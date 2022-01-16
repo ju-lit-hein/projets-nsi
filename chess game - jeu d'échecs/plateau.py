@@ -120,6 +120,15 @@ class Case:
 
     def __str__(self) -> str:
         return f'La case {self.case} | numéro {self.numero} a pour coordonnees {self.coordonnees} | Occupee : {self.occupee} | Piece : {self.occupeeParQuellePiece} | Camp : {self.occupeeParQuelCamp}'
+    
+    def __add__(self, int) -> object: # Case
+        other_num = self.numero + int
+        try:
+            other = eval(f"case_{cases[other_num]}")
+        except IndexError:
+            return -1
+        return other
+
 
     def ChangerLeStatutDeLaCase(self):
         if self.occupee:
@@ -197,6 +206,7 @@ case_b1 = Case('b1', 57, turtle.Vec2D(-275.00, -315.00), False, 0, 0)
 case_d1 = Case('d1', 59, turtle.Vec2D(-95.00, -315.00), False, 0, 0)
 case_f1 = Case('f1', 61, turtle.Vec2D(85.00, -315.00), False, 0, 0)
 case_h1 = Case('h1', 63, turtle.Vec2D(265.00, -315.00), False, 0, 0)
+case_out = Case('out', -1, turtle.Vec2D(-750.00, 0.00), False, 0, 0)
 wn.update()
 
 import creation
