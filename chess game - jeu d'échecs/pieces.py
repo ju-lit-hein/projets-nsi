@@ -203,7 +203,7 @@ class Pion:
         else:
             case_0 = point_de_depart + 10                                       # case où le pion à le droit d'aller
 
-            if not case_0.est_occupee() and :                        # si la case est libre
+            if case_0 != -1 and not case_0.est_occupee():              # si la case est libre
                 dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
 
         if self.caseActuelle + self.deplacementsPossibles[2] <= 0 or self.caseActuelle + self.deplacementsPossibles[3] <= 0:
