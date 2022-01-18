@@ -131,10 +131,7 @@ class Case:
 
 
     def ChangerLeStatutDeLaCase(self):
-        if self.occupee:
-            self.occupee = False
-        else:
-            self.occupee = True
+        self.occupee = not self.occupee
     
     def ChangerLaPiece(self, piece):    
         self.occupeeParQuellePiece == piece
