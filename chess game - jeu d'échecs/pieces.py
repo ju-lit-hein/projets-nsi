@@ -156,9 +156,9 @@ class Pion:
         self.dejaBouge = dejaBouge                          # bool -> vérifie si le pion a déjà bougé
         self.sens = sens                                    # bool -> voir définition de a class
         if self.sens:                                  # si le pion est orinté vers le haut
-            self.deplacementsPossibles = (-16,-8,-9,-7)     # tuple -> déplacements possibles de la pièce
+            self.deplacementsPossibles = (-20,-10,-11,-9)     # tuple -> déplacements possibles de la pièce
         else:                                               # si le pion est orienté vers le bas
-            self.deplacementsPossibles = (16,8,9,7)         # tuple -> déplacements possibles de la pièce
+            self.deplacementsPossibles = (20,10,11,9)         # tuple -> déplacements possibles de la pièce
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
         self.alive = True
         self.tortue.onclick(partial(MontrerDeplacementsPossibles(self.MouvementsPossibles())))
@@ -191,8 +191,8 @@ class Pion:
         point_de_depart = self.caseActuelle
         
         if self.dejaBouge == False:                                             # si le pion n'a pas encore bougé et peut donc avancer de deux cases d'un coup
-            case_0 = point_de_depart + 20                                       # case où le pion à le droit d'aller
-            case_1 = point_de_depart + 10                                       # case où le pion à le droit d'aller
+            case_0 = point_de_depart + self.deplacementsPossibles[0]            # case où le pion à le droit d'aller
+            case_1 = point_de_depart + self.deplacementsPossibles[1]            # case où le pion à le droit d'aller
 
             if not case_0.est_occupee():                                        # si la case est libre
                 dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
@@ -201,12 +201,12 @@ class Pion:
                 dico_deplacements_possibles[case_1] = False                     # case où le pion peut aller
 
         else:
-            case_0 = point_de_depart + 10                                       # case où le pion à le droit d'aller
+            case_0 = point_de_depart + self.deplacementsPossibles[1]            # case où le pion à le droit d'aller
 
-            if case_0 != -1 and not case_0.est_occupee():              # si la case est libre
+            if case_0 != -1 and not case_0.est_occupee():                       # si la case est libre
                 dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
 
-        if self.caseActuelle + self.deplacementsPossibles[2] <= 0 or self.caseActuelle + self.deplacementsPossibles[3] <= 0:
+        if self.caseActuelle + 9 >= 0 or self.caseActuelle + 11 >= 0:
             for i in self.deplacementsPossibles[2:]:
                 case = CASES[self.caseActuelle + i]                                 # cases où le pion à le droit d'aller pour manger une autre pièce
                 if eval("case_" + case + ".occupee"):                               # si il y a une pièce a manger
