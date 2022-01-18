@@ -38,7 +38,6 @@ wn.addshape(chemin_reine_noir)
 wn.addshape(chemin_roi_noir)
 
 # création des tortues des pièces
-
 pion_blanc_1_tortue = turtle.Turtle(shape=chemin_pion_blanc)
 pion_blanc_2_tortue = turtle.Turtle(shape=chemin_pion_blanc)
 pion_blanc_3_tortue = turtle.Turtle(shape=chemin_pion_blanc)

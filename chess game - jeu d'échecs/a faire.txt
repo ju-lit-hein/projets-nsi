@@ -17,3 +17,4 @@ chercher comment rendre un dessin turtle cliquable
 utile pour les lignes 194 & 195
 faire en sorte que objet Case + int = self.numero + int
     self.numero + int = other
+    ### A VERIFIER
