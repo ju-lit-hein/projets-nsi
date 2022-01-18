@@ -165,6 +165,7 @@ cases_buggees = [55, 57, 59, 61, 63]
 '''Les cases buggées ci-dessus sont buggees du fait de la façon dont est réaliser le plateau et de la façon dont les cases sont représentées numériquement.'''
 remplissage = 1
 count = 1
+objets_cases = {}
 for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
 
     
@@ -177,7 +178,8 @@ for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
             position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
             #print(cases[count], position)
-            exec("case_" + cases[count] + " = Case(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec(f"case_{cases[count]} = Case(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec(f'objets_cases[case_{cases[count]} = case_{cases[count]}')
         if count + 2 < 64:
             count += 2  # saute une case
         
@@ -190,7 +192,8 @@ for y in range(Y_DEPART, Y_FIN, -COTE_CASES):
             position = tuple(position)
             position = (position[0] + COTE_CASES/2, position[1] + COTE_CASES/2)
             position = turtle.Vec2D(position[0], position[1])
-            exec("case_" + cases[count] + " = Case(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec("case_{cases[count]} = Case(cases[count], count, position, False, 0, 0)")   # crée la variable de nom $case_** ayant pour valeur la class de la case
+            exec(f'obejts_cases[case_{cases[count]} = case_{cases[count]}')
         if count + 2 < 64:
             count += 2  # saute une case
 
