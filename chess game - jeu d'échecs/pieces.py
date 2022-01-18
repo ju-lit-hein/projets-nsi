@@ -209,9 +209,8 @@ class Pion:
 
         if self.caseActuelle + 9 >= 0 or self.caseActuelle + 11 >= 0:
             for i in self.deplacementsPossibles[2:]:
-                case = CASES[self.caseActuelle + i]                                 # cases où le pion à le droit d'aller pour manger une autre pièce
-                if eval("case_" + case + ".occupee"):                               # si il y a une pièce a manger
-                    if eval("case_" + case + ".occupeeParQuelCamp") != self.couleur and eval("case_" + case + ".occupeeParQuelCamp") != 0:
+                case = self.caseActuelle + i                                    # cases où le pion à le droit d'aller pour manger une autre pièce
+                if case.est_occupee() and case.get_camp() != self.couleur and case.get_camp() != 0:                           # si il y a une pièce a manger
                         dico_deplacements_possibles[case] = True
         return dico_deplacements_possibles
 
@@ -254,6 +253,7 @@ class Cavalier:
         return self.caseActuelle
 
     def set_dead(self):
+        '''Assassine la pièce'''
         self.alive = False
         
     def MouvementsPossibles(self) -> dict:
