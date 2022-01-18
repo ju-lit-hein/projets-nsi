@@ -161,7 +161,6 @@ class Pion:
             self.deplacementsPossibles = (20,10,11,9)         # tuple -> déplacements possibles de la pièce
         self.tortue = tortue                                # turtle.Turtle Object -> tortue qui a l'image du pion
         self.alive = True
-        self.tortue.onclick(partial(MontrerDeplacementsPossibles(self.MouvementsPossibles())))
 
     def __str__(self):
         return f"Ce pion {self.couleur} est sur la case {self.caseActuelle}. Déja bougé = {self.dejaBouge}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
@@ -210,7 +209,7 @@ class Pion:
         if self.caseActuelle + 9 >= 0 or self.caseActuelle + 11 >= 0:
             for i in self.deplacementsPossibles[2:]:
                 case = self.caseActuelle + i                                    # cases où le pion à le droit d'aller pour manger une autre pièce
-                if case.est_occupee() and case.get_camp() != self.couleur and case.get_camp() != 0:                           # si il y a une pièce a manger
+                if  type(case) != int and case.est_occupee() and case.get_camp() != self.couleur and case.get_camp() != 0:                           # si il y a une pièce a manger
                         dico_deplacements_possibles[case] = True
         return dico_deplacements_possibles
 
@@ -238,18 +237,23 @@ class Cavalier:
         return f"Ce cavalier {self.couleur} est sur la case {self.caseActuelle}. Il est représenté par la tortue {[i for i, a in locals().items() if a == self.tortue]}"
 
     def aller_a(self, x, y):
+        '''déplace la pièce à (x,y)'''
         self.tortue.goto(x, y)
     
     def cacher(self):
+        '''fait disparaître la tortue de la pièce'''
         self.tortue.hideturtle()
     
     def ChangerLaCase(self, case):
+        '''modifie l'attribut de la case de la pièce'''
         self.caseActuelle = case
 
     def get_camp(self) -> str:
+        '''retourne le camp de la pièce'''
         return self.couleur
     
     def get_case(self) -> object: # -> Plateau
+        '''retourne l'objet de la case de la pièce'''
         return self.caseActuelle
 
     def set_dead(self):
