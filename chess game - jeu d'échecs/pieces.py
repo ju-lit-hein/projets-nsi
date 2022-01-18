@@ -194,10 +194,11 @@ class Pion:
             case_0 = point_de_depart + self.deplacementsPossibles[0]            # case où le pion à le droit d'aller
             case_1 = point_de_depart + self.deplacementsPossibles[1]            # case où le pion à le droit d'aller
 
-            if not case_0.est_occupee():                                        # si la case est libre
+
+            if type(case_0) != int and not case_0.est_occupee():                                        # si la case est libre
                 dico_deplacements_possibles[case_0] = False                     # case où le pion peut aller
 
-            if not case_1.est_occupee():                                        # si la case est libre
+            if type(case_1) != int and not case_1.est_occupee():                                        # si la case est libre
                 dico_deplacements_possibles[case_1] = False                     # case où le pion peut aller
 
         else:
@@ -209,6 +210,7 @@ class Pion:
         if self.caseActuelle + 9 >= 0 or self.caseActuelle + 11 >= 0:
             for i in self.deplacementsPossibles[2:]:
                 case = CASES[self.caseActuelle + i]                                 # cases où le pion à le droit d'aller pour manger une autre pièce
+                exec('print(case_a4)')
                 if eval("case_" + case + ".occupee"):                               # si il y a une pièce a manger
                     if eval("case_" + case + ".occupeeParQuelCamp") != self.couleur and eval("case_" + case + ".occupeeParQuelCamp") != 0:
                         dico_deplacements_possibles[case] = True
