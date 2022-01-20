@@ -19,3 +19,5 @@ class IA():
         pass
 
     ### faire un algo minmax() qui prend en argument la liste retournée par eval_piece()
+
+# l'algorithme minimax utilisera le principe de récursivité
