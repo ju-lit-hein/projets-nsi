@@ -29,5 +29,5 @@ def minimax(depth, score):
     assert type(score) == dict, "score n'est pas un dictionnaire"
     if depth:
         for dpd in score:
-
+            pass
 ### voir si c'est pas mieux d'utiliser une liste [key, value, ...]
