@@ -1,7 +1,7 @@
 from pieces import *
 ### Fonctions d'évaluation de plusieurs même pièces
 
-def eval_piece(*args) -> list:
+def eval_piece(*args) -> dict:
     '''Calcul la pièce ayant le plus de valeur parmis plusieurs pièces du même type
     Un pion qui peut manger un reine aura plus de valeur qu'un pion qui peut manger un autre pion
     '''
@@ -13,6 +13,9 @@ def eval_piece(*args) -> list:
     for piece in args:
         coups_possibles[piece] = piece.mouvementPossibles()
 
+    note_pieces = {}
+    return note_pieces # note_pieces est le dictionnaire contenant {objet piece : score}
+
 
 class IA():
     def __init__(self) -> None:
@@ -21,3 +24,10 @@ class IA():
     ### faire un algo minmax() qui prend en argument la liste retournée par eval_piece()
 
 # l'algorithme minimax utilisera le principe de récursivité
+
+def minimax(depth, score):
+    assert type(score) == dict, "score n'est pas un dictionnaire"
+    if depth:
+        for dpd in score:
+
+### voir si c'est pas mieux d'utiliser une liste [key, value, ...]
