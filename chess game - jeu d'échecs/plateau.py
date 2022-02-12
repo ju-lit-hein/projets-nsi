@@ -3,6 +3,26 @@ import pygame
 from pygame.locals import *
 from constants import *
 
+
+class Board:
+    def __init__(self, Width, Height, Rows, Columns, Square, Win)
+        self.Width = Width
+        self.Height = Height
+        self.Rows = Rows
+        self.Columns = Columns
+        self.Square = Square
+        self.Win = Win
+        self.Board = []
+        self.createBoard()
+
+    def createBoard(self):
+        for row in range(self.Rows):
+            self.Board.append([0 for i in range(self.Columns)])
+            for column in range(self.Columns):
+                if row == 1:
+                    self.Board[row][column] = Pawn(self.Square, )
+
+'''
 pygame.init()
 
 pygame.display.set_caption('Chess Game')
@@ -33,3 +53,4 @@ pygame.draw.rect(window,(0,0,0),[size,size,boardLength*size,boardLength*size],1)
 pygame.display.update()
 sleep(1)
 print()
+'''
