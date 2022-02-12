@@ -6,20 +6,20 @@ currentDir = os.path.abspath(os.path.curdir)
 
 
 #Chemins d'accès
-path_to_white_pawn = r"s%\\PIECES\\pion blanc.gif" % currentDir
-path_to_white_bishop = r"s%\\PIECES\\fou blanc.gif" % currentDir
-path_to_white_knight = r"s%\\PIECES\\cavalier blanc.gif" % currentDir
-path_to_white_rook = r"s%\\PIECES\\tour blanc.gif" % currentDir
-path_to_white_queen = r"s%\\PIECES\\reine blanc.gif" % currentDir
-path_to_white_king = r"s%\\PIECES\\roi blanc.gif" % currentDir
+path_to_white_pawn = r"s%\\pieces\\pion blanc.gif" % currentDir
+path_to_white_bishop = r"s%\\pieces\\fou blanc.gif" % currentDir
+path_to_white_knight = r"s%\\pieces\\cavalier blanc.gif" % currentDir
+path_to_white_rook = r"s%\\pieces\\tour blanc.gif" % currentDir
+path_to_white_queen = r"s%\\pieces\\reine blanc.gif" % currentDir
+path_to_white_king = r"s%\\pieces\\roi blanc.gif" % currentDir
 
 
-path_to_black_pawn = r"s%\\PIECES\\pion noir.gif" % currentDir
-path_to_black_bishop = r"s%\\PIECES\\fou noir.gif" % currentDir
-path_to_black_knight = r"s%\\PIECES\\cavalier noir.gif" % currentDir
-path_to_black_rook = r"s%\\PIECES\\tour noir.gif" % currentDir
-path_to_black_queen = r"s%\\PIECES\\reine noir.gif" % currentDir
-path_to_black_king = r"s%\\PIECES\\roi noir.gif" % currentDir
+path_to_black_pawn = r"s%\\pieces\\pion noir.gif" % currentDir
+path_to_black_bishop = r"s%\\pieces\\fou noir.gif" % currentDir
+path_to_black_knight = r"s%\\pieces\\cavalier noir.gif" % currentDir
+path_to_black_rook = r"s%\\pieces\\tour noir.gif" % currentDir
+path_to_black_queen = r"s%\\pieces\\reine noir.gif" % currentDir
+path_to_black_king = r"s%\\pieces\\roi noir.gif" % currentDir
 
 
 #Création des pièces
