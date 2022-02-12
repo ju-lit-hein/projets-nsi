@@ -1,0 +1,2 @@
+This is the old project source code. We used first the library "Turtle" but we discovered (too late) that it was impossible (or too diffcult for us) to make the game using this library so we decide to use "pygame". So the main source code was made after the one in this folder "old".
+In this file, the code is (very) uncomplete and won't work.
