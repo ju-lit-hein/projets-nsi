@@ -11,5 +11,9 @@ WHITE_BOARD_COLOR = ("#dfdfdf")
 DARK_BOARD_COLOR = ('#5c3427')
 FONT = pygame.font.SysFont('Corbel', 30) # font and font size
 
+### Pieces and skins
+
+
 '''uneditable constants (could break the game)'''
 BOARD_WIDTH = (600, 600)
+
