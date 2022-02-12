@@ -6,22 +6,14 @@ from pieces import *
 
 
 class Board:
-    def __init__(self, Width, Height, Rows, Columns, Square, Win)
-        self.Width = Width
-        self.Height = Height
-        self.Rows = Rows
-        self.Columns = Columns
-        self.Square = Square
-        self.Win = Win
-        self.Board = []
-        self.createBoard()
-
-    def createBoard(self):
-        for row in range(self.Rows):
-            self.Board.append([0 for i in range(self.Columns)])
-            for column in range(self.Columns):
-                if row == 1:
-                    self.Board[row][column] = Pawn(self.Square, )
+    rect = ()
+    X = rect[0]
+    Y = rect[1]
+    def __init__(self, rows, columns):
+        self.rows = rows
+        self.colums = columns
+        self.ready = False
+        self.last
 
 '''
 pygame.init()
