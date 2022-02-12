@@ -2,6 +2,7 @@ from time import sleep
 import pygame
 from pygame.locals import *
 from constants import *
+from pieces import *
 
 
 class Board:
