@@ -1,1 +1,2 @@
 - retirer toutes les conditions comprenant une couleur 's' car elle correspond aux spectateurs de la partie et il n'y en aura pas
+- comprendre comment fonctionne client.py et server.py pour 'transformer' en base du jeu
