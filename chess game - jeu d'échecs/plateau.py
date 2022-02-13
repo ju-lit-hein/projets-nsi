@@ -180,7 +180,7 @@ class Board:
         return False
 
     def move(self, start, end, color):
-        checkedBefore = self.isChecked(color):
+        checkedBefore = self.isChecked(color)
         changed = True
         nBoard = self.board.copy()
         if nBoard[end[0]][end[1]].pawn:
