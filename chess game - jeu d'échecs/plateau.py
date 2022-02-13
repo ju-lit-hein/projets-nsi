@@ -1,4 +1,4 @@
-from time import sleep
+import time
 import pygame
 from pygame.locals import *
 from constants import *
@@ -58,10 +58,204 @@ class Board:
 
             xx = (4 - x) + round(self.X + (x * self.rect[2] / 8))
             yy = 3 + round(self.Y + (y * self.rect[3] / 8))
-            pygame.draw.circle(win, (0,0,,255), (xx+32, yy+30), 34, 4)
+            pygame.draw.circle(win, (0,0,255), (xx+32, yy+30), 34, 4)
 
         s = None
+        for row in range(self.rows):
+            for column in range(self.columns):
+                if self.board[row][column] != 0:
+                    self.board[row][column].draw(win, color)
+                    if self.board[row][column].isSelected():
+                        s = (row, column)
+
+    def getDangerMoves(self, color):
+        dangerMoves = []
+        for row in range(self.rows):
+            for column in range(self.columns):
+                if self.board[row][column] != 0:
+                    if self.board[row][column].color != color:
+                        for move in self.board[row][column].moveList:
+                            dangerMoves.append(move)
+        return dangerMoves
+
+    def isChecked(self, color):
+        self.updateMoves()
+        dangerMoves = self.getDangerMoves(color)
+        kingCoord = (-1, -1)
+        for row in range(self.rows):
+            for column in range(self.columns):
+                if self.board[row][column] != 0:
+                    if self.board[row][column].king and self.board[row][column].color == color:
+                        kingCoord = (column, row)
+
+        if kingCoord in dangerMoves:
+            return True
+        return False
+
+    def select(self, column, row, color):
+        changer = False
+        previous = (-1, -1)
+        for loopRow in range(self.rows):
+            for loopColumn in range(self.columns):
+                if self.board[loopRow][loopColumn] != 0:
+                    if self.board[loopRow][loopColumn].selected:
+                        previous = (loopRow, loopColumn)
+
+        # if piece
+        if self.board[row][column] == 0 and previous != (-1, -1):
+            moves = self.board[previous[0]][previous[1]].moveList
+            if (column, row) in moves:
+                changed = self.move(previous, (row, column), color)
+        else:
+            if previous == (-1, -1):
+                self.reserSelected()
+                if self.board[row][column] != 0:
+                    self.board[row][column].selected = True
+            else:
+                if self.board[previous[0]][previous[1]].color != self.board[row][column].color:
+                    moves = self.board[previous[0]][previous[1]].moveList
+                    if (column, row) in moves:
+                        changed = self.move(previous, (row, column), color)
+                    if self.board[row][column].color == color:
+                        self.board[row][column].selected = True
+                else:
+                    if self.board[row][column].color == color:
+                        # the castling
+                        self.resetSelected()
+                        if self.board[previous[0]][previous[1]].moved == False and self.board[previous[0]][previous[1]].rook and self.board[row][column].king and column != previous[1] and previous != (-1, -1):
+                            castle = True
+                            if previous[1] < column:
+                                for loopColumn in range(previous[1] + 1, column):
+                                    if self.board[row][loopColumn] != 0:
+                                        castle = False
+                                
+                                if castle:
+                                    changed = self.move(previous, (row, 3), color)
+                                    changed = self.move((row, column), (row, 2), color)
+                                if not changed:
+                                    self.board[row][column].selected = True
+                            else:
+                                for loopColumn in range(column + 1, previous[1]):
+                                    if self.board[row][loopColumn] != 0:
+                                        castle = False
+                                if castle:
+                                    changed = self.move(previous, (row, 6), color)
+                                    changed = self.move((row, column), (row, 5), color)
+                                if not changed:
+                                    self.board[row][column].selected = True
+                        else:
+                            self.board[row][column].selected = True
+        if changed:
+            if self.turn == 'w':
+                self.turn = 'b'
+                self.resetSelected()
+            else:
+                self.turn = 'w'
+                self.resetSelected()
+
+    def resetSelected(self):
+        for row in range(self.rows):
+            for column in range(self.column):
+                if self.board[row][column] != 0:
+                    self.board[row][column].selected = False
+
+    def checkMate(self, color):
+        if self.isChecked(color):
+            king = None
+            for row in range(self.rows):
+                for column in range(self.columns):
+                    if self.board[row][column] != 0:
+                        if self.board[row][column].king and self.board[row][column].color == color:
+                            king = self.board[row][column]
+                if king is not None:
+                    validMoves = king.validMoves(self.board)
+                    dangerMoves = self.getDangerMoves(color)
+                    dangerCount = 0
+                    for move in validMoves:
+                        if move in dangerMoves:
+                            dangerCount += 1
+                    return dangerCount == len(validMoves)
+
         
+        return False
+
+    def move(self, start, end, color):
+        checkedBefore = self.isChecked(color):
+        changed = True
+        nBoard = self.board.copy()
+        if nBoard[end[0]][end[1]].pawn:
+            nBoard[end[0]][end[1]].first = False
+
+        nBoard[start[0]][start[1]].changePos((end[0], end[1]))
+        nBoard[end[0]][end[1]] = nBoard[start[0]][start[1]]
+        nBoard[start[0]][start[1]] = 0
+        self.board = nBoard
+
+        if self.isChecked(color) or (checkedBefore and self.isChecked(color)):
+            changed = False
+            nBoard = self.board.copy()
+            if nBoard[end[0]][end[1]].pawn:
+                nBoard[end[0]][end[1]].first = True
+
+            nBoard[end[0]][end[1]].changePos((start[0], start[1]))
+            nBoard[start[0]][start[1]] = nBoard[end[0]][end[1]]
+            nBoard[end[0]][end[1]] = 0
+            self.board = nBoard
+        else:
+            self.resetSelected()
+        
+        self.updateMoves()
+        if changed:
+            self.last = [start, end]
+        return changed        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
 pygame.init()
