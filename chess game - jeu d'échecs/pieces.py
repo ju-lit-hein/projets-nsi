@@ -74,7 +74,7 @@ class Piece:
     def isSelected(self):
         return self.selected
 
-    def update_valid_moves(self, board):
+    def updateValidMoves(self, board):
         self.move_list = self.valid_moves(board)
 
     def draw(self, win, color):
@@ -91,7 +91,7 @@ class Piece:
         
         win.blit(drawThis, (x,y))
     
-    def change_pos(self, pos):
+    def changePos(self, pos):
         self.row = pos[0]
         self.col = pos[1]
 
@@ -102,7 +102,7 @@ class Piece:
 class Bishop(Piece):
     img = 0
 
-    def valid_moves(self, board):
+    def validMoves(self, board):
         i = self.row
         j = self.col
 
@@ -182,7 +182,7 @@ class King(Piece):
         super().__init__(row, col, color)
         self.king = True
 
-    def valid_moves(self, board):
+    def validMoves(self, board):
         i = self.row
         j = self.col
 
@@ -257,7 +257,7 @@ class King(Piece):
 class Knight(Piece):
     img = 2
 
-    def valid_moves(self, board):
+    def validMoves(self, board):
         i = self.row
         j = self.col
 
@@ -335,7 +335,7 @@ class Pawn(Piece):
         self.queen = False
         self.pawn = True
 
-    def valid_moves(self, board):
+    def validMoves(self, board):
         i = self.row
         j = self.col
 
@@ -408,7 +408,7 @@ class Pawn(Piece):
 class Queen(Piece):
     img = 4
 
-    def valid_moves(self, board):
+    def validMoves(self, board):
         i = self.row
         j = self.col
 
@@ -523,7 +523,7 @@ class Queen(Piece):
 class Rook(Piece):
     img = 5
 
-    def valid_moves(self, board):
+    def validMoves(self, board):
         i = self.row
         j = self.col
 
