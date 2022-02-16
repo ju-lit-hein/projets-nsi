@@ -6,7 +6,7 @@ from pieces import *
 
 
 class Board:
-    rect = ()
+    rect = RECT
     X = rect[0]
     Y = rect[1]
     def __init__(self, rows, columns):

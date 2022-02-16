@@ -70,6 +70,7 @@ def endScreen(win, text):
 
 def click(pos):
     '''return click position in the board (x, y) 0 <= x,y <= 7'''
+    rect = RECT
     x = pos[0]
     y = pos[1]
     if rect[0] < x < rect[0] + rect[2]:
