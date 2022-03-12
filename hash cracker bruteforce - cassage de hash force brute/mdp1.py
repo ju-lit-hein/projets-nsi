@@ -59,33 +59,3 @@ def decryptage_mdp1():
     
     
 print(decryptage_mdp1())
-
-import discord
-from discord.ext import commands
-import json
-
-# Get configuration.json
-with open("configuration.json", "r") as config:
-    data = json.load(config)
-    token = data["token"]
-    prefix = data["prefix"]
-
-
-class Greetings(commands.Cog):
-    def __init__(self, bot:commands.Bot):
-        self.bot = bot
-        self._last_member = None
-
-# Intents
-intents = discord.Intents.default()
-intents.members = True
-
-bot = commands.Bot(prefix, intents = intents)
-
-# Load cogs
-initial_extensions = [
-    "Cogs.help",
-    "Cogs.ping"
-]
-
-print(initial_extensions)

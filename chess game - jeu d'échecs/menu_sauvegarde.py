@@ -44,7 +44,7 @@ title.pack(fill=X)
 
 def go_home_menu():
     wn.destroy()
-    import main_menu
+    import mainmenu
 
 #Bouton pour lancer la sauvegarde
 for i in range(len(files)):
