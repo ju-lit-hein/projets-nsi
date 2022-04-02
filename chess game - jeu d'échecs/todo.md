@@ -1,0 +1,14 @@
+## ToDo List
+- choice between white and black
+- PvP mod
+- IAvIA mod
+
+
+- faire la fonction qui save la partie en cours  
+    - le nom de la save sera la date et l'heure de la save
+
+- modifier ligne 194 & 195 pieces.py pour que case_0 et case_1 soient égales aux objet de la case <Case object at 0x0000001CAB541D5>
+
+- avec faire_le_plateau('tcfrkfct/pppppppp/8/8/8/8/PPPPPPPP/TCFRKFCT')
+
+- faire des ouvertures de jeu choisies aléatoirement

@@ -10,11 +10,12 @@ pygame.display.set_icon(ICON)
 window = pygame.display.set_mode(RES)
 
 #Size of squares
-size = 70
+size = SQUARE_SIZE
 
 #board length, must be even
 boardLength = 8
 window.fill(MAIN_COLOR)
+window.
 cnt = 0
 for i in range(1,boardLength+1):
     for z in range(5,boardLength+5):
@@ -29,9 +30,5 @@ for i in range(1,boardLength+1):
 pygame.draw.rect(window,(0,0,0),[5*size,size,boardLength*size,boardLength*size],1)
 
 pygame.display.update()
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-    pygame.display.update()
+sleep(2)
+print()

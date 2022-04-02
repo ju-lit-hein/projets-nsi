@@ -1,576 +1,304 @@
-import pygame
-import os
+import ai, board, constants
 
-
-currentDir = os.path.abspath(os.path.curdir)
-
-
-#Chemins d'accès
-path_to_white_pawn = r"s%\\pieces\\pion blanc.gif" % currentDir
-path_to_white_bishop = r"s%\\pieces\\fou blanc.gif" % currentDir
-path_to_white_knight = r"s%\\pieces\\cavalier blanc.gif" % currentDir
-path_to_white_rook = r"s%\\pieces\\tour blanc.gif" % currentDir
-path_to_white_queen = r"s%\\pieces\\reine blanc.gif" % currentDir
-path_to_white_king = r"s%\\pieces\\roi blanc.gif" % currentDir
-
-
-path_to_black_pawn = r"s%\\pieces\\pion noir.gif" % currentDir
-path_to_black_bishop = r"s%\\pieces\\fou noir.gif" % currentDir
-path_to_black_knight = r"s%\\pieces\\cavalier noir.gif" % currentDir
-path_to_black_rook = r"s%\\pieces\\tour noir.gif" % currentDir
-path_to_black_queen = r"s%\\pieces\\reine noir.gif" % currentDir
-path_to_black_king = r"s%\\pieces\\roi noir.gif" % currentDir
-
-
-#Création des pièces
-black_pawn = pygame.image.load(path_to_black_pawn)
-black_bishop = pygame.image.load(path_to_black_bishop)
-black_knight = pygame.image.load(path_to_black_knight)
-black_rook = pygame.image.load(path_to_black_rook)
-black_queen = pygame.image.load(path_to_black_queen)
-black_king = pygame.image.load(path_to_black_king)
-
-
-white_pawn = pygame.image.load(path_to_white_pawn)
-white_bishop = pygame.image.load(path_to_white_bishop)
-white_knight = pygame.image.load(path_to_white_knight)
-white_rook = pygame.image.load(path_to_white_rook)
-white_queen = pygame.image.load(path_to_white_queen)
-white_king = pygame.image.load(path_to_white_king)
-
-
-
-bl = [black_bishop, black_king, black_knight, black_pawn, black_queen, black_rook]
-wh = [white_bishop, white_king, white_knight, white_pawn, white_queen, white_rook]
-
-
-BLACK = []
-WHITE = []
-
-
-for img in bl:
-    BLACK.append(pygame.transform.scale(img, (55,55)))
-
-for img in wh:
-    WHITE.append(pygame.transform.scale(img, (55,55)))
-
-
-#Création des objets des différentes pièces
 class Piece:
-    img = -1
-    rect = (113, 113, 525, 525)
-    startX = rect[0]
-    startY = rect[1]
 
-    def __init__(self, row, col, color):
-        self.row = row
-        self.col = col
+    def __init__(self, x, y, color, piece, value):
+        self.x = x
+        self.y = y
         self.color = color
-        self.selected = False
-        self.move_list = []
-        self.king = False
-        self.pawn = False
-    
-    def isSelected(self):
-        return self.selected
+        self.piece = piece
+        self.value = value
 
-    def updateValidMoves(self, board):
-        self.move_list = self.valid_moves(board)
 
-    def draw(self, win, color):
-        if self.color == 'wh':
-            drawThis = WHITE[self.img]
-        else:
-            drawThis = BLACK[self.img]
+    # Méthodes pour obtenir les mouvements valides
+
+    def get_diagonal_moves(self, board):
+        moves = []
+
+        for i in range(1,8):
+            if not board.in_bounds(self.x + i, self.y + i):
+                break
+            piece = board.get_piece(self.x + i, self.y + i)
+            moves.append(self.get_move(board, self.x + i, self.y + i))
+
+            if piece != 0:
+                break
+
+        for i in range(1,8):
+            if not board.in_bounds(self.x + i, self.y - i):
+                break
+            piece = board.get_piece(self.x + i, self.y - i)
+            moves.append(self.get_move(board, self.x + i, self.y - i))
+
+            if piece != 0:
+                break
         
-        x = (4 - self.col) + round(self.startX + (self.col * self.rect[2] / 8))
-        y = 3 + round(self.StartY + (self.row * self.rect[3] /8))
+        for i in range(1,8):
+            if not board.in_bounds(self.x - i, self.y - i):
+                break
+            piece = board.get_piece(self.x - i, self.y -i)
+            moves.append(self.get_move(board, self.x - i, self.y - i))
 
-        if self.selected and self.color == color:
-            pygame.draw.rect(win, (255, 0, 0), (x, y, 62, 62), 4)
+            if piece != 0:
+                break
         
-        win.blit(drawThis, (x,y))
+        for i in range(1,8):
+            if not board.in_bounds(self.x - i, self.y + i):
+                break
+            piece = board.get_piece(self.x - i, self.y + i)
+            moves.append(self.get_move(board, self.x - i, self.y + i))
+
+            if piece != 0:
+                break
+
+        return self.remove_zero(moves)
+
+
+    def get_line_moves(self, board):
+        moves = []
+
+        for i in range(1, 8 - self.x):
+            piece = board.get_piece(self.x + i, self.y)
+            moves.append(self.get_move(board, self.x + i, self.y))
+
+            if piece != 0:
+                break
+        
+        for i in range(1, self.x + 1):
+            piece = board.get_piece(self.x - i, self.y)
+            moves.append(self.get_move(board, self.x - i, self.y))
+
+            if piece != 0:
+                break
+
+        for i in range(1, 8 - self.y):
+            piece = board.get_piece(self.x, self.y + i)
+            moves.append(self.get_move(board, self.x, self.y + i))
+
+            if piece != 0:
+                break
+
+        for i in range(1, self.y + 1):
+            piece = board.get_piece(self.x, self.y - i)
+            moves.append(self.get_move(board, self.x, self.y - i))
+
+            if piece != 0:
+                break
+
+        return self.remove_zero(moves)
+
+
+    def get_move(self, board, xx, yy):
+        move = 0
+        if board.in_bounds(xx, yy):
+            piece = board.get_piece(xx, yy)
+            if piece != 0:
+                if piece.color != self.color:
+                    move = ai.Move(self.x, self.y, xx, yy, False)       # le booléen est là pour indiquer si le joueur faite un roque
+                
+            else:
+                move = ai.Move(self.x, self.y, xx, yy, False)       # le booléen est là pour indiquer si le joueur faite un roque
+        return move
+
     
-    def changePos(self, pos):
-        self.row = pos[0]
-        self.col = pos[1]
+    def remove_zero(self, tab):
+        return [move for move in tab if move != 0]
+
 
     def __str__(self):
-        return str(self.col) + " " + str(self.row)
-
-
-class Bishop(Piece):
-    img = 0
-
-    def validMoves(self, board):
-        i = self.row
-        j = self.col
-
-        moves = []
-
-        #TOP RIGHT
-        djL = j + 1
-        djR = j - 1
-        for di in range(i-1, -1, -1):
-            if djL < 8:
-                p = board[di][djL]
-                if p == 0:
-                    moves.append((djL, di))
-                elif p.color != self.color:
-                    moves.append((djL, di))
-                    break
-                else:
-                    break
-            else:
-                break
-
-            djL += 1
-
-        for di in range(i - 1, -1, -1):
-            if djR > -1:
-                p = board[di][djR]
-                if p == 0:
-                    moves.append((djR, di))
-                elif p.color != self.color:
-                    moves.append((djR, di))
-                    break
-                else:
-                    break
-            else:
-                break
-
-            djR -= 1
-        
-        #TOP LEFT
-        djL = j + 1
-        djR = j - 1
-        for di in range(i + 1, 8):
-            if djL < 8:
-                p = board[di][djL]
-                if p == 0:
-                    moves.append((djL, di))
-                elif p.color != self.color:
-                    moves.append((djL, di))
-                    break
-                else:
-                    break
-            else:
-                break
-            djL += 1
-        for di in range(i + 1, 8):
-            if djR > -1:
-                p = board[di][djR]
-                if p == 0:
-                    moves.append((djR, di))
-                elif p.color != self.color:
-                    moves.append((djR, di))
-                    break
-                else:
-                    break
-            else:
-                break
-
-            djR -= 1
-
-        return moves
-
-
-class King(Piece):
-    img = 1
-
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
-        self.king = True
-
-    def validMoves(self, board):
-        i = self.row
-        j = self.col
-
-        moves = []
-
-        if i>0:
-            #TOP LEFT
-            if j >0:
-                p = board[i-1][j-1]
-                if p == 0:
-                    moves.append((j-1, i-1))
-                elif p.color != self.color:
-                    moves.append((j-1, i-1))
-            
-            #TOP MIDDLE
-            p = board[i-1][j]
-            if p == 0:
-                moves.append((j, i-1))
-            elif p.color != self.color:
-                moves.append((j, i-1))
-            
-            #TOP RIGHT
-            if j <7:
-                p = board[i - 1][j+1]
-                if p == 0:
-                    moves.append((j+1, i-1))
-                elif p.color != self.color:
-                    moves.append((j+1, i-1))
-        
-        if i<7:
-            #BOTTOM LEFT
-            if j>0:
-                p = board[i+1][j-1]
-                if p == 0:
-                    moves.append((j-1, i+1))
-                elif p.color != self.color:
-                    moves.append((j-1, i+1))
-            
-            #BOTTOM MIDDLE
-            p = board[i+1][j]
-            if p == 0:
-                moves.append((j, i+1))
-            elif p.color != self.color:
-                moves.append((j, i+1))
-            
-            #BOTTOM RIGHT
-            p = board[i+1][j+1]
-            if p == 0:
-                moves.append((j+1, i+1))
-            elif p.color != self.color:
-                moves.append((j+1, i+1))
-
-        #MIDDLE LEFT
-        if j > 0:
-            p = board[i][j -1]
-            if p == 0:
-                moves.append((j-1, i))
-            elif p.color != self.color:
-                moves.append((j-1, i))
-        
-        #MIDDLE RIGHT
-        if j < 7:
-            p = board[i][j+1]
-            if p == 0:
-                moves.append((j+1, i))
-            elif p.color != self.color:
-                moves.append((j-+1, i))
-        
-        return moves
-
-
-class Knight(Piece):
-    img = 2
-
-    def validMoves(self, board):
-        i = self.row
-        j = self.col
-
-        moves = []
-
-        #DOWN LEFT
-        if i<6 and j>0:
-            p = board[i +2][j-1]
-            if p == 0:
-                moves.append((j-1, i+2))
-            elif p.color != self.color:
-                moves.append((j-1, i+2))
-        
-        #UP LEFT
-        if i >1 and j>0:
-            p = board[i-2][j-1]
-            if p == 0:
-                moves.append((j-1,i-2))
-            elif p.color != self.color:
-                moves.append((j-1,i-2))
-        
-        #DOWN RIGHT
-        if i <6 and j < 7:
-            p = board[i+2][j+1]
-            if p == 0:
-                moves.append((j+1, i+2))
-            elif p.color != self.color:
-                moves.append((j+1, i+2))
-
-        #UP RIGHT
-        if i > 1 and j < 7:
-            p = board[i - 2][j + 1]
-            if p == 0:
-                moves.append((j + 1, i - 2))
-            elif p.color != self.color:
-                moves.append((j + 1, i - 2))
-
-        if i > 0 and j > 1:
-            p = board[i - 1][j - 2]
-            if p == 0:
-                moves.append((j - 2, i - 1))
-            elif p.color != self.color:
-                moves.append((j - 2, i - 1))
-
-        if i > 0 and j < 6:
-            p = board[i - 1][j + 2]
-            if p == 0:
-                moves.append((j + 2, i - 1))
-            elif p.color != self.color:
-                moves.append((j + 2, i - 1))
-
-        if i < 7 and j > 1:
-            p = board[i + 1][j - 2]
-            if p == 0:
-                moves.append((j - 2, i + 1))
-            elif p.color != self.color:
-                moves.append((j - 2, i + 1))
-
-        if i < 7 and j < 6:
-            p = board[i + 1][j + 2]
-            if p == 0:
-                moves.append((j + 2, i + 1))
-            elif p.color != self.color:
-                moves.append((j + 2, i + 1))
-
-        return moves
-
-
-class Pawn(Piece):
-    img = 3
-
-    def __init__(self, row, col, color):
-        super().__init__(row, col, color)
-        self.first = True
-        self.queen = False
-        self.pawn = True
-
-    def validMoves(self, board):
-        i = self.row
-        j = self.col
-
-        moves = []
-
-        try:
-            if self.color == 'bl':
-                if i <7:
-                    p = board[i+1][j]
-                    if p == 0:
-                        moves.append((j, i+1))
-                
-                    #DIAGONAL
-                    if j<7:
-                        p = board[i+1][j+1]
-                        if p != 0:
-                            if p.color != self.color:
-                                moves.append((j+1, i+1))
-                    
-                    if j>0:
-                        p = board[i+1][j-1]
-                        if p != 0:
-                            if p.color != self.color:
-                                moves.append((j-1, i+1))
-
-                
-                if self.first:
-                    if i <6:
-                        p = board[i+2][j]
-                        if p == 0:
-                            if board[i + 1][j] == 0:
-                                moves.append((j,i+2))
-                        elif p.color != self.color:
-                            moves.append((j, i+2))
-            
-            #WHTIE
-            else:
-
-                if i > 0:
-                    p = board[i-1][j]
-                    if p == 0:
-                        moves.append((j, i-1))
-                
-                if j<7:
-                    p = board[i-1][j+1]
-                    if p != 0:
-                        if p.color != self.color:
-                            moves.append((j+1, i-1))
-                
-                if j >0:
-                    p = board[i-1][j-1]
-                    if p != 0:
-                        if p.color != self.color:
-                            moves.append((j-1, i-1))
-
-                if self.first:
-                    if i >1:
-                        p = board[i-2][j]
-                        if p == 0:
-                            if board[i-1][j] == 0:
-                                moves.append((j, i-2))
-                        elif p.color != self.color:
-                            moves.append(j, i-2)
-        except:
-            pass
-
-        return moves
-
-
-class Queen(Piece):
-    img = 4
-
-    def validMoves(self, board):
-        i = self.row
-        j = self.col
-
-        moves = []
-
-        #TOP RIGHT
-        djL = j + 1
-        djR = j - 1
-        for di in range(i-1,-1,-1):
-            if djL <8:
-                p = board[di][djL]
-                if p == 0:
-                    moves.append((djL, di))
-                elif p.color != self.color:
-                    moves.append((djL, di))
-                    break
-                else:
-                    djL = 9
-            
-            djL += 1
-        
-        for di in range(i-1, -1, -1):
-            if djR > -1:
-                p = board[di][djR]
-                if p ==0:
-                    moves.append((djR,di))
-                elif p.color != self.color:
-                    moves.append((djR, di))
-                    break
-                else:
-                    djR = -1
-            
-            djR -= 1
-        
-        #TOP LEFT
-        djL = j + 1
-        djR = j - 1
-        for di in range(i+1, 8):
-            if djL <8:
-                p = board[di][djL]
-                if p == 0:
-                    moves.append((djL,di))
-                elif p.color != self.color:
-                    moves.append((djL,di))
-                    break
-                else:
-                    djL = 9
-            
-            djL += 1
-
-        for di in range(i+1, 8):
-            if djR > -1:
-                p = board[di][djR]
-                if p == 0:
-                    moves.append((djR, di))
-                elif p.color != self.color:
-                    moves.append((djR, di))
-                    break
-                else:
-                    djR = -1
-
-            djR -=1
-
-        
-        #UP
-        for x in range(i-1, -1, -1):
-            p = board[x][j]
-            if p == 0:
-                moves.append((j, x))
-            elif p.color != self.color:
-                moves.append((j, x))
-                break
-            else:
-                break
-        
-        #DOWN
-        for x in range(i+1, 8, 1):
-            p = board[x][j]
-            if p == 0:
-                moves.append((j, x))
-            elif p.color != self.color:
-                moves.append((j, x))
-                break
-            else:
-                break
-        
-        #LEFT
-        for x in range(j-1, -1, -1):
-            p = board[i][x]
-            if p == 0:
-                moves.append((x,i))
-            elif p.color != self.color:
-                moves.append((x, i))
-                break
-            else:
-                break
-        
-        #RIGHT
-        for x in range(j+1, 8, 1):
-            p =  board[i][x]
-            if p == 0:
-                moves.append((x,i))
-            elif p.color != self.color:
-                moves.append((x, i))
-                break
-            else:
-                break
-        
-        return moves
+        return self.color + self.piece + ' '
 
 
 class Rook(Piece):
-    img = 5
 
-    def validMoves(self, board):
-        i = self.row
-        j = self.col
+    piece_type = 'R'
+    value = constants.ROOK_VALUE
 
+    def __init__(self,x, y, color):
+        super(Rook, self).__init__(x, y, color, Rook.piece_type, Rook.value)
+
+
+    def get_moves(self, board):
+        return self.get_line_moves(board)
+
+
+    def clone(self):
+        return Rook(self.x, self.y, self.color)
+
+
+class Knight(Piece):
+
+    piece_type = 'C'
+    value = constants.KNIGHT_VALUE
+
+    def __init__(self, x, y, color):
+        super(Knight, self).__init__(x, y, color, Knight.piece_type, Knight.value)
+
+
+    def get_moves(self, board):
         moves = []
 
-        #UP
-        for x in range(i-1, -1, -1):
-            p = board[x][j]
-            if p == 0:
-                moves.append((j,x))
-            elif p.color != self.color:
-                moves.append((j, x))
-                break
-            else:
-                break
+        moves.append(self.get_move(board, self.x + 2, self.y + 1))
+        moves.append(self.get_move(board, self.x - 1, self.y + 2))
+        moves.append(self.get_move(board, self.x - 2, self.y + 1))
+        moves.append(self.get_move(board, self.x + 1, self.y - 2))
+        moves.append(self.get_move(board, self.x + 2, self.y - 1))
+        moves.append(self.get_move(board, self.x + 1, self.y + 2))
+        moves.append(self.get_move(board, self.x - 2, self.y - 1))
+        moves.append(self.get_move(board, self.x - 1, self.y - 2))
 
-        #DOWN
-        for x in range(i+1, 8, 1):
-            p = board[x][j]
-            if p == 0:
-                moves.append((j,x))
-            elif p.color != self.color:
-                moves.append((j,x))
-                break
-            else:
-                break
+        return self.remove_zero(moves)
+
+    
+    def clone(self):
+        return Knight(self.x, self.y, self.color)
+
+
+class Bishop(Piece):
+
+    piece_type = 'B'
+    value = constants.BISHOP_VALUE
+
+    def __init__(self, x, y, color):
+        super(Bishop, self).__init__(x, y, color, Bishop.piece_type, Bishop.value)
+
+
+    def get_moves(self, board):
+        return self.get_diagonal_moves(board)
+
+    
+    def clone(self):
+        return Bishop(self.x, self.y, self.color)
+
+
+class Queen(Piece):
+
+    piece_type = 'Q'
+    value = constants.QUEEN_VALUE
+
+    def __init__(self, x, y, color):
+        super(Queen, self).__init__(x, y, color, Queen.piece_type, Queen.value)
+
+    
+    def get_moves(self, board):
+        diagonal = self.get_diagonal_moves(board)
+        line = self.get_line_moves(board)
+        return diagonal + line
+
+    
+    def clone(self):
+        return Queen(self.x, self.y, self.color)
+
+
+class King(Piece):
+
+    piece_type = 'K'
+    value = constants.KING_VALUE
+
+    def __init__(self, x, y, color):
+        super(King, self).__init__(x, y, color, King.piece_type, King.value)
+
+
+    def get_moves(self, board):
+        moves = []
+
+        moves.append(self.get_move(board, self.x + 1, self.y))
+        moves.append(self.get_move(board, self.x + 1, self.y + 1))
+        moves.append(self.get_move(board, self.x, self.y + 1))
+        moves.append(self.get_move(board, self.x - 1, self.y + 1))
+        moves.append(self.get_move(board, self.x - 1, self.y))
+        moves.append(self.get_move(board, self.x - 1, self.y - 1))
+        moves.append(self.get_move(board, self.x, self.y - 1))
+        moves.append(self.get_move(board, self.x + 1, self.y - 1))
+
+        moves.append(self.get_left_roque(board))
+        moves.append(self.get_right_roque(board))
+
+        return self.remove_zero(moves)
+
+
+    def get_left_roque(self, board):
+        if self.color == constants.WHITE and board.white_king_moved:
+            return 0
+        if self.color == constants.BLACK and board.black_king_moved:
+            return 0
+
+
+        piece = board.get_piece(0, self.y)
+
+        if piece != 0:
+            if piece.color == self.color and piece.piece_type == Rook.piece_type:
+                if board.get_piece(self.x - 1, self.y) == 0 and board.get_piece(self.x - 2, self.y) == 0 and board.get_piece(self.x - 3, self.y) == 0:
+                    return ai.Move(self.x, self.y, self.x - 2, self.y, True)
+
+        return 0
+
+    def get_right_roque(self, board):
+        if self.color == constants.WHITE and board.white_king_moved:
+            return 0
+        if self.color == constants.BLACK and board.black_king_moved:
+            return 0
+
+
+        piece = board.get_piece(self.x + 3, self.y)
+
+        if piece != 0:
+            if piece.color == self.color and piece.piece_type == Rook.piece_type:
+                if board.get_piece(self.x + 1, self.y) == 0 and board.get_piece(self.x + 2, self.y) == 0:
+                    return ai.Move(self.x, self.y, self.x + 2, self.y, True)
+
+        return 0
+
+    
+    def clone(self):
+        return King(self.x, self.y, self.color)
+
+
+class Pawn(Piece):
+
+    piece_type = 'P'
+    value = constants.PAWN_VALUE
+
+    def __init__(self, x, y, color):
+        super(Pawn, self).__init__(x, y, color, Pawn.piece_type, Pawn.value)
+
+
+    def is_starting_position(self):
+        if self.color == constants.BLACK:
+            return self.y == 1
+        else:
+            return self.y == 6
+
         
-        #LEFT
-        for x in range(j-1, -1, -1):
-            p = board[i][x]
-            if p == 0:
-                moves.append((x, i))
-            elif p.color != self.color:
-                moves.append((x, i))
-                break
-            else:
-                break
+    
+    def get_moves(self, board):
+        moves = []
+
+        direction = -1
+        if self.color == constants.BLACK:
+            direction = 1
+
         
-        #RIGHT
-        for x in range(j+1, 8, 1):
-            p = board[i][x]
-            if p == 0:
-                moves.append((x, i))
-            elif p.color != self.color:
-                moves.append((x, i))
-                break
-            else:
-                break
-        
-        return moves
+        # avancée d'une case
+        if board.get_piece(self.x, self.y + direction) == 0:
+            moves.append(self.get_move(board, self.x, self.y + direction))
+
+        # avancée de deux cases au départ
+        if self.is_starting_position() and board.get_piece(self.x, self.y + direction) == 0 and board.get_piece(self.x, self.y + direction * 2) == 0:
+            moves.append(self.get_move(board, self.x, self.y + direction * 2))
+
+        # Manger d'autres pièces
+        piece = board.get_piece(self.x + 1, self.y + direction)
+        if piece != 0:
+            moves.append(self.get_move(board, self.x + 1, self.y + direction))
+
+        piece = board.get_piece(self.x - 1, self.y + direction)
+        if piece != 0:
+            moves.append(self.get_move(board, self.x - 1, self.y + direction))
+
+
+        return self.remove_zero(moves)
+
+    
+    def clone(self):
+        return Pawn(self.x, self.y, self.color)
