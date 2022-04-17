@@ -103,6 +103,8 @@ class Board:
         if color == other_color:
             other_color = constants.BLACK
 
+        king_in_move = False
+        
         for move in self.get_possible_moves(other_color):
             copy = Board.clone(self)
             copy.move_piece(move)

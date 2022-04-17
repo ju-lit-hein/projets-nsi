@@ -12,7 +12,7 @@ class GraphicalUserInterface():
         self.BOARD_HEIGHT = constants.BOARD_HEIGHT
         self.BOARD_WIDTH = constants.BOARD_WIDTH
 
-        self.font = 0 # demander à Lukas
+        self.font = 'to be determined'
         self.title_font_size = 'to be determined'
         self.medium_font_size = 'to be determined'
         self.small_font_size = 'to be determined'
@@ -25,3 +25,4 @@ class GraphicalUserInterface():
 
         self.color_black_case = constants.BLACK_BOARD_COLOR
         self.color_white_case = constants.WHITE_BOARD_COLOR
+

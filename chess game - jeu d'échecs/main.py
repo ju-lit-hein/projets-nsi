@@ -1,4 +1,5 @@
 from asyncio import constants
+import time
 import ai
 import board
 import constants
@@ -62,41 +63,110 @@ def letter_to_xpos(letter):
 # Entry point
 #
 
-"""Player VS AI mode"""
+def PvE():
+    """Player VS AI mode"""
 
-var_board = board.Board.new()
-print(var_board)                                        # show the beggining board (new game)
+    var_board = board.Board.new()
+    print(var_board)                                        # show the beggining board (new game)
 
-while True:
-    move = get_valid_user_move(var_board)
-    if move == 0:
-        if var_board.is_check(constants.WHITE):
-            print("Checkmate. Black wins.")             # show the end of the game (checkmate - black wins)
-            break
-        else:
-            print('Stalemate.')                         # show the end of the game (stalemate)
-            break
+    while True:
+        move = get_valid_user_move(var_board)
+        if move == 0:
+            if var_board.is_check(constants.WHITE):
+                print("Checkmate. Black wins.")             # show the end of the game (checkmate - black wins)
+                break
+            else:
+                print('Stalemate.')                         # show the end of the game (stalemate)
+                break
 
-    var_board.move_piece(move)
+        var_board.move_piece(move)
 
-    print(f'User Move: + {str(move)}')                  # show the move (will be replace a color where the piece is moved)
-    print(var_board)                                    # show the updated board after the player move
+        print(f'User Move: + {str(move)}')                  # show the move (will be replace a color where the piece is moved)
+        print(var_board)                                    # show the updated board after the player move
 
-    ai_move = ai.AI.get_ai_move(var_board, [])
-    if ai_move == 0:
-        if var_board.is_check(constants.BLACK):
-            print("Checkmate. White wins.")             # show the end of the game (checkmate - white wins)
-            break
-        else:
-            print('Stalemate.')                         # show the end of the game (stalemate)
-            break
+        ai_move = ai.AI.get_ai_move(var_board, [])
+        if ai_move == 0:
+            if var_board.is_check(constants.BLACK):
+                print("Checkmate. White wins.")             # show the end of the game (checkmate - white wins)
+                break
+            else:
+                print('Stalemate.')                         # show the end of the game (stalemate)
+                break
 
-    var_board.move_piece(ai_move)
-    print(f"AI move: {str(ai_move)}")                   # show the move (will be replace a color where the piece is moved)
-    print(var_board)                                    # show the updated board after the AI move
+        var_board.move_piece(ai_move)
+        print(f"AI move: {str(ai_move)}")                   # show the move (will be replace a color where the piece is moved)
+        print(var_board)                                    # show the updated board after the AI move
 
+def PvP():
+    """Player VS Player mode"""
 
-"""Player VS Player mode"""
+    var_board = board.Board.new()
+    print(var_board)                                        # show the beggining board (new game)
 
+    while True:
+        user_1_move = get_valid_user_move(var_board)
+        if user_1_move == 0:
+            if var_board.is_check(constants.WHITE):
+                print("Checkmate. Black wins.")             # show the end of the game (checkmate - black wins)
+                break
+            else:
+                print('Stalemate.')                         # show the end of the game (stalemate)
+                break
 
-"""AI VS AI mode"""
+        var_board.move_piece(user_1_move)
+
+        print(f'User_1 Move: + {str(user_1_move)}')           # show the move (will be replace a color where the piece is moved)
+        print(var_board)                                    # show the updated board after the player move
+
+        user_2_move = get_valid_user_move(var_board)
+        if user_2_move == 0:
+            if var_board.is_check(constants.BLACK):
+                print("Checkmate. White wins.")             # show the end of the game (checkmate - white wins)
+                break
+            else:
+                print('Stalemate.')                         # show the end of the game (stalemate)
+                break
+
+        var_board.move_piece(user_2_move)
+        print(f"User_2 move: {str(user_2_move)}")                   # show the move (will be replace a color where the piece is moved)
+        print(var_board)                                    # show the updated board after the AI move
+
+def EvE():
+    """AI VS AI mode"""
+
+    var_board = board.Board.new()
+    print(var_board)                                        # show the beggining board (new game)
+
+    while True:
+        ai_1_move = ai.AI.get_ai_move(var_board, [], constants.BLACK)
+        if ai_1_move == 0:
+            if var_board.is_check(constants.WHITE):
+                print("Checkmate. Black wins.")             # show the end of the game (checkmate - black wins)
+                break
+            else:
+                print('Stalemate.')                         # show the end of the game (stalemate)
+                break
+
+        var_board.move_piece(ai_1_move)
+
+        print(f'AI_1 Move: + {str(ai_1_move)}')             # show the move (will be replace a color where the piece is moved)
+        print(var_board)                                    # show the updated board after the player move
+
+        #time.sleep(1)
+
+        ai_2_move = ai.AI.get_ai_move(var_board, [], constants.WHITE)
+        if ai_2_move == 0:
+            if var_board.is_check(constants.BLACK):
+                print("Checkmate. White wins.")             # show the end of the game (checkmate - white wins)
+                break
+            else:
+                print('Stalemate.')                         # show the end of the game (stalemate)
+                break
+
+        var_board.move_piece(ai_2_move)
+        print(f"AI_2 move: {str(ai_2_move)}")                 # show the move (will be replace a color where the piece is moved)
+        print(var_board)                                    # show the updated board after the AI move
+
+        #time.sleep(1)
+
+EvE()

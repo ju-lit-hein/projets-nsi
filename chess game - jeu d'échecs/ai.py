@@ -107,17 +107,17 @@ class Heureistics: ### changer le nom
 
         return white - black
 
-
+opening file
 class AI:
 
     INFINTE = 100000000
 
     @staticmethod
-    def get_ai_move(chessboard, invalid_moves):
+    def get_ai_move(chessboard, invalid_moves, color):
         best_move = 0
         best_score = AI.INFINTE
         print(chessboard)
-        for move in chessboard.get_possible_moves(constants.BLACK):
+        for move in chessboard.get_possible_moves(color):
             if AI.is_invalid_move(move, invalid_moves):
                 continue
 
@@ -138,7 +138,7 @@ class AI:
 
         if copy.is_check(constants.BLACK):
             invalid_moves.append(best_move)
-            return AI.get_ai_move(chessboard, invalid_moves)
+            return AI.get_ai_move(chessboard, invalid_moves, color)
         
         return best_move
 

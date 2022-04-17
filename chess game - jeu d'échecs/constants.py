@@ -27,8 +27,8 @@ KING_VALUE = 20000
 
 '''uneditable constants (could break the game)'''
 BLACK = 'B'
-BOARD_WIDTH = 600
-BOARD_HEIGHT = 600
+BOARD_WIDTH = 600       # change this to an operation that center the board whatever are window dimensions
+BOARD_HEIGHT = 600      # change this to an operation that center the board whatever are window dimensions
 HEIGHT = 8
 RECT = (113, 113, 525, 525)
 WHITE = 'W'

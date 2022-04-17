@@ -9,28 +9,28 @@ BACKGROUND = (12,247,129)
 BUTTON_COLOR = (46,201,123)
 
 
-#OOP for buttons
+#OOP for buttons   <- wtf is 'OOP' ??
 class Button:
 
     def __init__(self, text, width, height, pos, elevation, onClickCommand):
         # core attributions
-        self.pressed = False
-        self.elevation = elevation
         self.dynamic_elevation = elevation
+        self.elevation = elevation
         self.original_y_pos = pos[1]
+        self.pressed = False
 
         # top rectangle
-        self.top_rect = pygame.Rect(pos, (width, height))
         self.top_color = BUTTON_COLOR
+        self.top_rect = pygame.Rect(pos, (width, height))
 
 
         # bottom rectangle
-        self.bottom_rect = pygame.Rect(pos,(width, height))
         self.bottom_color = '#354B5E'
+        self.bottom_rect = pygame.Rect(pos,(width, height))
 
         # text
-        self.text_surf = GUI_FONT.render(text,True,'#FFFFFF')
         self.text_rect = self.text_surf.get_rect(center = self.top_rect.center)
+        self.text_surf = GUI_FONT.render(text,True,'#FFFFFF')
 
         # command to execute when clicked
         self.onClickCommand = onClickCommand
