@@ -1,4 +1,3 @@
-from turtle import width
 import ai
 import constants
 import pieces
@@ -88,7 +87,6 @@ class Board:
             
             if move.xx > move.x:    # right roque
                 rook = self.chess_pieces[move.x + 3][move.y]
-                print(rook)
                 rook.x = move.x - 1
                 self.chess_pieces[move.x + 1][move.y] = rook
                 self.chess_pieces[move.x + 3][move.y] = 0

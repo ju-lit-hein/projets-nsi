@@ -3,8 +3,8 @@ from pygame.locals import *
 
 
 #Constants
-SCREEN_HEIGHT = 480
-SCREEN_WIDTH = 720
+SCREEN_HEIGHT = 960
+SCREEN_WIDTH = 1440
 BACKGROUND = (12,247,129)
 BUTTON_COLOR = (46,201,123)
 
@@ -70,9 +70,9 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Chess Game Menu")
 GUI_FONT = pygame.font.SysFont("", 30)
-btn1 = Button('Start', 200, 40, (250,200),5, '')
-btn2 = Button('Options', 200, 40, (250,250), 5, '')
-btn3 = Button('Exit', 200, 40, (250, 300), 5, 'pygame.quit()')
+btn1 = Button('Start', 200, 40, (SCREEN_WIDTH // 2 - 100,200),5, '')
+btn2 = Button('Options', 200, 40, (SCREEN_WIDTH // 2 - 100,250), 5, '')
+btn3 = Button('Exit', 200, 40, (SCREEN_WIDTH // 2 - 100, 300), 5, 'pygame.quit()')
 
 #Window loop
 run = True
