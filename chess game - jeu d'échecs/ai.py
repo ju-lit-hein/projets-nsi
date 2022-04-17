@@ -3,6 +3,25 @@ import constants
 import numpy
 import pieces
 
+
+class Move:
+
+    def __init__(self, x, y, xx, yy, roque_move=False):   # arg 'roque_move' became predefined after coding all of the game. It was just to avoid to put thousands of 'False' in the opening in ai.py
+        self.x = x
+        self.y = y
+        self.xx = xx
+        self.yy = yy
+        self.roque_move = roque_move
+
+    
+    def equals(self, other):
+        return self.x == other.x and self.y == other.y and self.xx == other.xx and self.yy == other.yy
+
+
+    def __str__(self):
+        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+        return f"({letters[self.x]}{str(8 - self.y)}) -> ({letters[self.xx]}{str( 8 - self.yy)})"
+
 class Heureistics: ### changer le nom
     
     pawn_table = numpy.array([
@@ -64,6 +83,38 @@ class Heureistics: ### changer le nom
         [-20, -10, -10, -5, -5, -10, -10, -20]
     ])
 
+    # Black opening lists
+
+    opening1 = [Move()]     # Silician defense
+    opening2 = [Move(6, 0, 5, 2), Move(4, 1, 4, 2), Move(5, 0, 1, 4), Move(1, 4, 2, 3)]     # Nizmo Indian defense
+    opening3 = [Move()]     # Robatsch defense
+    opening4 = [Move()]     # Alekhine defense
+    opening5 = [Move()]     # Nimzowitsch defense
+    opening6 = [Move()]     # Rat
+    opening7 = [Move()]     # Benko Gambit
+    opening8 = [Move()]     # Modern defense
+    opening9 = [Move()]     # Queen's Indian defense
+    opening10 = [Move()]    # Pseudo King's Indian
+
+    # White opening lists
+
+    opening11 = [Move()]     # 
+    opening12 = [Move()]     # 
+    opening13 = [Move()]     # 
+    opening14 = [Move()]     # 
+    opening15 = [Move()]     # 
+    opening16 = [Move()]     # 
+    opening17 = [Move()]     # 
+    opening18 = [Move()]     # 
+    opening19 = [Move()]     # 
+    opening20 = [Move()]     # 
+
+    # list of lists of Black opening
+    black_opening_list = [opening1, opening2, opening3, opening4, opening5, opening6, opening7, opening8, opening9, opening10]
+    
+    # list of lists of White opening
+    white_opening_list = [opening11, opening12, opening13, opening14, opening15, opening16, opening17, opening18, opening19, opening20]
+    
     
     def evaluate(board):
         score = 0
@@ -107,7 +158,7 @@ class Heureistics: ### changer le nom
 
         return white - black
 
-opening file
+
 class AI:
 
     INFINTE = 100000000
@@ -210,20 +261,3 @@ class AI:
             return best_score
 
 
-class Move:
-
-    def __init__(self, x, y, xx, yy, roque_move):
-        self.x = x
-        self.y = y
-        self.xx = xx
-        self.yy = yy
-        self.roque_move = roque_move
-
-    
-    def equals(self, other):
-        return self.x == other.x and self.y == other.y and self.xx == other.xx and self.yy == other.yy
-
-
-    def __str__(self):
-        letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-        return f"({letters[self.x]}{str(8 - self.y)}) -> ({letters[self.xx]}{str( 8 -self.yy)})"
