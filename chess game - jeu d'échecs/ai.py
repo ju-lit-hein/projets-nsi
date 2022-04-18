@@ -83,6 +83,7 @@ class Heureistics: ### changer le nom
         [-20, -10, -10, -5, -5, -10, -10, -20]
     ])
 
+    """new"""
     # Black opening lists
 
     opening1 = [Move()]     # Silician defense
@@ -114,7 +115,7 @@ class Heureistics: ### changer le nom
     
     # list of lists of White opening
     white_opening_list = [opening11, opening12, opening13, opening14, opening15, opening16, opening17, opening18, opening19, opening20]
-    
+    """end of new code"""
     
     def evaluate(board):
         score = 0

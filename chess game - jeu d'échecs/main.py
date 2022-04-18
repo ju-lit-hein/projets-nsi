@@ -1,9 +1,9 @@
-from asyncio import constants
-import time
 import ai
 import board
 import constants
 import pieces
+import random
+import time
 
 
 ###
@@ -68,7 +68,7 @@ def PvE():
 
     var_board = board.Board.new()
     print(var_board)                                        # show the beggining board (new game)
-
+    n = 0 #indicator for when the opening stops
     while True:
         move = get_valid_user_move(var_board)
         if move == 0:
@@ -83,8 +83,16 @@ def PvE():
 
         print(f'User Move: + {str(move)}')                  # show the move (will be replace a color where the piece is moved)
         print(var_board)                                    # show the updated board after the player move
+        """new"""
+        if n == 0:                                              # if it's the first time the AI plays, it plays the opening
+            opening = random.choice(ai.black_opening_list)      # choose a random opening from the opening list
 
-        ai_move = ai.AI.get_ai_move(var_board, [])
+        if n >= len(opening):                                   # if the opening is over, the AI plays normally
+            ai_move = ai.AI.get_ai_move(var_board, [], constants.BLACK)
+        else:                                                   # if the opening is not over, the AI plays the opening
+            ai_move = opening[n]
+            n += 1
+        """end new"""
         if ai_move == 0:
             if var_board.is_check(constants.BLACK):
                 print("Checkmate. White wins.")             # show the end of the game (checkmate - white wins)
