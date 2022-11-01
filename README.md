@@ -1,12 +1,12 @@
 # projets-nsi
 Le GitHub des projets de NSI   
    
-Chess Game - Jeu D'échecs --> En cours de réalisation.   
+Chess Game - Jeu D'échecs --> Laissé à l'abandon pour le moment. J'essaierai de le finir quand j'aurai du temps. (Il manque l'aspect graphique du jeu et des ouvertures de jeu différentes pour l'IA).   
 Equipe --> Lukas et Julien   
    
 Hash Cracker Bruteforce - Cassage de Hash Force Brute --> Terminé    
 Equipe --> Lukas et Julien    
-Notes sur le projet --> Le cassage d'un mot de passe étant dans le dictionnaire français ne fonctionne plus. Le code sera mis à jour. Ce message ne sera plus lisible lorsque le code aura été mis à jour.    
+Notes sur le projet --> Le cassage d'un mot de passe étant dans le dictionnaire français ne fonctionne plus. Le code sera mis à jour.
      
 Julien's website - site internet de Julien --> Terminé    
 Thème du site --> Ce site présente l'univers du VTT Enduro et DH en expliquant l'essentiel à savoir.   
